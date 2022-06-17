@@ -1,0 +1,42 @@
+.auth-wrapper .lavalite-bg .lavalite-overlay {
+    background: linear-gradient(135deg, rgba(46, 52, 81, 0.4) 0%, rgba(46, 52, 81, 0.4) 100%);
+}
+.slider-nav .slider-dot-container .owl-dot { 
+	background: #2dce89;
+	color: #2dce89;
+}
+.slider-nav .slider-dot-container .owl-dot.active {
+	background: #28b97b;
+}
+.slider-nav .right-arrow { 
+	color: #2dce89;
+}
+.table-action {
+	width: 100px;
+}
+.card .nav-pills.custom-pills .nav-link.active {
+    color: #2dce89;
+    border-bottom: 2px solid #2dce89;
+}
+.wrapper .page-wrap .app-sidebar.colored .sidebar-content .nav-container .navigation-main .nav-item.open::after, .wrapper .page-wrap .app-sidebar.colored .sidebar-content .nav-container .navigation-main .nav-item.active::after {
+    background-color: #2dce89;
+}
+.badge-pending, .badge-treasurer, .badge-closed {
+    background-color: #fb6340;
+	color: #fff;
+}
+.badge-accepted, .badge-chairperson, .badge-open {
+    background-color: #2dce89;
+	color: #fff;
+}
+.badge-invited, .badge-secretary {
+    background-color: #11cdef;
+	color: #fff;
+}
+.badge-member {
+    background-color: #6c757d;
+	color: #fff;
+}
+.phone {
+	letter-spacing: 0.15em;
+}
