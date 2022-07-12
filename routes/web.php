@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Account\FarmController;
+use App\Http\Controllers\Account\UserController;
+use App\Http\Controllers\Account\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Account\Admin\PermissionController;
+use App\Http\Controllers\Account\Admin\RoleController;
 use App\Http\Controllers\Account\Admin\FarmCategoryController;
 use App\Http\Controllers\Account\Admin\ChildCategoryController;
 use App\Http\Controllers\Account\Admin\ChildSubCategoryController;
@@ -104,13 +108,15 @@ Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_i
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/add', [ExpenseController::class, 'create'])->middleware('auth')->name('group.add_expense');
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'create'])->middleware('auth')->name('group.add_sale');
 
+//profile
+Route::get('/profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
+Route::post('/profile', [UserController::class, 'update'])->middleware('auth');
+Route::post('/profile/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('profile.change_password');
+Route::post('/profile/change-profile-photo', [UserController::class, 'changeProfilePhoto'])->middleware('auth')->name('profile.change_profile_photo');
+
 Route::get('/information-center', function () {
     return view('account.information-center');
 })->middleware('auth')->name('information_center');
-
-Route::get('/profile', function () {
-    return view('account.profile');
-})->middleware('auth')->name('profile');
 
 Route::get('/settings', function () {
     return view('account.settings');
@@ -141,3 +147,16 @@ Route::get('/admin/farm-categories/{id}/{child_category_id}', [ChildCategoryCont
 
 Route::get('/admin/farm-categories/{id}/{child_category_id}/add', [ChildSubCategoryController::class, 'create'])->middleware('auth')->name('admin.add_child_sub_category');
 Route::post('/admin/farm-categories/{id}/{child_category_id}/add', [ChildSubCategoryController::class, 'store'])->middleware('auth');
+
+//roles
+Route::get('/admin/roles-and-permissions', [RoleController::class, 'index'])->middleware('auth')->name('admin.roles');
+Route::post('/admin/permissions/create', [PermissionController::class, 'store'])->middleware('auth')->name('admin.permissions.store');
+Route::post('/admin/permissions/{id}/delete', [PermissionController::class, 'delete'])->middleware('auth')->name('admin.permissions.delete');
+Route::post('/admin/roles/create', [RoleController::class, 'store'])->middleware('auth')->name('admin.roles.store');
+Route::get('/admin/roles/{id}', [RoleController::class, 'view'])->middleware('auth')->name('admin.roles.view');
+Route::post('/admin/roles/{id}/update', [RoleController::class, 'update'])->middleware('auth')->name('admin.roles.update');
+Route::post('/admin/roles/{id}/delete', [RoleController::class, 'delete'])->middleware('auth')->name('admin.roles.delete');
+
+//users
+Route::get('/admin/users', [AdminUserController::class, 'index'])->middleware('auth')->name('admin.users');
+Route::post('/admin/users/{id}/update/role', [AdminUserController::class, 'updateRole'])->middleware('auth')->name('admin.users.update.role');

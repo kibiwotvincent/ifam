@@ -15,10 +15,9 @@
 			<div class="top-menu d-flex align-items-center">
 				<span class="mr-10">Hello, {{ $user['first_name'] }} </span>  
 				<div class="dropdown">
-					<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="/assets/img/user.jpg" alt="profile"></a>
+					<a class="dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="avatar" src="{{ $user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$user['profile_photo']) }}" alt="profile"></a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-						<a class="dropdown-item" href="profile.html"><i class="ik ik-user dropdown-icon"></i> Profile</a>
-						<a class="dropdown-item" href="#"><i class="ik ik-settings dropdown-icon"></i> Settings</a>
+						<a class="dropdown-item" href="{{ route('profile') }}"><i class="ik ik-user dropdown-icon"></i> Profile</a>
 						<form action="{{ route('logout') }}" method="post">
 						@csrf
 						<button class="dropdown-item"><i class="ik ik-power dropdown-icon"></i> Logout</button>

@@ -65,7 +65,7 @@ class FarmCategoryController extends Controller
     /**
      * Handle an incoming add farm category request.
      *
-     * @param  \App\Http\Requests\Account\AddFarmCategoryRequest  $request
+     * @param  \App\Http\Requests\Account\Admin\AddFarmCategoryRequest  $request
      * @return \Illuminate\Support\Facades\Response
      */
     public function store(AddFarmCategoryRequest $request)

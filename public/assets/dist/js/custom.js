@@ -4,15 +4,35 @@ $(function () {
 		let id = $(this).attr('id');
 		ajaxPost('#'+id);
 	});
+	
+	$('form.ajax-upload').submit(function (e) {
+		e.preventDefault();
+		let id = $(this).attr('id');
+		let formName = '#'+id;
+		
+		let csrfToken = $('form'+formName+' input[name="_token"]').val();
+		
+		let formData = new FormData();
+		if($('#profile-photo')[0].files.length !== 0 ) {
+			//append only if input has file
+			let profilePhoto = $('#profile-photo')[0].files[0];
+			formData.append('profile_photo', profilePhoto);
+		}
+		
+        formData.append('_token', csrfToken);
+		
+		ajaxPost(formName, formData);
+	});
 
-	function ajaxPost(formName)
+	function ajaxPost(formName, formData = null)
 	{
 		commandButton = formName+"_submit";
 		commandButtonText = $(commandButton).html();
-		$.ajax({
+		
+		let setUp = 
+		{
 			type: "POST",
 			url: $(formName).attr("action"),
-			data: $(formName).serialize(),
 			dataType: "json",
 			beforeSend: function(){
 				$(commandButton).attr("disabled","disabled");
@@ -65,7 +85,18 @@ $(function () {
 				}
 				
 			}
-		});
+		};
+		
+		if(formData == null) {
+			setUp.data = $(formName).serialize();
+		}
+		else {
+			setUp.data = formData;
+			setUp.contentType = false;
+            setUp.processData = false;
+		}
+		
+		$.ajax(setUp);
 	}
 	
 	function updateFormStyle(formName, field, errors) {

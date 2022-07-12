@@ -108,10 +108,10 @@
 				<div class="card-header">
 					<div class="container px-0">
 						<div class="row">
-							<div class="col-6">
+							<div class="col-md-6">
 								<h3 class="mt-2">Member Contributions</h3>
 							</div>
-							<div class="col-6 text-right">
+							<div class="col-md-6 text-right">
 								<a href="#" data-toggle="modal" data-target="#addMemberModal" class="btn btn-success"><i class="ik ik-plus-circle"></i> Add Member Contributions</a>
 							</div>
 						</div>

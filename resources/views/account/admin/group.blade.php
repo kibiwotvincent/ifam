@@ -115,12 +115,12 @@
 						<tbody>
 							@foreach($group->members as $row)
 							<tr>
-								<td><img src="../img/users/1.jpg" class="table-user-thumb" alt=""></td>
-								<td>{{ $row->user['first_name'] }}</td>
+								<td><img src="{{ $row->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row->user['profile_photo']) }}" class="table-user-thumb" alt=""></td>
+								<td>{{ $row->user['name'] }}</td>
 								<td>{{ $row->user['id_number'] }}</td>
 								<td><span class="mb-0 badge badge-pill badge-success">{{ $row['position'] }}</span></td>
-								<td>Male</td>
-								<td>53</td>
+								<td>{{ $row->user['gender'] }}</td>
+								<td>{{ $row->user['age'] }}</td>
 								<td class="table-action text-right">
 									<a href="{{ route('admin.group', $row['id']) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
 								</td>

@@ -54,8 +54,8 @@
 									<td>{{ $row['name'] }}</td>
 									<td>{{ $row['description'] }}</td>
 									<td class="table-action text-right">
-									<a href="#!"><i class="ik ik-edit f-16 mr-15 text-green"></i></a>
-									<a href="{{ route('admin.view_child_category', [$row['parent_category_id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-info"></i>
+									<a href="#!"><i class="ik ik-edit f-16 mr-15 text-success"></i></a>
+									<a href="{{ route('admin.view_child_category', [$row['parent_category_id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i>
 									</a>
 									</td>
 								</tr>

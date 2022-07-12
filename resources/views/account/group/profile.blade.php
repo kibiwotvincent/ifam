@@ -42,7 +42,7 @@
 									<h5 class="mb-20 fw-700 text-muted">Chairperson <a href="#" data-toggle="modal" data-target="#updateChairpersonModal" class="ml-2"><i class="ik ik-edit-1 text-success"></i> </a></h5>
 								</div>
 								<div class="col-4 text-right">
-									<img src="/assets/img/user.jpg" class="rounded-circle" width="60" />
+									<img src="{{ $chairperson->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$chairperson->user['profile_photo']) }}" class="rounded-circle" width="60" />
 								</div>
 							</div>
 							<h6 class="mb-3 text-muted phone"><i class="ik ik-phone"></i> {{ $chairperson->user['phone_number'] }}</h6>
@@ -63,7 +63,7 @@
 									<h5 class="mb-20 fw-700 text-muted">Secretary <a href="#" data-toggle="modal" data-target="#updateSecretaryModal" class="ml-2"><i class="ik ik-edit-1 text-success"></i> </a></h5>
 								</div>
 								<div class="col-4 text-right">
-									<img src="/assets/img/user.jpg" class="rounded-circle" width="60" />
+									<img src="{{ $secretary->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$secretary->user['profile_photo']) }}" class="rounded-circle" width="60" />
 								</div>
 							</div>
 							<h6 class="mb-3 text-muted phone"><i class="ik ik-phone"></i> {{ $secretary->user['phone_number'] }}</h6>
@@ -84,7 +84,7 @@
 									<h5 class="mb-20 fw-700 text-muted">Treasurer <a href="#" data-toggle="modal" data-target="#updateTreasurerModal" class="ml-2"><i class="ik ik-edit-1 text-success"></i> </a></h5>
 								</div>
 								<div class="col-4 text-right">
-									<img src="/assets/img/user.jpg" class="rounded-circle" width="60" />
+									<img src="{{ $treasurer->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$treasurer->user['profile_photo']) }}" class="rounded-circle" width="60" />
 								</div>
 							</div>
 							<h6 class="mb-3 text-muted phone"><i class="ik ik-phone"></i> {{ $treasurer->user['phone_number'] }}</h6>

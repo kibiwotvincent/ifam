@@ -6,17 +6,16 @@
 				<div class="widget-body">
 					<div class="d-flex justify-content-between align-items-center">
 						<div class="state">
-							<h6>Bookmarks</h6>
+							<h6>Groups</h6>
 							<h2>1,410</h2>
 						</div>
 						<div class="icon">
-							<i class="ik ik-award"></i>
+							<i class="ik ik-users"></i>
 						</div>
 					</div>
-					<small class="text-small mt-10 d-block">6% higher than last month</small>
 				</div>
 				<div class="progress progress-sm">
-					<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%;"></div>
+					<div class="progress-bar bg-danger" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
 				</div>
 			</div>
 		</div>
@@ -25,17 +24,16 @@
 				<div class="widget-body">
 					<div class="d-flex justify-content-between align-items-center">
 						<div class="state">
-							<h6>Likes</h6>
+							<h6>Farms</h6>
 							<h2>41,410</h2>
 						</div>
 						<div class="icon">
-							<i class="ik ik-thumbs-up"></i>
+							<i class="ik ik-layout"></i>
 						</div>
 					</div>
-					<small class="text-small mt-10 d-block">61% higher than last month</small>
 				</div>
 				<div class="progress progress-sm">
-					<div class="progress-bar bg-success" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" style="width: 78%;"></div>
+					<div class="progress-bar bg-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
 				</div>
 			</div>
 		</div>
@@ -51,10 +49,9 @@
 							<i class="ik ik-calendar"></i>
 						</div>
 					</div>
-					<small class="text-small mt-10 d-block">Total Events</small>
 				</div>
 				<div class="progress progress-sm">
-					<div class="progress-bar bg-warning" role="progressbar" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" style="width: 31%;"></div>
+					<div class="progress-bar bg-warning" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
 				</div>
 			</div>
 		</div>
@@ -70,10 +67,9 @@
 							<i class="ik ik-message-square"></i>
 						</div>
 					</div>
-					<small class="text-small mt-10 d-block">Total Comments</small>
 				</div>
 				<div class="progress progress-sm">
-					<div class="progress-bar bg-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"></div>
+					<div class="progress-bar bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
 				</div>
 			</div>
 		</div>
@@ -82,122 +78,121 @@
 		<div class="col-md-8">
 			<div class="card">
 				<div class="card-body">
-					<div class="row align-items-center">
-						<div class="col-lg-8 col-md-12">
-							<h3 class="card-title">Visitors By Countries</h3>
-							<div id="visitfromworld" style="width:100%; height:350px"></div>
-						</div>
-						<div class="col-lg-4 col-md-12">
-							<div class="row mb-15">
-								<div class="col-9">India</div>
-								<div class="col-3 text-right">28%</div>
-								<div class="col-12">
-									<div class="progress progress-sm mt-5">
-										<div class="progress-bar bg-green" role="progressbar" style="width: 48%" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row mb-15">
-								<div class="col-9"> UK</div>
-								<div class="col-3 text-right">21%</div>
-								<div class="col-12">
-									<div class="progress progress-sm mt-5">
-										<div class="progress-bar bg-aqua" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row mb-15">
-								<div class="col-9"> USA</div>
-								<div class="col-3 text-right">18%</div>
-								<div class="col-12">
-									<div class="progress progress-sm mt-5">
-										<div class="progress-bar bg-purple" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-9">China</div>
-								<div class="col-3 text-right">12%</div>
-								<div class="col-12">
-									<div class="progress progress-sm mt-5">
-										<div class="progress-bar bg-danger" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-									</div>
-								</div>
-							</div>
-						</div>
+					<div id="calendar"></div>
+<!-- calendar modals -->
+<div class="modal" id="editEvent" tabindex="-1" role="dialog" aria-labelledby="editEventLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<form class="editEventForm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editEventLabel">Edit Event</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="editEname">Event Title</label>
+						<input type="text" class="form-control" id="editEname" name="editEname" placeholder="Please enter event title">
+					</div>
+					<div class="form-group">
+						<label for="editStarts">Start</label>
+						<input type="text" class="form-control datetimepicker-input" id="editStarts" name="editStarts" data-toggle="datetimepicker" data-target="#editStarts">
 					</div>
 				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card" style="min-height: 422px;">
-				<div class="card-header"><h3>Donut chart</h3></div>
-				<div class="card-body">
-					<div id="c3-donut-chart"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button class="btn btn-danger delete-event" type="submit">Delete</button>
+					<button class="btn btn-success save-event" type="submit">Save</button>
 				</div>
+			</div>
+		</form>
+	</div>
+</div> 
+
+<div class="modal" id="addEvent" tabindex="-1" role="dialog" aria-labelledby="addEventLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="addEventLabel">Add New Event</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<form id="addEventForm">
+					<div class="form-group">
+						<label for="eventName">Event Title</label>
+						<input type="text" class="form-control" id="eventName" name="eventName" placeholder="Please enter event title">
+					</div>
+					<div class="form-group">
+						<label for="eventStarts">Starts</label>
+						<input type="text" class="form-control datetimepicker-input" id="eventStarts" name="eventStarts" data-toggle="datetimepicker" data-target="#eventStarts">
+					</div>
+					<div class="form-group mb-0" id="addColor">
+						<label for="colors">Choose Color</label>
+						<ul class="color-selector">
+							<li class="bg-aqua">
+								<input type="radio" data-color="bg-aqua" checked name="colorChosen" id="addColorAqua">
+								<label for="addColorAqua"></label>
+							</li>
+							<li class="bg-blue">
+								<input type="radio" data-color="bg-blue" name="colorChosen" id="addColorBlue">
+								<label for="addColorBlue"></label>
+							</li>
+							<li class="bg-light-blue">
+								<input type="radio" data-color="bg-light-blue" name="colorChosen" id="addColorLightblue">
+								<label for="addColorLightblue"></label>
+							</li>
+							<li class="bg-teal">
+								<input type="radio" data-color="bg-teal" name="colorChosen" id="addColorTeal">
+								<label for="addColorTeal"></label>
+							</li>
+							<li class="bg-yellow">
+								<input type="radio" data-color="bg-yellow" name="colorChosen" id="addColorYellow">
+								<label for="addColorYellow"></label>
+							</li>
+							<li class="bg-orange">
+								<input type="radio" data-color="bg-orange" name="colorChosen" id="addColorOrange">
+								<label for="addColorOrange"></label>
+							</li>
+							<li class="bg-green">
+								<input type="radio" data-color="bg-green" name="colorChosen" id="addColorGreen">
+								<label for="addColorGreen"></label>
+							</li>
+							<li class="bg-lime">
+								<input type="radio" data-color="bg-lime" name="colorChosen" id="addColorLime">
+								<label for="addColorLime"></label>
+							</li>
+							<li class="bg-red">
+								<input type="radio" data-color="bg-red" name="colorChosen" id="addColorRed">
+								<label for="addColorRed"></label>
+							</li>
+							<li class="bg-purple">
+								<input type="radio" data-color="bg-purple" name="colorChosen" id="addColorPurple">
+								<label for="addColorPurple"></label>
+							</li>
+							<li class="bg-fuchsia">
+								<input type="radio" data-color="bg-fuchsia" name="colorChosen" id="addColorFuchsia">
+								<label for="addColorFuchsia"></label>
+							</li>
+							<li class="bg-muted">
+								<input type="radio" data-color="bg-muted" name="colorChosen" id="addColorMuted">
+								<label for="addColorMuted"></label>
+							</li>
+							<li class="bg-navy">
+								<input type="radio" data-color="bg-navy" name="colorChosen" id="addColorNavy">
+								<label for="addColorNavy"></label>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-success save-event">Save</button>
+				<button type="button" class="btn btn-danger delete-event" data-dismiss="modal">Delete</button>
 			</div>
 		</div>
 	</div>
-
-	<div class="row">
-		<div class="col-md-4">
-			<div class="card">
-				<div class="card-header">
-					<h3>Recent Chat</h3>
-					<div class="card-header-right">
-						<ul class="list-unstyled card-option">
-							<li><i class="ik ik-chevron-left action-toggle"></i></li>
-							<li><i class="ik ik-minus minimize-card"></i></li>
-							<li><i class="ik ik-x close-card"></i></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-body chat-box scrollable" style="height:300px;">
-					<ul class="chat-list">
-						<li class="chat-item">
-							<div class="chat-img"><img src="img/users/1.jpg" alt="user"></div>
-							<div class="chat-content">
-								<h6 class="font-medium">James Anderson</h6>
-								<div class="box bg-light-info">Lorem Ipsum is simply dummy text of the printing &amp; type setting industry.</div>
-							</div>
-							<div class="chat-time">10:56 am</div>
-						</li>
-						<li class="chat-item">
-							<div class="chat-img"><img src="img/users/2.jpg" alt="user"></div>
-							<div class="chat-content">
-								<h6 class="font-medium">Bianca Doe</h6>
-								<div class="box bg-light-info">It’s Great opportunity to work.</div>
-							</div>
-							<div class="chat-time">10:57 am</div>
-						</li>
-						<li class="odd chat-item">
-							<div class="chat-content">
-								<div class="box bg-light-inverse">I would love to join the team.</div>
-								<br>
-							</div>
-						</li>
-						<li class="odd chat-item">
-							<div class="chat-content">
-								<div class="box bg-light-inverse">Whats budget of the new project.</div>
-								<br>
-							</div>
-							<div class="chat-time">10:59 am</div>
-						</li>
-						<li class="chat-item">
-							<div class="chat-img"><img src="img/users/3.jpg" alt="user"></div>
-							<div class="chat-content">
-								<h6 class="font-medium">Angelina Rhodes</h6>
-								<div class="box bg-light-info">Well we have good budget for the project</div>
-							</div>
-							<div class="chat-time">11:00 am</div>
-						</li>
-					</ul>
-				</div>
-				<div class="card-footer chat-footer">
-					<div class="input-wrap">
-						<input type="text" placeholder="Type and enter" class="form-control">
-					</div>
-					<button type="button" class="btn btn-icon btn-theme"><i class="fa fa-paper-plane"></i></button>
+</div> 
+<!-- end calendar modals -->
 				</div>
 			</div>
 		</div>
@@ -240,401 +235,6 @@
 					</ul>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="card" style="min-height: 422px;">
-				<div class="card-header">
-					<h3>Timeline</h3>
-					<div class="card-header-right">
-						<ul class="list-unstyled card-option">
-							<li><i class="ik ik-chevron-left action-toggle"></i></li>
-							<li><i class="ik ik-minus minimize-card"></i></li>
-							<li><i class="ik ik-x close-card"></i></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-body timeline">
-					<div class="header bg-theme" style="background-image: url('img/placeholder/placeimg_400_200_nature.jpg')">
-						<div class="color-overlay d-flex align-items-center">
-							<div class="day-number">8</div>
-							<div class="date-right">
-								<div class="day-name">Monday</div>
-								<div class="month">February 2018</div>
-							</div>
-						</div>                                
-					</div>
-					<ul>
-						<li>
-							<div class="bullet bg-pink"></div>
-							<div class="time">11am</div>
-							<div class="desc">
-								<h3>Attendance</h3>
-								<h4>Computer Class</h4>
-							</div>
-						</li>
-						<li>
-							<div class="bullet bg-green"></div>
-							<div class="time">12pm</div>
-							<div class="desc">
-								<h3>Design Team</h3>
-								<h4>Hangouts</h4>
-							</div>
-						</li>
-						<li>
-							<div class="bullet bg-orange"></div>
-							<div class="time">2pm</div>
-							<div class="desc">
-								<h3>Finish</h3>
-								<h4>Go to Home</h4>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div class="card">
-		<div class="card-header row">
-			<div class="col col-sm-3">
-				<div class="dropdown d-inline-block">
-					<a class="btn-icon checkbox-dropdown dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-					<div class="dropdown-menu" aria-labelledby="moreDropdown">
-						<a class="dropdown-item" id="checkbox_select_all" href="javascript:void(0);">Select All</a>
-						<a class="dropdown-item" id="checkbox_deselect_all" href="javascript:void(0);">Deselect All</a>
-					</div>
-				</div>
-				<div class="card-options d-inline-block">
-					<a href="#"><i class="ik ik-inbox"></i></a>
-					<a href="#"><i class="ik ik-plus"></i></a>
-					<a href="#"><i class="ik ik-rotate-cw"></i></a>
-					<div class="dropdown d-inline-block">
-						<a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-horizontal"></i></a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item" href="#">More Action</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col col-sm-6">
-				<div class="card-search with-adv-search dropdown">
-					<form action="">
-						<input type="text" class="form-control" placeholder="Search.." required>
-						<button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-						<button type="button" id="adv_wrap_toggler" class="adv-btn ik ik-chevron-down dropdown-toggle" data-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-						<div class="adv-search-wrap dropdown-menu dropdown-menu-right" aria-labelledby="adv_wrap_toggler">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Full Name">
-							</div>
-							<div class="form-group">
-								<input type="email" class="form-control" placeholder="Email">
-							</div>
-							<button class="btn btn-theme">Search</button>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="col col-sm-3">
-				<div class="card-options text-right">
-					<span class="mr-5">1 - 50 of 2,500</span>
-					<a href="#"><i class="ik ik-chevron-left"></i></a>
-					<a href="#"><i class="ik ik-chevron-right"></i></a>
-				</div>
-			</div>
-		</div>
-		<div class="card-body p-0">
-			<div class="list-item-wrap">
-				<div class="list-item">
-					<div class="item-inner">
-						<label class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option1">
-							<span class="custom-control-label">&nbsp;</span>
-						</label>
-						<div class="list-title"><a href="javascript:void(0)">Lorem Ipsum is simply dumm dummy text of the printing and typesetting industry.</a></div>
-						<div class="list-actions">
-							<a href="#"><i class="ik ik-eye"></i></a>
-							<a href="#"><i class="ik ik-inbox"></i></a>
-							<a href="#"><i class="ik ik-edit-2"></i></a>
-							<a href="#"><i class="ik ik-trash-2"></i></a>
-						</div>
-					</div>
-
-					<div class="qickview-wrap">
-						<div class="desc">
-							<p>Fusce suscipit turpis a dolor posuere ornare at a ante. Quisque nec libero facilisis, egestas tortor eget, mattis dui. Curabitur viverra laoreet ligula at hendrerit. Nullam sollicitudin maximus leo, vel pulvinar orci semper id. Donec vehicula tempus enim a facilisis. Proin dignissim porttitor sem, sed pulvinar tortor gravida vitae.</p>
-						</div>
-					</div>
-				</div>
-				<div class="list-item">
-					<div class="item-inner">
-						<label class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option2">
-							<span class="custom-control-label">&nbsp;</span>
-						</label>
-						<div class="list-title"><a href="javascript:void(0)">Aenean eu pharetra arcu, vitae elementum sem. Sed non ligula molestie, finibus lacus at, suscipit mi. Nunc luctus lacus vel felis blandit, eu finibus augue tincidunt.</a></div>
-						<div class="list-actions">
-							<a href="#"><i class="ik ik-eye"></i></a>
-							<a href="#"><i class="ik ik-inbox"></i></a>
-							<a href="#"><i class="ik ik-edit-2"></i></a>
-							<a href="#"><i class="ik ik-trash-2"></i></a>
-						</div>
-					</div>
-					<div class="qickview-wrap">
-						<div class="desc">
-							<p>Fusce suscipit turpis a dolor posuere ornare at a ante. Quisque nec libero facilisis, egestas tortor eget, mattis dui. Curabitur viverra laoreet ligula at hendrerit. Nullam sollicitudin maximus leo, vel pulvinar orci semper id. Donec vehicula tempus enim a facilisis. Proin dignissim porttitor sem, sed pulvinar tortor gravida vitae.</p>
-						</div>
-					</div>
-				</div>
-				<div class="list-item">
-					<div class="item-inner">
-						<label class="custom-control custom-checkbox">
-							<input type="checkbox" class="custom-control-input" id="item_checkbox" name="item_checkbox" value="option3">
-							<span class="custom-control-label">&nbsp;</span>
-						</label>
-						<div class="list-title"><a href="javascript:void(0)">Donec lectus augue, suscipit in sodales sit amet, semper sit amet enim. Duis pretium, nisi id pretium ornare, tortor nibh sodales tellus.</a></div>
-						<div class="list-actions">
-							<a href="#"><i class="ik ik-eye"></i></a>
-							<a href="#"><i class="ik ik-inbox"></i></a>
-							<a href="#"><i class="ik ik-edit-2"></i></a>
-							<a href="#"><i class="ik ik-trash-2"></i></a>
-						</div>
-					</div>
-					<div class="qickview-wrap">
-						<div class="desc">
-							<p>Fusce suscipit turpis a dolor posuere ornare at a ante. Quisque nec libero facilisis, egestas tortor eget, mattis dui. Curabitur viverra laoreet ligula at hendrerit. Nullam sollicitudin maximus leo, vel pulvinar orci semper id. Donec vehicula tempus enim a facilisis. Proin dignissim porttitor sem, sed pulvinar tortor gravida vitae.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="card">
-		<div class="card-header row">
-			<div class="col col-sm-3">
-				<div class="card-options d-inline-block">
-					<a href="#"><i class="ik ik-inbox"></i></a>
-					<a href="#"><i class="ik ik-plus"></i></a>
-					<a href="#"><i class="ik ik-rotate-cw"></i></a>
-					<div class="dropdown d-inline-block">
-						<a class="nav-link dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ik ik-more-horizontal"></i></a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-							<a class="dropdown-item" href="#">Action</a>
-							<a class="dropdown-item" href="#">More Action</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col col-sm-6">
-				<div class="card-search with-adv-search dropdown">
-					<form action="">
-						<input type="text" class="form-control global_filter" id="global_filter" placeholder="Search.." required>
-						<button type="submit" class="btn btn-icon"><i class="ik ik-search"></i></button>
-						<button type="button" id="adv_wrap_toggler" class="adv-btn ik ik-chevron-down dropdown-toggle" data-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-						<div class="adv-search-wrap dropdown-menu dropdown-menu-right" aria-labelledby="adv_wrap_toggler">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col0_filter" placeholder="Name" data-column="0">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col1_filter" placeholder="Position" data-column="1">
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col2_filter" placeholder="Office" data-column="2">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col3_filter" placeholder="Age" data-column="3">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col4_filter" placeholder="Start date" data-column="4">
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="form-group">
-										<input type="text" class="form-control column_filter" id="col5_filter" placeholder="Salary" data-column="5">
-									</div>
-								</div>
-							</div>
-							<button class="btn btn-theme">Search</button>
-						</div>
-					</form>
-				</div>
-			</div>
-			<div class="col col-sm-3">
-				<div class="card-options text-right">
-					<span class="mr-5" id="top">1 - 50 of 2,500</span>
-					<a href="#"><i class="ik ik-chevron-left"></i></a>
-					<a href="#"><i class="ik ik-chevron-right"></i></a>
-				</div>
-			</div>
-		</div>
-		<div class="card-body">
-			<table id="advanced_table" class="table">
-				<thead>
-					<tr>
-						<th class="nosort" width="10">
-							<label class="custom-control custom-checkbox m-0">
-								<input type="checkbox" class="custom-control-input" id="selectall" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</th>
-						<th class="nosort">Avatar</th>
-						<th>Name</th>
-						<th>Position</th>
-						<th>Office</th>
-						<th>Age</th>
-						<th>Start date</th>
-						<th>Salary</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/1.jpg" class="table-user-thumb" alt=""></td>
-						<td>Tiger Nixon</td>
-						<td>System Architect</td>
-						<td>Edinburgh</td>
-						<td>61</td>
-						<td>2011/04/25</td>
-						<td>$320,800</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/2.jpg" class="table-user-thumb" alt=""></td>
-						<td>Garrett Winters</td>
-						<td>Accountant</td>
-						<td>Tokyo</td>
-						<td>63</td>
-						<td>2011/07/25</td>
-						<td>$170,750</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/3.jpg" class="table-user-thumb" alt=""></td>
-						<td>Ashton Cox</td>
-						<td>Junior Technical Author</td>
-						<td>San Francisco</td>
-						<td>66</td>
-						<td>2009/01/12</td>
-						<td>$86,000</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/4.jpg" class="table-user-thumb" alt=""></td>
-						<td>Cedric Kelly</td>
-						<td>Senior Javascript Developer</td>
-						<td>Edinburgh</td>
-						<td>22</td>
-						<td>2012/03/29</td>
-						<td>$433,060</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/5.jpg" class="table-user-thumb" alt=""></td>
-						<td>Airi Satou</td>
-						<td>Accountant</td>
-						<td>Tokyo</td>
-						<td>33</td>
-						<td>2008/11/28</td>
-						<td>$162,700</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/1.jpg" class="table-user-thumb" alt=""></td>
-						<td>Brielle Williamson</td>
-						<td>Integration Specialist</td>
-						<td>New York</td>
-						<td>61</td>
-						<td>2012/12/02</td>
-						<td>$372,000</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/2.jpg" class="table-user-thumb" alt=""></td>
-						<td>Herrod Chandler</td>
-						<td>Sales Assistant</td>
-						<td>San Francisco</td>
-						<td>59</td>
-						<td>2012/08/06</td>
-						<td>$137,500</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/3.jpg" class="table-user-thumb" alt=""></td>
-						<td>Rhona Davidson</td>
-						<td>Integration Specialist</td>
-						<td>Tokyo</td>
-						<td>55</td>
-						<td>2010/10/14</td>
-						<td>$327,900</td>
-					</tr>
-					<tr>
-						<td>
-							<label class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input select_all_child" id="" name="" value="option2">
-								<span class="custom-control-label">&nbsp;</span>
-							</label>
-						</td>
-						<td><img src="img/users/4.jpg" class="table-user-thumb" alt=""></td>
-						<td>Colleen Hurst</td>
-						<td>Javascript Developer</td>
-						<td>San Francisco</td>
-						<td>39</td>
-						<td>2009/09/15</td>
-						<td>$205,500</td>
-					</tr>
-				</tbody>
-			</table>
 		</div>
 	</div>
 </div>

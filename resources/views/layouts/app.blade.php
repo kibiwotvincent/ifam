@@ -87,6 +87,7 @@
 		<script src="/assets/plugins/owl.carousel/dist/owl.carousel.min.js"></script>
 		<script src="/assets/js/carousel.js"></script>
 		<script src="/assets/js/form-advanced.js"></script>
+		<script src="/assets/js/form-components.js"></script>
 		<script src="/assets/js/calendar.js"></script>
 		
         <script src="/assets/dist/js/theme.js"></script>

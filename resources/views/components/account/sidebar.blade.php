@@ -26,9 +26,11 @@
 					@if($groupsCount > 0)<span class="badge badge-success">{{ $groupsCount }}</span>@endif
 					</a>
 				</div>
+				@can('view groups reports')
 				<div class="nav-item active">
-					<a href="{{ route('admin.groups') }}"><i class="ik ik-users"></i><span>Groups Admin</span></a>
+					<a href="{{ route('admin.groups') }}"><i class="ik ik-users"></i><span>Groups Reports</span></a>
 				</div>
+				@endcan
 				<div class="nav-item active">
 					<a href="{{ route('farms') }}"><i class="ik ik-layout"></i><span>Farms</span>
 					@if($farmsCount > 0)<span class="badge badge-success">{{ $farmsCount }}</span>@endif
@@ -40,12 +42,24 @@
 				<div class="nav-item active">
 					<a href="{{ route('profile') }}"><i class="ik ik-user"></i><span>Profile</span></a>
 				</div>
-				<div class="nav-item active">
+				<div class="nav-item active d-none">
 					<a href="{{ route('settings') }}"><i class="ik ik-settings"></i><span>Settings</span></a>
 				</div>
+				@can('manage farm categories')
 				<div class="nav-item active">
 					<a href="{{ route('admin.farm_categories') }}"><i class="ik ik-pie-chart"></i><span>Farm Categories</span></a>
 				</div>
+				@endcan
+				@can('manage roles and permissions')
+				<div class="nav-item active">
+					<a href="{{ route('admin.roles') }}"><i class="ik ik-sliders"></i><span>Roles and Permissions</span></a>
+				</div>
+				@endcan
+				@can('manage platform users')
+				<div class="nav-item active">
+					<a href="{{ route('admin.users') }}"><i class="ik ik-users"></i><span>Platform Users</span></a>
+				</div>
+				@endcan
 				<div class="nav-lavel">&nbsp;</div>
 				<div class="nav-item active">
 					<a href="{{ route('information_center') }}"><i class="ik ik-help-circle"></i><span>Information Center</span></a>

@@ -2,7 +2,7 @@
 <div class="container-fluid">
 	<div class="page-header">
 		<div class="row align-items-end">
-			<div class="col-lg-8">
+			<div class="col-lg-4">
 				<div class="page-header-title">
 					<i class="ik ik-layout bg-success"></i>
 					<div class="d-inline">
@@ -10,7 +10,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-4">
+			<div class="col-lg-8">
 				<nav class="breadcrumb-container" aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">

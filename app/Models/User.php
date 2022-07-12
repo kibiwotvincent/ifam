@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 //use Illuminate\Notifications\Notifiable;
-//use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 //use Laravel\Sanctum\HasApiTokens;
 //use App\Notifications\VerifyEmailAddress;
@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable //implements MustVerifyEmail
 {
-    use HasFactory, SoftDeletes;//, Notifiable, HasRoles, HasApiTokens;
+    use HasFactory, SoftDeletes, HasRoles;//, Notifiable,  HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -46,7 +46,9 @@ class User extends Authenticatable //implements MustVerifyEmail
      */
     protected $casts = [
         'phone_number_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime',
         'deleted_at' => 'datetime',
+        //'date_of_birth' => 'date',
     ];
 	
 	/**
@@ -57,10 +59,11 @@ class User extends Authenticatable //implements MustVerifyEmail
 	protected $appends = [
 		'full_name',
 		'name',
+		'age',
 	];
 	
 	/**
-	 * Get user name.
+	 * Get user's name.
 	 *
 	 * @param  none
 	 * @return string
@@ -68,6 +71,17 @@ class User extends Authenticatable //implements MustVerifyEmail
 	public function getNameAttribute()
 	{
 		return $this->first_name." ".$this->last_name;
+	}
+	
+	/**
+	 * Get user age.
+	 *
+	 * @param  none
+	 * @return string
+	 */
+	public function getAgeAttribute()
+	{
+		return 12;
 	}
 	
 	/**
