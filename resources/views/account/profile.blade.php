@@ -93,7 +93,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="date-of-birth">Date of Birth</label>
-											<input type="date" value="{{ $user['date_of_birth'] }}" class="form-control" name="date_of_birth" id="date-of-birth">
+											<input type="date" value="{{ $user['date_of_birth']->format('Y-m-d') }}" class="form-control" name="date_of_birth" id="date-of-birth">
 											<p class="d-none error" for="date_of_birth"></p>
 										</div>
 									</div>

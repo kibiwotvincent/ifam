@@ -48,7 +48,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         'phone_number_verified_at' => 'datetime',
         'email_verified_at' => 'datetime',
         'deleted_at' => 'datetime',
-        //'date_of_birth' => 'date',
+        'date_of_birth' => 'date',
     ];
 	
 	/**
@@ -81,7 +81,12 @@ class User extends Authenticatable //implements MustVerifyEmail
 	 */
 	public function getAgeAttribute()
 	{
-		return 12;
+		if($this->date_of_birth == "") return null;
+		
+		$today = \Carbon\Carbon::now();
+		$age = $today->diffInYears($this->date_of_birth);
+
+		return $age;
 	}
 	
 	/**

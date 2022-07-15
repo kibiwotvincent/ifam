@@ -35,10 +35,10 @@
 		<div class="col-md-12">
 			<div class="row mb-1">
 				<div class="col-md-8">
-					<h5 class="mt-3 h6">Member Merged Farms</h5>
+					<h5 class="mt-3 h6">Member Merged Seasons</h5>
 				</div>
 				<div class="col-md-4 text-right">
-					@if($member['status'] == "accepted")
+					@if($member->isAccepted())
 						<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#removeMemberModal"><i class="ik ik-user-x"></i> Remove Member</a>
 					@else
 						<form class="ajax" id="approve_member_form" action="{{ route('approve_group_member', $member['id']) }}" method="post">
@@ -50,55 +50,59 @@
 					@endif
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-12 mb-4 pl-0 pr-0">
-					<div class="owl-container">
-						<div class="owl-carousel basic">
-							@foreach($member->user->farms as $row)
-							<div class="card proj-t-card">
-								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col pl-0 mx-3">
-											<a href="{{ route('group.view_farm', [$row->farmable['id'], $row['id']]) }}">
-												<h6 class="mb-5 font-weight-bold">{{ $row['name'] }}</h6>
-											</a>
-											<p>
-											Added On <span class="text-muted">{{ date('d M Y', strtotime($row['created_at'])) }}</span>
-											</p>
+			
+			@if(count($member->merged_seasons) == 0)
+				<div class="alert alert-warning" role="alert">
+				  There are no merged seasons belonging to this member yet!
+				</div>
+			@else
+				<div class="row">
+					<div class="col-md-12 mb-4 pl-0 pr-0">
+						<div class="owl-container">
+							<div class="owl-carousel basic">
+								@foreach($member->merged_seasons as $row)
+								<div class="card proj-t-card">
+									<div class="card-body">
+										<div class="row align-items-center">
+											<div class="col pl-0 mx-3">
+												<a href="{{ route('group.view_merged_season', [$row['group_id'], $row['group_member_id'], $row['season_id']]) }}">
+													<h6 class="mb-5 font-weight-bold">{{ $row->season['name'] }}</h6>
+												</a>
+												<p>
+												Started On <span class="text-muted">{{ $row->season['start_date_string'] }}</span>
+												</p>
+											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col">
-											<span class="badge badge-pill badge-info">
-											{{ $row->departments[0]->category['name'] }}
-											@if(count($row->departments) > 1)
-											+ {{ count($row->departments) - 1 }}
-											@endif
-											</span>
-										</div>
-										<div class="col text-right">
-											<a href="#">
-											<span class="badge badge-pill badge-success"><i class="ik ik-edit-1"></i> Edit</span>
-											</a>
+										<div class="row">
+											<div class="col">
+												<span class="badge badge-pill badge-info">
+												{{ $row->season->department->category['name'] }}
+												</span>
+											</div>
+											<div class="col text-right">
+												<a href="#">
+												<span class="badge badge-pill badge-success">{{ $row->season['status'] }}</span>
+												</a>
+											</div>
 										</div>
 									</div>
 								</div>
+								@endforeach
 							</div>
-							@endforeach
+							<div class="slider-nav text-center">
+								<a href="#" class="left-arrow owl-prev text-success">
+									<i class="ik ik-chevron-left"></i>
+								</a>
+								<div class="slider-dot-container"></div>
+								<a href="#" class="right-arrow owl-next text-success">
+									<i class="ik ik-chevron-right"></i>
+								</a>
+							</div>
 						</div>
-						<div class="slider-nav text-center">
-							<a href="#" class="left-arrow owl-prev text-success">
-								<i class="ik ik-chevron-left"></i>
-							</a>
-							<div class="slider-dot-container"></div>
-							<a href="#" class="right-arrow owl-next text-success">
-								<i class="ik ik-chevron-right"></i>
-							</a>
-						</div>
-					
+						
 					</div>
 				</div>
-			</div>
+			@endif
 		</div>
 	</div>
 

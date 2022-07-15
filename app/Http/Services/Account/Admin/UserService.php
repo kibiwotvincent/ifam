@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 /**
  * Class UserService.
@@ -98,12 +99,31 @@ class UserService extends BaseService
 		return $profilePhotoPathArray[count($profilePhotoPathArray) - 1];
 	}
 	
-	public function deleteProfilePhoto(string $profilePhotoName = null): bool 
+	public function deleteProfilePhoto(string $profilePhotoName = null)
 	{
-		if(Storage::exists('/public/profile-photos/'.$profilePhotoName)) {
-			return Storage::delete('/public/profile-photos/'.$profilePhotoName);
+		if($profilePhotoName == null) return;
+		
+		if(Storage::exists('/public/profile-photos/original'.$profilePhotoName)) {
+			Storage::delete('/public/profile-photos/original'.$profilePhotoName);
 		}
 		
-		return $profilePhotoName == null ? true : false;
+		if(Storage::exists('/public/profile-photos/'.$profilePhotoName)) {
+			Storage::delete('/public/profile-photos/'.$profilePhotoName);
+		}
+	}
+	
+	public function resizeProfilePhoto() {
+		$user = Auth::getUser();
+		$filename = $user['profile_photo'];
+		
+		$sourcePath = storage_path('app/public/profile-photos/original/');
+		$destinationPath = storage_path('app/public/profile-photos/');
+		$image = Image::make($sourcePath.$filename);
+		$width = 256;
+		$height = 256;
+		
+		$image->resize($width, $height, function ($constraint) {
+			//$constraint->aspectRatio();
+		})->save($destinationPath.$filename);
 	}
 }

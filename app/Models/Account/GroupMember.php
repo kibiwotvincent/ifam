@@ -53,6 +53,17 @@ class GroupMember extends Model
 	}
 	
 	/**
+	 * Check if member join request has been accepted
+	 *
+	 * @param  none
+	 * @return bool
+	 */
+	public function isAccepted()
+	{
+		return $this->status == "accepted";
+	}
+	
+	/**
 	 * Query scope for chairperson.
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder  $query

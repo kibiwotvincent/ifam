@@ -29,11 +29,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row mb-1">
-				<div class="col-md-8">
+				<div class="col-md-5">
 					<h5 class="mt-3 h6">Group Farms</h5>
 				</div>
-				<div class="col-md-4 text-right">
-					<a href="{{ route('group_profile', $group['id']) }}" class="btn btn-info"><i class="ik ik-grid"></i> Group Profile</a>
+				<div class="col-md-7 text-right">
+					<a href="{{ route('group_profile', $group['id']) }}" class="btn btn-info mr-2"><i class="ik ik-grid"></i> Group Profile</a>
 					<a href="{{ route('group.add_farm', $group['id']) }}" class="btn btn-success"><i class="ik ik-plus-circle"></i> Add Group Farm</a>
 				</div>
 			</div>

@@ -11,17 +11,19 @@ class Expenses extends Component
 	public $season;
 	public $expenses;
 	public $is_group;
+	public $read_only;
 	
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Request $request, bool $isGroup = false)
+    public function __construct(Request $request, bool $isGroup = false, bool $readOnly = false)
     {
 		$this->season = Season::find($request->season_id);
 		$this->expenses = $this->season->expenses()->orderBy('date_incurred', 'desc')->get();
 		$this->is_group = $isGroup;
+		$this->read_only = $readOnly;
     }
 	
     /**

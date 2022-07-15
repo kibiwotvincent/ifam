@@ -98,8 +98,11 @@ class UserController extends Controller
 		$user = Auth::getUser();
 		$existingProfilePhoto = $user['profile_photo'];
 		
-		$profilePhotoPath = $request->file('profile_photo')->store('public/profile-photos');
+		$profilePhotoPath = $request->file('profile_photo')->store('public/profile-photos/original');
 		$this->userService->changeProfilePhoto($profilePhotoPath);
+		
+		//resize uploaded profile photo
+		$this->userService->resizeProfilePhoto();
 		
 		//delete previous profile photo
 		$this->userService->deleteProfilePhoto($existingProfilePhoto);

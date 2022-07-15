@@ -17,6 +17,7 @@ use App\Http\Controllers\Account\SaleController;
 use App\Http\Controllers\Account\GroupController;
 use App\Http\Controllers\Account\Admin\GroupController as AdminGroupController;
 use App\Http\Controllers\Account\GroupMemberController;
+use App\Http\Controllers\Account\GroupMergedSeasonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,6 +98,7 @@ Route::post('/groups/{id}/members/leave', [GroupMemberController::class, 'leave'
 Route::post('/groups/{id}/members/cancel', [GroupMemberController::class, 'cancel'])->middleware('auth')->name('cancel_join_request');
 Route::post('/groups/{id}/members/update', [GroupMemberController::class, 'update'])->middleware('auth')->name('update_group_member');
 Route::get('/groups/{group_id}/members/{member_id}', [GroupMemberController::class, 'view'])->middleware('auth')->name('view_group_member');
+Route::get('/groups/{group_id}/members/{member_id}/seasons/{season_id}', [GroupMergedSeasonController::class, 'view'])->middleware('auth')->name('group.view_merged_season');
 
 //group farms routes
 Route::get('/groups/{group_id}/farms/add', [FarmController::class, 'create'])->middleware('auth')->name('group.add_farm');
