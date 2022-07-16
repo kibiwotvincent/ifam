@@ -97,7 +97,7 @@
 					</div>
 					<div class="card-block">
 						<div class="alert alert-info mt-3 mx-3" role="alert">No current active season!</div>
-						<x-account.admin.group_only_report_table :seasons=$seasons />
+						<x-account.group.group_only_report_table :seasons=$seasons />
 					</div>
 				</div>
 			</div>

@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Account\Admin\ChildCategory;
 
 class FarmController extends Controller
 {
@@ -106,6 +107,20 @@ class FarmController extends Controller
 		$data['farm'] = $farm;
 		$data['department'] = $department;
         return view($view, $data);
+    }
+	
+	/**
+     * Display farm report view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function report(Request $request)
+    {
+		$farm = Farm::find($request->farm_id);
+		$departments = FarmCategory::orderBy('name', 'asc')->get();
+		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
+		
+        return view('account.farm_report', ['farm' => $farm, 'seasons' => $farm->seasons(), 'departments' => $departments, 'child_categories' => $childCategories]);
     }
 
     /**

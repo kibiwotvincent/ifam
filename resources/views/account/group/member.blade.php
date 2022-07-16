@@ -70,6 +70,7 @@
 												</a>
 												<p>
 												Started On <span class="text-muted">{{ $row->season['start_date_string'] }}</span>
+												<span class="badge badge-pill badge-{{ $row->season['status'] }} ml-3 py-1">{{ $row->season['status'] }}</span>
 												</p>
 											</div>
 										</div>
@@ -79,9 +80,9 @@
 												{{ $row->season->department->category['name'] }}
 												</span>
 											</div>
-											<div class="col text-right">
-												<a href="#">
-												<span class="badge badge-pill badge-success">{{ $row->season['status'] }}</span>
+											<div class="col pt-1 text-right">
+												<a href="#" title="Unmerge Season" data-toggle="modal" data-target="#unmergeSeason{{ $row['id'] }}Modal">
+												<i class="ik ik-zap-off f-18"></i>
 												</a>
 											</div>
 										</div>
@@ -218,6 +219,35 @@
 		</div>
 	</div>
 	<!--end remove member confirmation -->
+	
+	<!-- unmerge season confirmations -->
+	@foreach($member->merged_seasons as $row)
+	<div class="modal fade" id="unmergeSeason{{ $row['id'] }}Modal" tabindex="-1" role="dialog" aria-labelledby="unmergeSeason{{ $row['id'] }}ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="unmergeSeason{{ $row['id'] }}ModalLabel">Unmerge Season</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				</div>
+				<div class="modal-body">
+					<form class="ajax" id="unmerge_season_{{ $row['id'] }}_form" action="{{ route('group.unmerge_season', [$row['group_id'], $row['group_member_id'], $row['season_id']]) }}" method="post">
+						@csrf
+						<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
+						<input type="hidden" name="id" value="{{ $row['id'] }}"/>
+						<p>Are you sure you want to unmerge `{{ $row->season['name'] }}` season from {{ $row->group['name'] }} ?</p>
+						<div id="unmerge_season_{{ $row['id'] }}_form_feedback"></div>
+								
+						<div class="text-right">
+							<a href="#" class="btn btn-light" data-dismiss="modal">Cancel</a>
+							<button type="submit" class="btn btn-danger" id="unmerge_season_{{ $row['id'] }}_form_submit">Unmerge</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	@endforeach;
+	<!--end unmerge season confirmations -->
 	
 </div>
 </x-app-layout>

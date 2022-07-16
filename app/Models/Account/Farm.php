@@ -73,5 +73,18 @@ class Farm extends Model
 	{
 		return $this->morphTo();
 	}
+	
+	/*get farm seasons*/
+	public function seasons() {
+		$seasons = collect([]);
+		//get group farms' seasons
+		foreach($this->departments as $farmDepartment) {
+			foreach($farmDepartment->seasons as $season) {
+				$seasons->push($season);
+			}
+		}
+		
+		return $seasons;
+	}
 
 }

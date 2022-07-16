@@ -10,6 +10,8 @@ use App\Models\Account\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Account\Admin\FarmCategory;
+use App\Models\Account\Admin\ChildCategory;
 
 class GroupController extends Controller
 {
@@ -79,6 +81,23 @@ class GroupController extends Controller
 		$treasurer = $group->members()->treasurer()->first();
 		
         return view('account.group.profile', compact('group', 'chairperson', 'secretary', 'treasurer'));
+    }
+	
+	/**
+     * Display group report view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function report(Request $request)
+    {
+		$group = Group::find($request->id);
+		$departments = FarmCategory::orderBy('name', 'asc')->get();
+		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
+		
+		$groupStats = $this->groupService->groupStats($group);
+		
+        return view('account.group.report', ['group' => $group, 'departments' => $departments, 'child_categories' => $childCategories, 
+		'group_stats' => $groupStats]);
     }
 	
     /**

@@ -46,7 +46,7 @@ class GroupMergedSeasonController extends Controller
     public function unmerge(UnmergeGroupSeasonRequest $request)
     {
 		$this->groupMergedSeasonService->unmerge($request->validated());
-		return Response::json(['message' => "Group season unmerged successfully."], 200);
+		return Response::json(['message' => "Season has been unmerged successfully."], 200);
     }
 
 	

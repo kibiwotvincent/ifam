@@ -119,9 +119,18 @@
 					<div class="card-body">
 						<div class="row align-items-center mb-30">
 							<div class="col pl-0 mx-3">
-								<a href="{{ route('view_group', $row->group['id']) }}">
-									<h6 class="mb-5 font-weight-bold">{{ $row->group['name'] }}</h6>
-								</a>
+								<div class="row">
+									<div class="col-11">
+										<a href="{{ route('view_group', $row->group['id']) }}">
+											<h6 class="mb-5 font-weight-bold">{{ $row->group['name'] }}</h6>
+										</a>
+									</div>
+									<div class="col-1 text-right">
+										<a href="{{ route('group.report', $row->group['id']) }}" title="Group Report">
+											<span classs="badge badge-pil badge-light"><i class="ik ik-bar-chart-2"></i></span>
+										</a>
+									</div>
+								</div>
 								Created On <span class="text-muted">{{ date('d M Y', strtotime($row->group['created_at'])) }}</span>
 							</div>
 						</div>

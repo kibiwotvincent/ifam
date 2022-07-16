@@ -58,7 +58,12 @@
 									</div>
 									<div class="row">
 										<div class="col">
-											<span class="badge badge-pill badge-info">{{ $row->category['name'] }} + 2</span>
+											<span class="badge badge-pill badge-info">
+											{{ $row->departments[0]->category['name'] }}
+											@if(count($row->departments) > 1)
+											+ {{ count($row->departments) - 1 }}
+											@endif
+											</span>
 										</div>
 										<div class="col text-right">
 											<a href="#">

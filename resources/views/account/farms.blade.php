@@ -56,6 +56,9 @@
 									@endforeach
 								</div>
 							</div>
+							<a href="{{ route('farm.report', $row['id']) }}" title="Farm Report">
+								<span classs="badge badge-pil badge-light"><i class="ik ik-bar-chart-2"></i></span>
+							</a>
 						</div>
 					</div>
 					<div class="row">

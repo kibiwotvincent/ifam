@@ -73,6 +73,7 @@ Route::get('/farms', [FarmController::class, 'index'])->middleware('auth')->name
 Route::get('/farms/add', [FarmController::class, 'create'])->middleware('auth')->name('add_farm');
 Route::post('/farms/add', [FarmController::class, 'store'])->middleware('auth');
 Route::get('/farms/{farm_id}', [FarmController::class, 'view'])->middleware('auth')->name('view_farm');
+Route::get('/farms/{farm_id}/report', [FarmController::class, 'report'])->middleware('auth')->name('farm.report');
 Route::get('/farms/{farm_id}/{department_id}', [FarmController::class, 'view_department'])->middleware('auth')->name('view_department');
 Route::get('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->middleware('auth')->name('add_season');
 Route::post('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'store'])->middleware('auth');
@@ -89,6 +90,7 @@ Route::get('/groups/create', [GroupController::class, 'create'])->middleware('au
 Route::post('/groups/create', [GroupController::class, 'store'])->middleware('auth');
 Route::get('/groups/{id}', [GroupController::class, 'view'])->middleware('auth')->name('view_group');
 Route::get('/groups/{id}/profile', [GroupController::class, 'profile'])->middleware('auth')->name('group_profile');
+Route::get('/groups/{id}/report', [GroupController::class, 'report'])->middleware('auth')->name('group.report');
 Route::post('/groups/{id}/members/add', [GroupMemberController::class, 'store'])->middleware('auth')->name('add_group_member');
 Route::post('/groups/{id}/members/remove', [GroupMemberController::class, 'remove'])->middleware('auth')->name('remove_group_member');
 Route::post('/groups/{id}/members/approve', [GroupMemberController::class, 'approve'])->middleware('auth')->name('approve_group_member');
@@ -99,6 +101,7 @@ Route::post('/groups/{id}/members/cancel', [GroupMemberController::class, 'cance
 Route::post('/groups/{id}/members/update', [GroupMemberController::class, 'update'])->middleware('auth')->name('update_group_member');
 Route::get('/groups/{group_id}/members/{member_id}', [GroupMemberController::class, 'view'])->middleware('auth')->name('view_group_member');
 Route::get('/groups/{group_id}/members/{member_id}/seasons/{season_id}', [GroupMergedSeasonController::class, 'view'])->middleware('auth')->name('group.view_merged_season');
+Route::post('/groups/{group_id}/members/{member_id}/seasons/{season_id}/unmerge', [GroupMergedSeasonController::class, 'unmerge'])->middleware('auth')->name('group.unmerge_season');
 
 //group farms routes
 Route::get('/groups/{group_id}/farms/add', [FarmController::class, 'create'])->middleware('auth')->name('group.add_farm');

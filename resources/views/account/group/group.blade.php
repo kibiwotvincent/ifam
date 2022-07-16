@@ -44,16 +44,21 @@
 							@foreach($group->farms as $row)
 							<div class="card proj-t-card">
 								<div class="card-body">
-									<div class="row align-items-center">
-										<div class="col pl-0 mx-3">
+									<div class="row">
+										<div class="col-10">
 											<a href="{{ route('group.view_farm', [$row->farmable['id'], $row['id']]) }}">
 												<h6 class="mb-5 font-weight-bold">{{ $row['name'] }}</h6>
 											</a>
-											<p>
-											Added On <span class="text-muted">{{ date('d M Y', strtotime($row['created_at'])) }}</span>
-											</p>
+										</div>
+										<div class="col-1 text-right">
+											<a href="{{ route('farm.report', $row['id']) }}" title="Farm Report">
+												<span classs="badge badge-pil badge-light"><i class="ik ik-bar-chart-2"></i></span>
+											</a>
 										</div>
 									</div>
+									<p>
+									Added On <span class="text-muted">{{ date('d M Y', strtotime($row['created_at'])) }}</span>
+									</p>
 									<div class="row">
 										<div class="col">
 											<span class="badge badge-pill badge-info">

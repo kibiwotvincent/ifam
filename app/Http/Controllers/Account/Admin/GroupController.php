@@ -69,7 +69,7 @@ class GroupController extends Controller
     }
 	
 	/**
-     * Display groups report view.
+     * Display group report view.
      *
      * @return \Illuminate\View\View
      */

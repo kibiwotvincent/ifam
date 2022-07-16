@@ -66,13 +66,14 @@ class GroupService extends BaseService
 	public function groupStats(Group $group){
 		$groupStats = [];
 		$farmers = [];
-		//get group's seasons
+		
+		//get group's seasons (seasons belonging to group farms)
 		$groupSeasons = $group->seasons(false);
-			
 		$farmerType = "group";
 		$farmerID = $group['id'];
 		array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $group['name'], 'seasons' => $groupSeasons]);
 		
+		//get merged seasons (seasons merged into group by group members)
 		foreach($group->members as $groupMember) {
 			$farmerType = "individual";
 			$farmerID = $groupMember['id'];
@@ -84,7 +85,7 @@ class GroupService extends BaseService
 			array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $groupMember->user['name'], 'seasons' => $sns]);
 		}
 		
-		//populate group stats from members who have merged seasons
+		//populate group stats from farmers array
 		foreach($farmers as $farmer) {
 			$expenses = 0;
 			$sales = 0;
