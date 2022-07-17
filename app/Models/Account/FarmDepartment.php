@@ -4,6 +4,7 @@ namespace App\Models\Account;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class FarmDepartment extends Model
 {
@@ -44,4 +45,45 @@ class FarmDepartment extends Model
     {
         return $this->hasMany('App\Models\Account\Season'::class);
     }
+	
+	/**
+     * get department expenses
+     */
+	public function expenses()
+    {
+		$expenses = 0;
+		foreach($this->seasons as $season) {
+			$expenses += $season->expenses->sum('amount');
+		}
+        return $expenses;
+    }
+	
+	/**
+     * get department sales
+     */
+	public function sales()
+    {
+		$sales = 0;
+		foreach($this->seasons as $season) {
+			$sales += $season->sales()->paid()->sum('amount_paid');
+		}
+        return $sales;
+    }
+	
+	/**
+     * get department profits
+     */
+	public function profits()
+    {
+		return $this->sales() - $this->expenses();
+	}
+	
+	/**
+     * get department background color
+     */
+	public function color()
+    {
+		$colors = Arr::shuffle(['light', 'dark', 'info', 'warning', 'success', 'secondary', 'primary']);
+		return $colors[0];
+	}
 }

@@ -28,7 +28,7 @@
 			<div class="col-md-12"> 
 				<div class="row mb-1">
 					<div class="col-md-7">
-						<h6 class="mt-3">Explore Groups</h6>
+						<h6 class="mt-3 font-weight-bold text-muted">Explore Groups</h6>
 					</div>
 					<div class="col-md-5">
 						<div class="input-group mb-2 mr-sm-2">
@@ -58,7 +58,7 @@
 										</div>
 										<div class="row">
 											<div class="col">
-												<h6 class="mb-0"><span class="font-weight-bold">{{ count($row->members) }}</span> Members</h6> 
+												<span class="badge badge-light">{{ count($row->members) }} Members</span>
 											</div>
 											<div class="col text-right">
 												<form class="ajax" id="join_group_{{ $row['id'] }}_form" action="{{ route('join_group', $row['id']) }}" method="post">
@@ -66,7 +66,7 @@
 													@csrf
 													<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
 													<input type="hidden" name="group_id" value="{{ $row['id'] }}" >
-													<button type="submit" id="join_group_{{ $row['id'] }}_form_submit" class="badge badge-pill btn-success ">Join Group</button>
+													<button type="submit" id="join_group_{{ $row['id'] }}_form_submit" class="badge badge-pill btn-success "><i class="ik ik-user-plus"></i> Join Group</button>
 													
 												</form>
 												</a>
@@ -99,7 +99,7 @@
 		
 		<div class="row">
 			<div class="col-md-6">
-				<h6 class="mt-2" >My Groups</h6>
+				<h6 class="mt-2 font-weight-bold text-muted" >My Groups</h6>
 			</div>
 			@if(count($groups) == 0)
 			<div class="col-md-6 text-right">
@@ -136,27 +136,27 @@
 						</div>
 						<div class="row">
 							<div class="col">
-								<h6 class="mb-0"><span class="font-weight-bold">{{ count($row->group->members) }}</span> Members</h6> 
+								<span class="badge badge-light">{{ count($row->group->members) }} Members</span>
 							</div>
 							<div class="col">
-								<h6 class="mb-0"><span class="font-weight-bold">{{ count($row->group->farms) }}</span> Farms added</h6> 
+								<span class="badge badge-light">{{ count($row->group->farms) }} Farms</span>
 							</div>
 							<div class="col text-right">
-								@if($row['status'] == "accepted")
-								<a href="#" class="badge badge-pill badge-success" data-toggle="modal" data-target="#leaveGroup{{ $row['id'] }}Modal">Leave Group</a>
+								@if($row->isAccepted())
+								<a href="#" class="badge badge-pill badge-success" data-toggle="modal" data-target="#leaveGroup{{ $row['id'] }}Modal"><i class="ik ik-user-x"></i> Leave Group</a>
 								@else
 									<form class="ajax" id="cancel_join_request_{{ $row['id'] }}_form" action="{{ route('cancel_join_request', $row['group_id']) }}" method="post">
 										@method('post')
 										@csrf
 										<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
 										<input type="hidden" name="group_id" value="{{ $row['group_id'] }}"/>
-										<button type="submit" id="cancel_join_request_{{ $row['id'] }}_form_submit" class="badge badge-pill btn-info">Cancel Join Request</button>
+										<button type="submit" id="cancel_join_request_{{ $row['id'] }}_form_submit" class="badge badge-pill btn-info"><i class="ik ik-x-circle"></i> Cancel Join Request</button>
 									</form>
 								
 								@endif
 							</div>
 							<div class="col-12">
-								<div id="cancel_join_request_{{ $row['id'] }}_form_feedback"></div>
+								<div id="cancel_join_request_{{ $row['id'] }}_form_feedback" class="mt-1"></div>
 							</div>
 						</div>
 					</div>

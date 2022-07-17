@@ -30,7 +30,7 @@
 		<div class="col-md-12">
 			<div class="row mb-1">
 				<div class="col-md-5">
-					<h5 class="mt-3 h6">Group Farms</h5>
+					<h5 class="mt-3 h6 font-weight-bold text-muted">Group Farms</h5>
 				</div>
 				<div class="col-md-7 text-right">
 					<a href="{{ route('group_profile', $group['id']) }}" class="btn btn-info mr-2"><i class="ik ik-grid"></i> Group Profile</a>
@@ -70,7 +70,7 @@
 										</div>
 										<div class="col text-right">
 											<a href="#">
-											<span class="badge badge-pill badge-success"><i class="ik ik-edit-1"></i> Edit</span>
+											<span class="badge badge-pill badge-success"><i class="ik ik-edit"></i> Edit</span>
 											</a>
 										</div>
 									</div>
