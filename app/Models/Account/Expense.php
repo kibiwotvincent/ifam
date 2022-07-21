@@ -33,4 +33,34 @@ class Expense extends Model
         'deleted_at' => 'datetime',
     ];
 	
+	/**
+	 * Query scope to only include expenses incurred after or on a particular date.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeFrom($query, $dateIncurred = null)
+	{
+		if($dateIncurred !== null) {
+			return $query->where('date_incurred', '>=', $dateIncurred);
+		}
+		
+		return $query;
+	}
+
+	/**
+	 * Query scope to only include expenses incurred before or on a particular date.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeTo($query, $dateIncurred = null)
+	{
+		if($dateIncurred !== null) {
+			return $query->where('date_incurred', '<=', $dateIncurred);
+		}
+		
+		return $query;
+	}
+	
 }

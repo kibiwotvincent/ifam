@@ -74,6 +74,7 @@ Route::get('/farms/add', [FarmController::class, 'create'])->middleware('auth')-
 Route::post('/farms/add', [FarmController::class, 'store'])->middleware('auth');
 Route::get('/farms/{farm_id}', [FarmController::class, 'view'])->middleware('auth')->name('view_farm');
 Route::get('/farms/{farm_id}/report', [FarmController::class, 'report'])->middleware('auth')->name('farm.report');
+Route::post('/farms/{farm_id}/report', [FarmController::class, 'farm_report'])->middleware('auth');
 Route::get('/farms/{farm_id}/{department_id}', [FarmController::class, 'view_department'])->middleware('auth')->name('view_department');
 Route::get('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->middleware('auth')->name('add_season');
 Route::post('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'store'])->middleware('auth');

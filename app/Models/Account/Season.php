@@ -123,24 +123,81 @@ class Season extends Model
 	/**
      * total sales of the season
      */
-	public function total_sales()
+	public function total_sales($from = null, $to = null)
     {
-        return $this->sales()->paid()->sum('amount_paid');
+        $sales = $this->sales()->paid();
+		
+		if($from != null) {
+			$sales->from($from);
+		}
+		
+		if($to != null) {
+			$sales->to($to);
+		}
+		
+		return $sales->sum('amount_paid');
     }
 	
 	/**
      * total expenses of the season
      */
-	public function total_expenses()
+	public function total_expenses($from = null, $to = null)
     {
-		return $this->expenses->sum('amount');
+		$expenses = $this->expenses();
+		
+		if($from != null) {
+			$expenses->from($from);
+		}
+		
+		if($to != null) {
+			$expenses->to($to);
+		}
+		
+		return $expenses->sum('amount');
 	}
 	
 	/**
      * total profits of the season
      */
-	public function total_profits()
+	public function total_profits($from = null, $to = null)
     {
-		return $this->total_sales() - $this->total_expenses();
+		return $this->total_sales($from, $to) - $this->total_expenses($from, $to);
+	}
+	
+	/**
+	 * Query scope to only include seasons that belong to a particular department.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeDepartment($query, $departmentID)
+	{
+		if($departmentID !== null) {
+			return $query->where('farm_department_id', $departmentID);
+		}
+		
+		return $query;
+	}
+	
+	/**
+	 * Query scope to only include seasons that belong to a particular child category.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeChildCategories($query, $childCategories)
+	{
+		if($childCategories !== null) {
+			
+			$query->where('child_category_id', $childCategories[0]);
+			unset($childCategories[0]);
+			
+			foreach($childCategories as $childCategoryID) {
+				$query->orWhere('child_category_id', $childCategoryID);
+			}
+			return $query;
+		}
+		
+		return $query;
 	}
 }

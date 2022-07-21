@@ -29,8 +29,8 @@ class MetaData extends Component
 		$sales = 0;
 		
 		foreach($seasons as $season) {
-			$expenses += $season->expenses->sum('amount');
-			$sales += $season->sales()->paid()->sum('amount_paid');
+			$expenses += $season->total_expenses();
+			$sales += $season->total_sales();
 		}
         
 		$this->expenses = number_format($expenses, 2);

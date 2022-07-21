@@ -23,8 +23,14 @@ $(function () {
 		
 		ajaxPost(formName, formData);
 	});
+	
+	$('form.ajax-get-report').submit(function (e) {
+		e.preventDefault();
+		let id = $(this).attr('id');
+		ajaxPost('#'+id, null, "html");
+	});
 
-	function ajaxPost(formName, formData = null)
+	function ajaxPost(formName, formData = null, dataType = "json")
 	{
 		commandButton = formName+"_submit";
 		commandButtonText = $(commandButton).html();
@@ -33,7 +39,7 @@ $(function () {
 		{
 			type: "POST",
 			url: $(formName).attr("action"),
-			dataType: "json",
+			dataType: dataType,
 			beforeSend: function(){
 				$(commandButton).attr("disabled","disabled");
 				$(formName+"_feedback").addClass("d-none");
@@ -45,16 +51,25 @@ $(function () {
 				return;
 			},
 			success: function(response) {
+				if(dataType == "html") {
+					$(formName+"_feedback").html(response).removeClass("d-none");
+					return;
+				}
+				
 				let message = "<div class=\"alert alert-success role=\"alert\">"+response.message+"</div>";
 				$(formName+"_feedback").html(message).removeClass("d-none");
 				
 				let redirectUrl = $('form'+formName+' input[name="_redirect"]').val();
-				if(typeof redirectUrl !== 'undefined' && redirectUrl != "")
-				{
+				if(typeof redirectUrl !== 'undefined' && redirectUrl != "") {
 					window.location = redirectUrl;
 				}
 			},
 			error: function(response) {
+				console.log(response);
+				if(dataType == "html") {
+					$(formName+"_feedback").html(response).removeClass("d-none");
+					return;
+				}
 				
 				let jsonResponse = response.responseJSON;
 				

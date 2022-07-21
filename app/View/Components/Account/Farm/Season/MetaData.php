@@ -21,8 +21,8 @@ class MetaData extends Component
     {
 		$season = Season::find($request->season_id);
 		
-		$expenses = $season->expenses->sum('amount');
-		$sales = $season->sales()->paid()->sum('amount_paid');
+		$expenses = $season->total_expenses();
+		$sales = $season->total_sales();
         
 		$this->expenses = number_format($expenses, 2);
         $this->sales = number_format($sales, 2);

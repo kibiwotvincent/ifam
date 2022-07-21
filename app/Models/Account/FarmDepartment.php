@@ -4,7 +4,6 @@ namespace App\Models\Account;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 
 class FarmDepartment extends Model
 {
@@ -76,14 +75,5 @@ class FarmDepartment extends Model
 	public function profits()
     {
 		return $this->sales() - $this->expenses();
-	}
-	
-	/**
-     * get department background color
-     */
-	public function color()
-    {
-		$colors = Arr::shuffle(['light', 'dark', 'info', 'warning', 'success', 'secondary', 'primary']);
-		return $colors[0];
 	}
 }

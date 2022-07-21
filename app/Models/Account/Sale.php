@@ -49,4 +49,34 @@ class Sale extends Model
 		return $query->where('status', "paid");
 	}
 	
+	/**
+	 * Query scope to only include sales made after or on a particular date.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeFrom($query, $saleDate = null)
+	{
+		if($saleDate !== null) {
+			return $query->where('sale_date', '>=', $saleDate);
+		}
+		
+		return $query;
+	}
+
+	/**
+	 * Query scope to only include sales made before or on a particular date.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder  $query
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	public function scopeTo($query, $saleDate = null)
+	{
+		if($saleDate !== null) {
+			return $query->where('sale_date', '<=', $saleDate);
+		}
+		
+		return $query;
+	}
+
 }

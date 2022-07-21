@@ -1,0 +1,1 @@
+<div class="alert alert-{{ $type }} mt-3 mx-3" role="alert">{{ $message }}</div>
