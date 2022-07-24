@@ -45,8 +45,9 @@ class AddSeason extends Component
 		//get all child sub categories belonging to all child categories of the department's category
 		$childCategoryIDs = $this->child_categories->pluck(['id']);
 		
-		$this->child_sub_categories = ChildSubCategory::whereIn('parent_category_id', $childCategoryIDs)->orderBy('name', 'asc')->get();
-    }
+		$this->child_sub_categories = ChildSubCategory::whereIn('parent_category_id', $childCategoryIDs)->orderBy('name', 'asc')->get()->groupBy('parent_category_id');
+		//print_r($this->child_sub_categories[1]);die();
+	}
 	
     /**
      * Get the view / contents that represents the component.

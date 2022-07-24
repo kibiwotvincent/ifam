@@ -10,6 +10,7 @@ use App\Http\Services\Account\FarmService;
 use App\Models\Account\Group;
 use App\Models\Account\Farm;
 use App\Models\Account\Season;
+use App\Models\Account\FarmDepartment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -42,6 +43,7 @@ class FarmController extends Controller
     public function create(Request $request)
     {
 		$farmCategories = FarmCategory::orderBy('name', 'asc')->get();
+		
 		if($request->routeIs('group.*')) {
 			$view = 'account.group.add-farm';
 			$data['group'] = Group::find($request->group_id);
@@ -49,6 +51,7 @@ class FarmController extends Controller
 		else {
 			$view = 'account.add-farm';
 		}
+		
 		$data['farm_categories'] = $farmCategories;
 		
         return view($view, $data);
@@ -120,13 +123,12 @@ class FarmController extends Controller
     public function report(Request $request)
     {
 		$farm = Farm::find($request->farm_id);
-		$departments = FarmCategory::orderBy('name', 'asc')->get();
-		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
 		
-		$viewData = ['farm' => $farm, 'seasons' => $farm->seasons(), 'departments' => $departments, 'child_categories' => $childCategories,
-		'from' => null, 'to' => null];
+		$data = ['farm' => $farm, 'seasons' => $farm->seasons(), 'from' => null, 'to' => null];
 		
-        return view('account.farm_report', $viewData);
+		$view = $request->routeIs('group.*') ? 'account.group.farm_report' : 'account.farm_report';
+		
+        return view($view, $data);
     }
 
     /**
@@ -188,16 +190,15 @@ class FarmController extends Controller
 		}
 		
 		$farm = Farm::find($request->farm_id);
-		$departments = FarmCategory::orderBy('name', 'asc')->get();
 		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
-		
 		
 		//get expenses and sales dated between from and to dates
 		$viewData = ['farm' => $farm, 'seasons' => $farm->seasons($request->department, $request->categories), 
-		'departments' => $departments, 'child_categories' => $childCategories, 'from' => $request->from, 'to' => $request->to];
+		'child_categories' => $childCategories, 'from' => $request->from, 'to' => $request->to];
 		
 		return response()
 			->view('components.account.farm.farm_report_table', $viewData, 200)
 			->header('Content-Type', "text/html; charset=UTF-8");
     }
+	
 }

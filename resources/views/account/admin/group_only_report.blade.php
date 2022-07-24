@@ -23,7 +23,7 @@
 								<a href="{{ route('admin.groups') }}">Groups</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="{{ route('admin.group_report', $group['id']) }}">{{ $group['name'] }}</a>
+								<a href="{{ route('admin.group', $group['id']) }}">{{ $group['name'] }}</a>
 							</li>
 							<li class="breadcrumb-item active" aria-current="page">Group Only Report</li>
 						</ol>
@@ -36,68 +36,66 @@
 			<div class="col-md-12">
 				<div class="card table-card">
 					<div class="card-header">
-						<form class="forms-sample ajax" id="add_farm_form" action="{{ route('add_farm') }}" method="post">
+						<form class="ajax-get-report" id="view_group_only_report_form" action="{{ route('fetch_group_only_report', $group['id']) }}" method="post">
 						@csrf
-						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
-							<select style="min-width: 180px;" class="form-control select2" id="farm-category" name="category" required>
-								<option value="">All Departments</option>
-								@foreach($departments as $row)
-								<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
-								@endforeach
-							</select>
-						</div>
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
-							<div class="dropdown d-inline-block">
-								<a style="padding: 8px 10px 10px 12px; border-radius: 4px;" class="border dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="text-muted font-weight-bold">Child Categories <i class="ik ik-chevron-down"></i></span>
-								</a>
-								<div class="border-checkbox-section dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-									@foreach($child_categories as $row)
-									<div class="border-checkbox-group border-checkbox-group-success d-block">
-										<input class="border-checkbox" type="checkbox" id="child-category-{{ $row['id'] }}" name="departments[]" value="{{ $row['id'] }}">
-										<label class="border-checkbox-label" for="child-category-{{ $row['id'] }}">{{ $row['name'] }}</label>
-									</div>
+							<div class="formgroup">
+								<label for="from">From</label>
+								<input type="date" style="min-width: 180px;" class="form-control" id="from" name="from" />
+								<p class="d-none error" for="from"></p>
+							</div>
+						</div>
+						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
+							<div class="formgroup">
+								<label for="to">To</label>
+								<input type="date" style="min-width: 180px;" class="form-control" id="to" name="to" />
+								<p class="d-none error" for="to"></p>
+							</div>
+						</div>
+						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
+							<div class="formgroup">
+								<label class="d-block" for="farm-department">Department</label>
+								<select style="min-width: 180px;" class="form-control select2 department-selector" id="farm-department" name="department">
+									<option value="">All Departments</option>
+									@foreach($departments as $department)
+									<option value="{{ $department['id'] }}">{{ $department['name'] }}</option>
 									@endforeach
-								</div>
+								</select>
+								<p class="d-none error" for="department"></p>
 							</div>
 						</div>
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
-							<select style="min-width: 180px;" class="form-control select2" id="year" name="category" required>
-								<option value="">Select Year</option>
-								@foreach([2020, 2021, 2022, 2023, 2024, 2025] as $year)
-								<option value="{{ $year }}">{{ $year }}</option>
-								@endforeach
-							</select>
+							<div class="formgroup">
+								<label class="d-block pb-1">Categories</label>
+								<div class="dropdown d-inline-block">
+									<a style="padding: 8px 10px 10px 12px; border-radius: 4px;" class="border dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<span>Categories <i class="ik ik-chevron-down"></i></span>
+									</a>
+									<div class="border-checkbox-section dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
+										@foreach($categories as $row)
+										<div class="border-checkbox-group border-checkbox-group-success checkbox-panels checkbox-panel-{{ $row['parent_category_id'] }} d-block">
+											<input class="border-checkbox departments" data-department-id="{{ $row['parent_category_id'] }}" type="checkbox" id="category-{{ $row['id'] }}" name="categories[]" value="{{ $row['id'] }}" checked="checked" >
+											<label class="border-checkbox-label" for="category-{{ $row['id'] }}">{{ $row['name'] }}</label>
+										</div>
+										@endforeach
+									</div>
+								</div>
+								<p class="d-none error" for="categories"></p>
+							</div>
 						</div>
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
-							<select style="min-width: 180px;" class="form-control select2" id="month" name="category" required>
-								<option value="">Select Month</option>
-								@foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-								'September', 'October', 'November', 'December'] as $month)
-								<option value="{{ $month }}">{{ $month }}</option>
-								@endforeach
-							</select>
-						</div>
-						
-						<div class="card-header-right">
-							<div class="dropdown d-inline-block mt-2">
-								<a style="padding: 10px 15px; border-radius: 4px;" class="border-0 dropdown-toggle bg-success text-white" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Download <i class="ik ik-chevron-down"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-									<a class="dropdown-item" href="#">Excel</a>
-									<a class="dropdown-item" href="#">PDF</a>
-								</div>
-							</div>
+							<label>&nbsp;</label>
+							<button type="submit" id="view_group_only_report_form_submit" style="padding: 8px 15px 8.5px 15px; border-radius: 4px;" class="border-0 bg-success text-white">
+							Submit
+							</button>
 						</div>
 						</form>
 					</div>
-					<div class="card-block">
-						<div class="alert alert-info mt-3 mx-3" role="alert">No current active season!</div>
-						<x-account.group.group_only_report_table :seasons=$seasons />
+					<div class="card-block" id="view_group_only_report_form_feedback">
+						<x-account.group.group_only_report_table :seasons=$seasons :from=$from :to=$to />
 					</div>
 				</div>
 			</div>

@@ -18,9 +18,9 @@
 			<div class="row mb-1">
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="crop">Select Crop * </label>
-						<select class="form-control select2" id="crop" name="child_category_id">
-							<option value="">Select crop</option>
+						<label for="crop">Select Category * </label>
+						<select class="form-control select2 category-selector" id="crop" name="child_category_id">
+							<option value="">Select category</option>
 							@foreach($child_categories as $row)
 							<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
 							@endforeach
@@ -30,14 +30,27 @@
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="variety">Select Variety </label>
-						<select class="form-control select2" id="variety" name="child_sub_category_id">
-							<option value="">Select variety</option>
-							@foreach($child_sub_categories as $row)
-							<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
-							@endforeach
+						<label for="variety">Select Sub Category </label>
+						<select class="form-control select2 sub-category-selector" id="variety" name="child_sub_category_id">
+							<option value="">Select sub category</option>
+							<!-- other options to be populated once category has been selected -->
 						</select>
 						<p class="d-none error" for="child_sub_category_id"></p>
+						
+						<!-- pre generated sub categories (to be used to populate sub category options) -->
+						<!-- when no category has been selected -->
+						<div class="d-none" id="empty-sub-categories">
+							<option value="">Select sub category</option>
+						</div>
+						@foreach($child_sub_categories as $childCategoryID => $group)
+							<div class="d-none" id="sub-categories-for-{{ $childCategoryID }}">
+								<option value="">Select sub category</option>
+								@foreach($group as $row)
+								<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
+								@endforeach
+							</div>
+						@endforeach
+						<!-- end pre generated sub categories -->
 					</div>
 				</div>
 				<div class="col-md-4">

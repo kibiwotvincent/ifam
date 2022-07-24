@@ -76,17 +76,18 @@ class GroupController extends Controller
     public function group_report(Request $request)
     {
 		$group = Group::find($request->group_id);
-		$departments = FarmCategory::orderBy('name', 'asc')->get();
-		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
+		$departments =  $group->departments();
+		$categories =  $group->categories();
 		
 		$groupStats = $this->groupService->groupStats($group);
+		$isAdmin = $request->routeIs('admin.*') ? true : false;
 		
-        return view('account.admin.group_report', ['group' => $group, 'departments' => $departments, 'child_categories' => $childCategories, 
-		'group_stats' => $groupStats]);
+        return view('account.admin.group_report', ['group' => $group, 'departments' => $departments, 'categories' => $categories, 
+		'group_stats' => $groupStats, 'is_admin' => $isAdmin]);
     }
 	
 	/**
-     * Display groups report view.
+     * Display group member report view.
      *
      * @return \Illuminate\View\View
      */
@@ -103,27 +104,25 @@ class GroupController extends Controller
 		}
 		
 		$departments = FarmCategory::orderBy('name', 'asc')->get();
-		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
+		$categories = ChildCategory::orderBy('name', 'asc')->get();
 		
-		$groupsStats = $this->groupService->groupsStats();
-		
-        return view('account.admin.group_member_report', ['group' => $group, 'member' => $member, 'merged_seasons' => $groupMemberMergedSeasons, 'departments' => $departments, 'child_categories' => $childCategories]);
+        return view('account.admin.group_member_report', ['group' => $group, 'member' => $member, 'merged_seasons' => $groupMemberMergedSeasons, 'departments' => $departments, 'categories' => $categories]);
     }
 	
 	/**
-     * Display groups report view.
+     * Display group only report view.
      *
      * @return \Illuminate\View\View
      */
     public function group_only_report(Request $request)
-    {
-		$departments = FarmCategory::orderBy('name', 'asc')->get();
-		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
-		
+    {	
 		$group = Group::find($request->group_id);
 		$seasons = $group->seasons(false);
 		
-        return view('account.admin.group_only_report', ['group' => $group, 'seasons' => $seasons, 'departments' => $departments, 'child_categories' => $childCategories]);
+		$departments =  $group->departments();
+		$categories =  $group->categories();
+		
+        return view('account.admin.group_only_report', ['group' => $group, 'seasons' => $seasons, 'departments' => $departments, 'categories' => $categories, 'from' => null, 'to' => null]);
     }
 	
 	/**

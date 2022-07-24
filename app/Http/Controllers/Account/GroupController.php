@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Account\Admin\FarmCategory;
 use App\Models\Account\Admin\ChildCategory;
+use Illuminate\Support\Facades\Validator;
+use \Carbon\Carbon;
 
 class GroupController extends Controller
 {
@@ -91,13 +93,30 @@ class GroupController extends Controller
     public function report(Request $request)
     {
 		$group = Group::find($request->id);
-		$departments = FarmCategory::orderBy('name', 'asc')->get();
-		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
+		
+		$departments =  $group->departments();
+		$categories =  $group->categories();
 		
 		$groupStats = $this->groupService->groupStats($group);
+		$isAdmin = $request->routeIs('admin.*') ? true : false;
 		
-        return view('account.group.report', ['group' => $group, 'departments' => $departments, 'child_categories' => $childCategories, 
-		'group_stats' => $groupStats]);
+        return view('account.group.report', ['group' => $group, 'departments' => $departments, 'categories' => $categories, 'group_stats' => $groupStats, 'is_admin' => $isAdmin]);
+    }
+	
+	/**
+     * Display group only report view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function group_only_report(Request $request)
+    {	
+		$group = Group::find($request->id);
+		$seasons = $group->seasons(false);
+		
+		$departments =  $group->departments();
+		$categories =  $group->categories();
+		
+        return view('account.group.group_only_report', ['group' => $group, 'seasons' => $seasons, 'departments' => $departments, 'categories' => $categories, 'from' => null, 'to' => null]);
     }
 	
     /**
@@ -112,5 +131,118 @@ class GroupController extends Controller
 		return Response::json(['message' => "Group created successfully."], 200);
     }
 
+	/**
+     * Display group report.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function group_report(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+			'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date'],
+            'department' => ['nullable', 'numeric'],
+            'categories' => ['nullable', 'array'],
+            'is_admin' => ['required', 'numeric'],
+		]);
+		
+		$validator->after(function ($validator) use ($request) {
+			if ($request->from != null && $request->to != null) {
+				$from = new Carbon($request->from);
+				$to = new Carbon($request->to);
+				
+				//extra validate `from` date only if `to` date exists
+				//`from` date must be before or equals to `to` date
+				if($from->gt($to)) {
+					$validator->errors()->add(
+						'from', "The from must be a date before or equal to to."
+					);
+				}
+				
+				//extra validate `to` date only if `from` date exists
+				//`to` date must come after or equals to `from` date
+				if($to->lt($from)) {
+					$validator->errors()->add(
+						'from', "The to must be a date after or equal to from."
+					);
+				}
+			}
+		});
+		
+		if ($validator->fails()) {
+			//get the first error message
+			$errorMessage = $validator->errors()->all()[0];
+			
+			return response()
+					->view('components.common.alert', ['type' => "danger", 'message' => $errorMessage], 200)
+					->header('Content-Type', "text/html; charset=UTF-8");
+		}
+		
+		$group = Group::find($request->id);
+		
+		$groupStats = $this->groupService->groupStats($group, $request->department, $request->categories, $request->from, $request->to);
+		
+		$viewData = ['group' => $group, 'groupStats' => $groupStats, 'isAdmin' => (bool) $request->is_admin];
+		
+		return response()
+			->view('components.account.group.group_report_table', $viewData, 200)
+			->header('Content-Type', "text/html; charset=UTF-8");
+    }
 	
+	
+	/**
+     * Display group only report - aggregates group data without merged seasons.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function fetch_group_only_report(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+			'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date'],
+            'department' => ['nullable', 'numeric'],
+            'categories' => ['nullable', 'array'],
+		]);
+		
+		$validator->after(function ($validator) use ($request) {
+			if ($request->from != null && $request->to != null) {
+				$from = new Carbon($request->from);
+				$to = new Carbon($request->to);
+				
+				//extra validate `from` date only if `to` date exists
+				//`from` date must be before or equals to `to` date
+				if($from->gt($to)) {
+					$validator->errors()->add(
+						'from', "The from must be a date before or equal to to."
+					);
+				}
+				
+				//extra validate `to` date only if `from` date exists
+				//`to` date must come after or equals to `from` date
+				if($to->lt($from)) {
+					$validator->errors()->add(
+						'from', "The to must be a date after or equal to from."
+					);
+				}
+			}
+		});
+		
+		if ($validator->fails()) {
+			//get the first error message
+			$errorMessage = $validator->errors()->all()[0];
+			
+			return response()
+					->view('components.common.alert', ['type' => "danger", 'message' => $errorMessage], 200)
+					->header('Content-Type', "text/html; charset=UTF-8");
+		}
+		
+		$group = Group::find($request->id);
+		$seasons = $group->seasons(false, $request->department, $request->categories);
+		
+		$viewData = ['seasons' => $seasons, 'from' => $request->from, 'to' => $request->to];
+		
+		return response()
+			->view('components.account.group.group_only_report_table', $viewData, 200)
+			->header('Content-Type', "text/html; charset=UTF-8");
+    }
 }

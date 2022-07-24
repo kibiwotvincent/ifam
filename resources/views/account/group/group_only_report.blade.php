@@ -6,7 +6,7 @@
 					<div class="page-header-title">
 						<i class="ik ik-users bg-success"></i>
 						<div class="d-inline">
-							<h5 class="pt-2">Group Member Report</h5>
+							<h5 class="pt-2">Group Only Report</h5>
 						</div>
 					</div>
 				</div>
@@ -16,19 +16,13 @@
 							<li class="breadcrumb-item">
 								<a href="{{ route('dashboard') }}"><i class="ik ik-home"></i></a>
 							</li>
-							<li class="breadcrumb-item">
-								<a href="{{ route('dashboard') }}">Admin</a>
+								<li class="breadcrumb-item">
+								<a href="{{ route('groups') }}">Groups</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="{{ route('admin.groups') }}">Groups</a>
+								<a href="{{ route('view_group', $group['id']) }}">{{ $group['name'] }}</a>
 							</li>
-							<li class="breadcrumb-item">
-								<a href="{{ route('admin.group_report', $group['id']) }}">{{ $group['name'] }}</a>
-							</li>
-							<li class="breadcrumb-item">
-								<a href="{{ url()->previous() }}">{{ $member->user['name'] }}</a>
-							</li>
-							<li class="breadcrumb-item active" aria-current="page">Group Member Report</li>
+							<li class="breadcrumb-item active" aria-current="page">Group Only Report</li>
 						</ol>
 					</nav>
 				</div>
@@ -39,7 +33,7 @@
 			<div class="col-md-12">
 				<div class="card table-card">
 					<div class="card-header">
-						<form class="ajax-get-report" id="view_group_member_report_form" action="{{ route('fetch_group_member_report', [$group['id'], $member['id']]) }}" method="post">
+						<form class="ajax-get-report" id="view_group_only_report_form" action="{{ route('fetch_group_only_report', $group['id']) }}" method="post">
 						@csrf
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
@@ -91,15 +85,14 @@
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
 							<label>&nbsp;</label>
-							<button type="submit" id="view_group_member_report_form_submit" style="padding: 8px 15px 8.5px 15px; border-radius: 4px;" class="border-0 bg-success text-white">
+							<button type="submit" id="view_group_only_report_form_submit" style="padding: 8px 15px 8.5px 15px; border-radius: 4px;" class="border-0 bg-success text-white">
 							Submit
 							</button>
 						</div>
 						</form>
 					</div>
-					
-					<div class="card-block" id="view_group_member_report_form_feedback">
-						<x-account.group.group_member_report_table :mergedSeasons=$merged_seasons />
+					<div class="card-block" id="view_group_only_report_form_feedback">
+						<x-account.group.group_only_report_table :seasons=$seasons :from=$from :to=$to />
 					</div>
 				</div>
 			</div>

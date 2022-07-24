@@ -1,5 +1,5 @@
 @if(count($seasons) == 0)
-<div class="alert alert-info mt-3 mx-3" role="alert">There are no seasons to display!</div>
+<div class="alert alert-info mt-3 mx-3" role="alert">Nothing to display!</div>
 @else
 <div class="row">
 	<div class="col my-3 mr-2 text-right">

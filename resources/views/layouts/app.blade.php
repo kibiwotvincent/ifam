@@ -8,6 +8,7 @@
         <meta name="keywords" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="csrf-token" content="{{ csrf_token() }}">
+		<meta name="site-url" content="{{ url('/') }}">
         
         <link rel="icon" href="/assets/img/ifam-square.png" type="image/png" />
 
@@ -59,8 +60,9 @@
             </div>
         </div>
 		
-		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/assets/src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+		<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script>window.jQuery || document.write('<script src="/assets/src/js/vendor/jquery-3.3.1.min.js"><\/script>')</script>-->
+        <script src="/assets/src/js/vendor/jquery-3.3.1.min.js"></script>
         <script src="/assets/plugins/popper.js/dist/umd/popper.min.js"></script>
         <script src="/assets/plugins/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="/assets/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
@@ -79,11 +81,11 @@
         <script src="/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
         <script src="/assets/plugins/jquery.repeater/jquery.repeater.min.js"></script>
 		<script src="/assets/plugins/mohithg-switchery/dist/switchery.min.js"></script>
-		<script src="/assets/plugins/chartist/dist/chartist.min.js"></script>
-        <script src="/assets/js/chart-chartist.js"></script>
+		<!--<script src="/assets/plugins/chartist/dist/chartist.min.js"></script> 
+        <script src="/assets/js/chart-chartist.js"></script>-->
         <script src="/assets/js/tables.js"></script>
-        <script src="/assets/js/widgets.js"></script>
-        <script src="/assets/js/charts.js"></script>
+        <!--<script src="/assets/js/widgets.js"></script>
+        <script src="/assets/js/charts.js"></script> -->
 		<script src="/assets/plugins/owl.carousel/dist/owl.carousel.min.js"></script>
 		<script src="/assets/js/carousel.js"></script>
 		<script src="/assets/js/form-advanced.js"></script>

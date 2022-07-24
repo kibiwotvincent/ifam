@@ -55,14 +55,12 @@ class Group extends Model
 	}
 	
 	/*get group seasons, this includes merged seasons from members by default*/
-	public function seasons($includeMergedSeasons = true) {
+	public function seasons($includeMergedSeasons = true, $department = null, $categories = null) {
 		$seasons = collect([]);
 		//get group farms' seasons
-		foreach($this->farms as $groupFarm) {
-			foreach($groupFarm->departments as $farmDepartment) {
-				foreach($farmDepartment->seasons as $season) {
-					$seasons->push($season);
-				}
+		foreach($this->farms as $farm) {
+			foreach($farm->seasons($department, $categories) as $season) {
+				$seasons->push($season);
 			}
 		}
 		
@@ -72,6 +70,7 @@ class Group extends Model
 			
 			//push to seasons collection
 			foreach($mergedSeasons as $mergedSeason) {
+				//$season = $mergedSeason->season()->department($department)->childCategories($categories)->first();
 				$seasons->push($mergedSeason->season);
 			}
 		}
@@ -86,5 +85,29 @@ class Group extends Model
 			$interests[$season->child_category_id] = $season->child_category['name'];
 		}
 		return $interests;
+	}
+	
+	//returns group unique departments - from farm category table
+	//basically go through all seasons belonging to the group including merged seasons 
+	//then return unique farm categories as group departments
+	public function departments() {
+		$departments = collect([]);
+		foreach($this->seasons() as $season) {
+			$departments->push($season->department->category);				
+		}
+		
+		return $departments->unique('id');
+	}
+	
+	//return group unique categories - from child category table
+	public function categories() {
+		$categories = collect([]);
+		foreach($this->departments() as $category) {
+			foreach($category->child_categories as $row) {
+				$categories->push($row);				
+			}
+		}
+		
+		return $categories->unique('id');
 	}
 }

@@ -51,7 +51,7 @@
 											</a>
 										</div>
 										<div class="col-1 text-right">
-											<a href="{{ route('farm.report', $row['id']) }}" title="Farm Report">
+											<a href="{{ route('group.farm_report', [$row->farmable['id'], $row['id']]) }}" title="Farm Report">
 												<span classs="badge badge-pil badge-light"><i class="ik ik-bar-chart-2"></i></span>
 											</a>
 										</div>

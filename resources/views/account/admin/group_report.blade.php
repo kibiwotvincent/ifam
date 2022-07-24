@@ -36,68 +36,66 @@
 			<div class="col-md-12">
 				<div class="card table-card">
 					<div class="card-header">
-						<form class="forms-sample ajax" id="add_farm_form" action="{{ route('add_farm') }}" method="post">
+						<form class="ajax-get-report" id="view_group_report_form" action="{{ route('group.report', $group['id']) }}" method="post">
 						@csrf
-						
+						<input type="hidden" name="is_admin" value="{{ (int) $is_admin }}" />
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
 							<div class="formgroup">
-								<label>From</label>
-								<input type="date" style="min-width: 180px;" class="form-control" placeholder="From..." id="year" name="from" required />
+								<label for="from">From</label>
+								<input type="date" style="min-width: 180px;" class="form-control" id="from" name="from" />
+								<p class="d-none error" for="from"></p>
 							</div>
 						</div>
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
 							<div class="formgroup">
-								<label>To</label>
-								<input type="date" style="min-width: 180px;" class="form-control" placeholder="From..." id="year" name="from" required />
+								<label for="to">To</label>
+								<input type="date" style="min-width: 180px;" class="form-control" id="to" name="to" />
+								<p class="d-none error" for="to"></p>
 							</div>
 						</div>
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
 							<div class="formgroup">
-								<label class="d-block">Department</label>
-								<select style="min-width: 180px;" class="form-control select2" id="farm-category" name="category" required>
+								<label class="d-block" for="farm-department">Department</label>
+								<select style="min-width: 180px;" class="form-control select2 department-selector" id="farm-department" name="department">
 									<option value="">All Departments</option>
-									@foreach($departments as $row)
-									<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
+									@foreach($departments as $department)
+									<option value="{{ $department['id'] }}">{{ $department['name'] }}</option>
 									@endforeach
 								</select>
+								<p class="d-none error" for="department"></p>
 							</div>
 						</div>
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
 							<div class="formgroup">
-								<label class="d-block pb-1">Child Categories</label>
+								<label class="d-block pb-1">Categories</label>
 								<div class="dropdown d-inline-block">
 									<a style="padding: 8px 10px 10px 12px; border-radius: 4px;" class="border dropdown-toggle" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<span>Child Categories <i class="ik ik-chevron-down"></i></span>
+									<span>Categories <i class="ik ik-chevron-down"></i></span>
 									</a>
 									<div class="border-checkbox-section dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-										@foreach($child_categories as $row)
-										<div class="border-checkbox-group border-checkbox-group-success d-block">
-											<input class="border-checkbox" type="checkbox" id="child-category-{{ $row['id'] }}" name="departments[]" value="{{ $row['id'] }}">
-											<label class="border-checkbox-label" for="child-category-{{ $row['id'] }}">{{ $row['name'] }}</label>
+										@foreach($categories as $row)
+										<div class="border-checkbox-group border-checkbox-group-success checkbox-panels checkbox-panel-{{ $row['parent_category_id'] }} d-block">
+											<input class="border-checkbox departments" data-department-id="{{ $row['parent_category_id'] }}" type="checkbox" id="category-{{ $row['id'] }}" name="categories[]" value="{{ $row['id'] }}" checked="checked" >
+											<label class="border-checkbox-label" for="category-{{ $row['id'] }}">{{ $row['name'] }}</label>
 										</div>
 										@endforeach
 									</div>
 								</div>
+								<p class="d-none error" for="categories"></p>
 							</div>
 						</div>
 						
-						<div class="card-header-right">
-							<div class="dropdown d-inline-block mt-2">
-								<a style="padding: 10px 15px; border-radius: 4px;" class="border-0 dropdown-toggle bg-success text-white" href="#" id="moreDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Download <i class="ik ik-chevron-down"></i>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
-									<a class="dropdown-item" href="#">Excel</a>
-									<a class="dropdown-item" href="#">PDF</a>
-								</div>
-							</div>
+						<div class="d-inline-block mr-2 mb-3 mb-lg-0">
+							<label>&nbsp;</label>
+							<button type="submit" id="view_group_report_form_submit" style="padding: 8px 15px 8.5px 15px; border-radius: 4px;" class="border-0 bg-success text-white">
+							Submit
+							</button>
 						</div>
 						</form>
 					</div>
-					<div class="card-block">
-						<div class="alert alert-info mt-3 mx-3" role="alert">No current active season!</div>
-						<x-account.admin.group_report_table :group=$group :groupStats=$group_stats />
+					<div class="card-block" id="view_group_report_form_feedback">
+						<x-account.group.group_report_table :group=$group :groupStats=$group_stats :isAdmin=$is_admin />
 					</div>
 				</div>
 			</div>

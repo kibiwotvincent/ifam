@@ -79,8 +79,11 @@ class Farm extends Model
 		$seasons = collect([]);
 		//get group farms' seasons
 		foreach($this->departments as $farmDepartment) {
-			$seasonss = $farmDepartment->seasons()->department($department)->childCategories($categories)->get();
-			foreach($seasonss as $season) {
+			$filteredSeasons = $farmDepartment->seasons()
+								->department($department)	/*get seasons from specified department*/
+								->childCategories($categories)	/*get seasons from specified categories*/
+								->get();
+			foreach($filteredSeasons as $season) {
 				$seasons->push($season);
 			}
 		}

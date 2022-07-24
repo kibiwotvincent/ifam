@@ -63,12 +63,12 @@ class GroupService extends BaseService
 		return $groupsStats;
 	}
 	
-	public function groupStats(Group $group){
+	public function groupStats(Group $group, $department = null, $categories = null, $from = null, $to = null){
 		$groupStats = [];
 		$farmers = [];
 		
 		//get group's seasons (seasons belonging to group farms)
-		$groupSeasons = $group->seasons(false);
+		$groupSeasons = $group->seasons(false, $department, $categories);
 		$farmerType = "group";
 		$farmerID = $group['id'];
 		array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $group['name'], 'seasons' => $groupSeasons]);
@@ -78,11 +78,15 @@ class GroupService extends BaseService
 			$farmerType = "individual";
 			$farmerID = $groupMember['id'];
 			$mergedSeasons = $groupMember->merged_seasons;
-			$sns = [];
+			$memberSeasons = [];
 			foreach($mergedSeasons as $row) {
-				$seasons = array_push($sns, $row->season);
+				$season = $row->season()->department($department)->childCategories($categories)->get();
+				
+				if(! $season->isEmpty()) {
+					array_push($memberSeasons, $season[0]);
+				}
 			}
-			array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $groupMember->user['name'], 'seasons' => $sns]);
+			array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $groupMember->user['name'], 'seasons' => $memberSeasons]);
 		}
 		
 		//populate group stats from farmers array
@@ -93,12 +97,17 @@ class GroupService extends BaseService
 			$groupChildCategories = [];
 			$farmers = [];
 			foreach($farmer['seasons'] as $season){
-				$expenses += $season->total_expenses();
-				$sales += $season->total_sales();
+				$expenses += $season->total_expenses($from, $to);
+				$sales += $season->total_sales($from, $to);
 				$groupChildCategories[$season->child_category['name']] = $season->child_category['name'];
 			}
+			
+			if(empty($groupChildCategories)) { //this means the season has no data no need to proceed
+				continue;
+			}
+			
 			$profit = $sales - $expenses;
-			$groupChildCategoriesString = empty($groupChildCategories) ? "--" : implode(", ", $groupChildCategories);
+			$groupChildCategoriesString = implode(", ", $groupChildCategories);
 			
 			$farmerStats = ['farmer_type' => $farmer['farmer_type'], 'farmer_id' => $farmer['farmer_id'], 'farmer_name' => $farmer['farmer_name'], 'farmer_child_categories' => $groupChildCategoriesString, 'data' => ['expenses' => $expenses, 'sales' => $sales, 'profit' => $profit]];
 			array_push($groupStats, $farmerStats);

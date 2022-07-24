@@ -5,6 +5,7 @@ namespace App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Season extends Model
 {
@@ -173,7 +174,9 @@ class Season extends Model
 	public function scopeDepartment($query, $departmentID)
 	{
 		if($departmentID !== null) {
-			return $query->where('farm_department_id', $departmentID);
+			return $query->whereHas('department', function (Builder $query) use ($departmentID) {
+						$query->where('department_id', $departmentID);
+					});
 		}
 		
 		return $query;

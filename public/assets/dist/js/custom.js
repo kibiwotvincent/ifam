@@ -29,6 +29,64 @@ $(function () {
 		let id = $(this).attr('id');
 		ajaxPost('#'+id, null, "html");
 	});
+	
+	//add listener to department selector in farm report
+	$('.department-selector').change(function (e) {
+		e.preventDefault();
+		let departmentID = $(this).val();
+		
+		//go through all categories
+		//uncheck & hide categories that dont't belong to the selected department
+		//check & show all departments if department id is empty
+		
+		$(".departments").each(function() {
+			
+			let checkboxID = $(this).attr('id');
+			
+			if(departmentID == "") {
+				//show & check all categories
+				if( ! $("#"+checkboxID).is(':checked') ) {
+					$("#"+checkboxID).click();
+					$(".checkbox-panels").removeClass("d-none").addClass("d-block");
+				}
+			}
+			else {
+				let checkboxDepartmentID = $(this).attr('data-department-id');
+				
+				//hide all checkboxes
+				$(".checkbox-panels").removeClass("d-block").addClass("d-none");
+				//show only checkboxes belonging to selected department
+				$(".checkbox-panel-"+departmentID).removeClass("d-none").addClass("d-block");
+				
+				if(checkboxDepartmentID == departmentID) {
+					//check checkboxes that belong to the selected department
+					if( ! $("#"+checkboxID).is(':checked') ) {
+						$("#"+checkboxID).click();
+					}
+				}
+				else {
+					//uncheck all the other checkboxes if they are checked
+					if($("#"+checkboxID).is(':checked')) {
+						$("#"+checkboxID).click();
+					}
+				}
+			}
+		});
+	});
+	
+	//add listener to categories options in add season
+	$('.category-selector').change(function (e) {
+		e.preventDefault();
+		let categoryID = $(this).val();
+		
+		let subCategoryOptions = $("#empty-sub-categories").html();
+		
+		if(typeof $("#sub-categories-for-"+categoryID).html() !== "undefined") {
+			subCategoryOptions = $("#sub-categories-for-"+categoryID).html();
+		}
+		
+		$(".sub-category-selector").html(subCategoryOptions);
+	});
 
 	function ajaxPost(formName, formData = null, dataType = "json")
 	{
@@ -65,7 +123,7 @@ $(function () {
 				}
 			},
 			error: function(response) {
-				console.log(response);
+				//console.log(response);
 				if(dataType == "html") {
 					$(formName+"_feedback").html(response).removeClass("d-none");
 					return;
@@ -140,5 +198,4 @@ $(function () {
 			$(this).addClass('d-none').html("");
 		});
 	}
-
 });

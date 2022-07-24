@@ -69,7 +69,7 @@
 							@else
 							<div class="border-checkbox-group border-checkbox-group-success">
 								<input class="border-checkbox" type="checkbox" id="checkbox2" name="status" value="open">
-								<label class="border-checkbox-label" for="checkbox2">Open season</label>
+								<label class="border-checkbox-label" for="checkbox2">Re-open season</label>
 							</div>
 							@endif
 						</div>

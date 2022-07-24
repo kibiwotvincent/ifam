@@ -36,7 +36,7 @@
 					<h6 class="mt-2 font-weight-bold">Farm Departments</h6>
 				</div>
 				<div class="col-md-6 text-right">
-					<a href="{{ route('add_farm') }}" class="btn btn-success"><i class="ik ik-plus-circle"></i> Add New Farm</a>
+					<a href="{{ route('group.add_farm', $farm['farmable_id']) }}" class="btn btn-success"><i class="ik ik-plus-circle"></i> Add New Farm</a>
 				</div>
 			</div>
 		</div>
