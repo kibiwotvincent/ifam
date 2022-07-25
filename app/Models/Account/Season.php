@@ -191,14 +191,7 @@ class Season extends Model
 	public function scopeChildCategories($query, $childCategories)
 	{
 		if($childCategories !== null) {
-			
-			$query->where('child_category_id', $childCategories[0]);
-			unset($childCategories[0]);
-			
-			foreach($childCategories as $childCategoryID) {
-				$query->orWhere('child_category_id', $childCategoryID);
-			}
-			return $query;
+			return $query->whereIn('child_category_id', $childCategories);
 		}
 		
 		return $query;

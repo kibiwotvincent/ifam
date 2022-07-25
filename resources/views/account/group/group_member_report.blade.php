@@ -17,13 +17,10 @@
 								<a href="{{ route('dashboard') }}"><i class="ik ik-home"></i></a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="{{ route('dashboard') }}">Admin</a>
+								<a href="{{ route('groups') }}">Groups</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="{{ route('admin.groups') }}">Groups</a>
-							</li>
-							<li class="breadcrumb-item">
-								<a href="{{ route('admin.group', $member->group['id']) }}">{{ $member->group['name'] }}</a>
+								<a href="{{ route('view_group', $member->group['id']) }}">{{ $member->group['name'] }}</a>
 							</li>
 							<li class="breadcrumb-item">
 								<a href="{{ url()->previous() }}">{{ $member->user['name'] }}</a>
@@ -39,7 +36,7 @@
 			<div class="col-md-12">
 				<div class="card table-card">
 					<div class="card-header">
-						<form class="ajax-get-report" id="view_group_member_report_form" action="{{ route('fetch_group_member_report', [$member->group['id'], $member['id']]) }}" method="post">
+						<form class="ajax-get-report" id="view_group_member_report_form" action="{{ route('fetch_group_member_report', [$group['id'], $member['id']]) }}" method="post">
 						@csrf
 						
 						<div class="d-inline-block mr-2 mb-3 mb-lg-0">

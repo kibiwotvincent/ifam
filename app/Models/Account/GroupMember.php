@@ -104,24 +104,36 @@ class GroupMember extends Model
         return $this->hasMany('App\Models\Account\GroupMergedSeason'::class, 'group_member_id', 'id');
     }
 	
-	/*get group seasons, this includes merged seasons from members by default*/
-	/*public function seasons() {
-		$seasons = [];
-		//get group farms' seasons
-		foreach($this->farms as $groupFarm) {
-			foreach($groupFarm->departments as $farmDepartment) {
-				$seasons = $farmDepartment->seasons;
+	/*get group member merged seasons*/
+	public function mergedSeasons($department = null, $categories = null) {
+		$seasons = $this->merged_seasons()->department($department)->childCategories($categories)->get()
+					->map(function ($row) {
+						return $row->season;
+					});
+		
+		return $seasons;
+	}
+	
+	//returns group member unique departments - from farm category table
+	//basically go through all merged seasons of the member
+	//then return unique farm categories as departments
+	public function departments() {
+		return $this->merged_seasons
+				->map(function($row){
+					return $row->season->department->category;
+				})->unique('id');
+	}
+	
+	//return group member unique categories - from child category table
+	public function categories() {
+		$categories = collect([]);
+		foreach($this->departments() as $category) {
+			foreach($category->child_categories as $row) {
+				$categories->push($row);				
 			}
 		}
 		
-		//fetch group's merged seasons data
-		$mergedSeasons = $this->merged_seasons;
-		
-		//push to seasons collection
-		foreach($mergedSeasons as $mergedSeason) {
-			$seasons->push($mergedSeason->season);
-		}
-		return $seasons;
-	}*/
+		return $categories->unique('id');
+	}
 	
 }

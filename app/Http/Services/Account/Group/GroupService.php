@@ -36,26 +36,26 @@ class GroupService extends BaseService
         return  $group;
     }
 	
-	public function groupsStats(){
+	public function groupsStats($department = null, $categories = null, $from = null, $to = null){
 		$groups = Group::orderBy('name', 'asc')->get();
 		
 		$groupsStats = [];
 		foreach($groups as $group){
 			//get group's seasons
-			$seasons = $group->seasons();
+			$seasons = $group->seasons(true, $department, $categories);
 			
 			$expenses = 0;
 			$sales = 0;
 			$profit = 0;
 			$groupChildCategories = [];
 			foreach($seasons as $season){
-				$expenses += $season->total_expenses();
-				$sales += $season->total_sales();
+				$expenses += $season->total_expenses($from, $to);
+				$sales += $season->total_sales($from, $to);
 				$groupChildCategories[$season->child_category['name']] = $season->child_category['name'];
 			}
 			
 			$profit = $sales - $expenses;
-			$groupChildCategoriesString = implode(", ", $groupChildCategories);
+			$groupChildCategoriesString = implode(", ", $group->interests());
 			
 			$groupStats = ['id' => $group['id'], 'name' => $group['name'], 'group_child_categories' => $groupChildCategoriesString, 'data' => ['expenses' => $expenses, 'sales' => $sales, 'profit' => $profit]];
 			array_push($groupsStats, $groupStats);
@@ -77,15 +77,13 @@ class GroupService extends BaseService
 		foreach($group->members as $groupMember) {
 			$farmerType = "individual";
 			$farmerID = $groupMember['id'];
-			$mergedSeasons = $groupMember->merged_seasons;
 			$memberSeasons = [];
+			
+			$mergedSeasons = $groupMember->merged_seasons()->department($department)->childCategories($categories)->get();
 			foreach($mergedSeasons as $row) {
-				$season = $row->season()->department($department)->childCategories($categories)->get();
-				
-				if(! $season->isEmpty()) {
-					array_push($memberSeasons, $season[0]);
-				}
+				array_push($memberSeasons, $row->season);
 			}
+			
 			array_push($farmers, ['farmer_type' => $farmerType, 'farmer_id' => $farmerID, 'farmer_name' => $groupMember->user['name'], 'seasons' => $memberSeasons]);
 		}
 		

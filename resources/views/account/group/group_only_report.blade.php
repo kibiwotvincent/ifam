@@ -16,7 +16,7 @@
 							<li class="breadcrumb-item">
 								<a href="{{ route('dashboard') }}"><i class="ik ik-home"></i></a>
 							</li>
-								<li class="breadcrumb-item">
+							<li class="breadcrumb-item">
 								<a href="{{ route('groups') }}">Groups</a>
 							</li>
 							<li class="breadcrumb-item">

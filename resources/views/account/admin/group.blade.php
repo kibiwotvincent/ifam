@@ -35,9 +35,9 @@
 				<div class="col-md-8">
 					<h5 class="mt-3 h6 font-weight-bold text-muted">Group Farms</h5>
 				</div>
-				<div class="col-md-4 text-right">
+				<!--<div class="col-md-4 text-right">
 					<a href="{{ route('admin.group_report', $group['id']) }}" class="btn btn-success"><i class="ik ik-bar-chart-line-"></i> Group Stats</a>
-				</div>
+				</div> -->
 			</div>
 			<div class="row">
 				<div class="col-md-12 mb-4 pl-0 pr-0">
@@ -66,7 +66,7 @@
 											</span>
 										</div>
 										<div class="col text-right">
-											<a href="#">
+											<a href="{{ route('admin.farm_report', [$group['id'], $row['id']]) }}">
 											<span classs="badge badge-pil badge-light"><i class="ik ik-bar-chart-2"></i></span>
 											</a>
 										</div>
@@ -108,7 +108,6 @@
 					<table id="data_tabl" class="table">
 						<thead>
 							<tr>
-								<th class="nosort">Avatar</th>
 								<th>Name</th>
 								<th>ID Number</th>
 								<th>Position</th>
@@ -120,8 +119,8 @@
 						<tbody>
 							@foreach($group->members as $row)
 							<tr>
-								<td><img src="{{ $row->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row->user['profile_photo']) }}" class="table-user-thumb" alt=""></td>
-								<td>{{ $row->user['name'] }}</td>
+								<td><img src="{{ $row->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row->user['profile_photo']) }}" class="table-user-thumb mr-2" alt="">
+								{{ $row->user['name'] }}</td>
 								<td>{{ $row->user['id_number'] }}</td>
 								<td><span class="mb-0 badge badge-pill badge-success">{{ $row['position'] }}</span></td>
 								<td>{{ $row->user['gender'] }}</td>

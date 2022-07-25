@@ -113,8 +113,8 @@ class GroupController extends Controller
 		$group = Group::find($request->id);
 		$seasons = $group->seasons(false);
 		
-		$departments =  $group->departments();
-		$categories =  $group->categories();
+		$departments =  $group->departments(false);
+		$categories =  $group->categories(false);
 		
         return view('account.group.group_only_report', ['group' => $group, 'seasons' => $seasons, 'departments' => $departments, 'categories' => $categories, 'from' => null, 'to' => null]);
     }
@@ -142,7 +142,7 @@ class GroupController extends Controller
 			'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date'],
             'department' => ['nullable', 'numeric'],
-            'categories' => ['nullable', 'array'],
+            'categories' => ['required', 'array'],
             'is_admin' => ['required', 'numeric'],
 		]);
 		
@@ -201,7 +201,7 @@ class GroupController extends Controller
 			'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date'],
             'department' => ['nullable', 'numeric'],
-            'categories' => ['nullable', 'array'],
+            'categories' => ['required', 'array'],
 		]);
 		
 		$validator->after(function ($validator) use ($request) {

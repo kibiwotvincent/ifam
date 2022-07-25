@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Account\FarmController;
+use App\Http\Controllers\Account\Admin\FarmController as AdminFarmController;
 use App\Http\Controllers\Account\UserController;
 use App\Http\Controllers\Account\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Account\Admin\PermissionController;
@@ -105,7 +106,7 @@ Route::post('/groups/{id}/members/cancel', [GroupMemberController::class, 'cance
 Route::post('/groups/{id}/members/update', [GroupMemberController::class, 'update'])->middleware('auth')->name('update_group_member');
 Route::get('/groups/{group_id}/members/{member_id}', [GroupMemberController::class, 'view'])->middleware('auth')->name('view_group_member');
 Route::get('/groups/{group_id}/members/{member_id}/report', [GroupMemberController::class, 'report'])->middleware('auth')->name('group_member_report');
-Route::post('/groups/{group_id}/members/{member_id}/report', [GroupMemberController::class, 'report'])->middleware('auth')->name('fetch_group_member_report');
+Route::post('/groups/{group_id}/members/{member_id}/report', [GroupMemberController::class, 'fetch_report'])->middleware('auth')->name('fetch_group_member_report');
 Route::get('/groups/{group_id}/members/{member_id}/seasons/{season_id}', [GroupMergedSeasonController::class, 'view'])->middleware('auth')->name('group.view_merged_season');
 Route::post('/groups/{group_id}/members/{member_id}/seasons/{season_id}/unmerge', [GroupMergedSeasonController::class, 'unmerge'])->middleware('auth')->name('group.unmerge_season');
 
@@ -114,7 +115,6 @@ Route::get('/groups/{group_id}/farms/add', [FarmController::class, 'create'])->m
 Route::get('/groups/{group_id}/farms/{farm_id}', [FarmController::class, 'view'])->middleware('auth')->name('group.view_farm');
 
 Route::get('/groups/{group_id}/farms/{farm_id}/report', [FarmController::class, 'report'])->middleware('auth')->name('group.farm_report');
-//Route::post('/groups/{group_id}/farms/{farm_id}/report', [FarmController::class, 'farm_report'])->middleware('auth');
 
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}', [FarmController::class, 'view_department'])->middleware('auth')->name('group.view_department');
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->middleware('auth')->name('group.add_season');
@@ -145,10 +145,12 @@ Route::get('/contact-support', function () {
 //groups
 Route::get('/admin/groups', [AdminGroupController::class, 'index'])->middleware('auth')->name('admin.groups');
 Route::get('/admin/groups/report', [AdminGroupController::class, 'groups_report'])->middleware('auth')->name('admin.groups_report');
+Route::post('/admin/groups/report', [AdminGroupController::class, 'fetch_groups_report'])->middleware('auth');
 Route::get('/admin/groups/{group_id}', [AdminGroupController::class, 'view'])->middleware('auth')->name('admin.group');
 Route::get('/admin/groups/{group_id}/report', [AdminGroupController::class, 'group_report'])->middleware('auth')->name('admin.group_report');
 Route::get('/admin/groups/{group_id}/report/group', [AdminGroupController::class, 'group_only_report'])->middleware('auth')->name('admin.group_only_report');
 Route::get('/admin/groups/{group_id}/members/{member_id}/report', [AdminGroupController::class, 'group_member_report'])->middleware('auth')->name('admin.group_member_report');
+Route::get('/admin/groups/{group_id}/farms/{farm_id}/report', [AdminFarmController::class, 'report'])->middleware('auth')->name('admin.farm_report');
 
 //farm categories
 Route::get('/admin/farm-categories', [FarmCategoryController::class, 'index'])->middleware('auth')->name('admin.farm_categories');

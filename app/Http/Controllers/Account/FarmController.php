@@ -154,7 +154,7 @@ class FarmController extends Controller
 			'from' => ['nullable', 'date'],
             'to' => ['nullable', 'date'],
             'department' => ['nullable', 'numeric'],
-            'categories' => ['nullable', 'array'],
+            'categories' => ['required', 'array'],
 		]);
 		
 		$validator->after(function ($validator) use ($request) {

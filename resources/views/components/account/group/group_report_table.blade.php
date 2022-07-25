@@ -20,7 +20,7 @@
 		<thead>
 			<tr>
 				<th>Farmer</th>
-				<th>Crop</th>
+				<th>Category</th>
 				<th>Expenses</th>
 				<th>Sales</th>
 				<th>Profit</th>

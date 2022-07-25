@@ -66,11 +66,10 @@ class Group extends Model
 		
 		if($includeMergedSeasons) {
 			//fetch group's merged seasons data
-			$mergedSeasons = $this->merged_seasons;
+			$mergedSeasons = $this->merged_seasons()->department($department)->childCategories($categories)->get();
 			
 			//push to seasons collection
 			foreach($mergedSeasons as $mergedSeason) {
-				//$season = $mergedSeason->season()->department($department)->childCategories($categories)->first();
 				$seasons->push($mergedSeason->season);
 			}
 		}
@@ -78,31 +77,28 @@ class Group extends Model
 		return $seasons;
 	}
 	
-	/*group crops*/
-	public function interests(){
-		$interests = [];
-		foreach($this->seasons() as $season) {
-			$interests[$season->child_category_id] = $season->child_category['name'];
-		}
-		return $interests;
+	/*group interests - basically categories of group seasons including merged seasons*/
+	public function interests() {
+		return $this->seasons()
+				->mapWithKeys(function($season){
+					return [$season->child_category_id => $season->child_category['name']];
+				})->toArray();
 	}
 	
 	//returns group unique departments - from farm category table
-	//basically go through all seasons belonging to the group including merged seasons 
+	//basically go through all seasons belonging to the group including merged seasons if specified
 	//then return unique farm categories as group departments
-	public function departments() {
-		$departments = collect([]);
-		foreach($this->seasons() as $season) {
-			$departments->push($season->department->category);				
-		}
-		
-		return $departments->unique('id');
+	public function departments($includeMergedSeasons = true) {
+		return $this->seasons($includeMergedSeasons)
+				->map(function($season){
+					return $season->department->category;
+				})->unique('id');
 	}
 	
 	//return group unique categories - from child category table
-	public function categories() {
+	public function categories($includeMergedSeasons = true) {
 		$categories = collect([]);
-		foreach($this->departments() as $category) {
+		foreach($this->departments($includeMergedSeasons) as $category) {
 			foreach($category->child_categories as $row) {
 				$categories->push($row);				
 			}
