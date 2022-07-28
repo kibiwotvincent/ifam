@@ -17,16 +17,16 @@
 							<a href="{{ route('dashboard') }}"><i class="ik ik-home"></i></a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('groups') }}">Groups</a>
+							<a href="{{ route('dashboard') }}">Admin</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('view_group', $season->department->farm->farmable['id']) }}">{{ $season->department->farm->farmable['name'] }}</a>
+							<a href="{{ route('admin.groups') }}">Groups</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('group.view_farm', [$season->department->farm->farmable['id'], $season->department->farm['id']]) }}">{{ $season->department->farm['name'] }}</a>
+							<a href="{{ route('admin.group', $season->merged_group->group['id']) }}">{{ $season->merged_group->group['name'] }}</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('group.view_department', [$season->department->farm->farmable['id'], $season->department->farm['id'], $season->department['id']]) }}">{{ $season->department->category['name'] }}</a>
+							<a href="{{ route('admin.view_group_member', [$season->merged_group->group['id'], $member['id']]) }}">{{ $member->user['name'] }}</a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">{{ $season['name'] }}</li>
 					</ol>
@@ -60,12 +60,12 @@
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="expenses-tab" role="tabpanel" aria-labelledby="pills-expenses-tab">
 						<div class="card-body">
-							<x-account.farm.season.expenses :is_group=true />
+							<x-account.farm.season.expenses :read_only=true />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="sales-tab" role="tabpanel" aria-labelledby="pills-sales-tab">
 						<div class="card-body">
-							<x-account.farm.season.sales :is_group=true />
+							<x-account.farm.season.sales :read_only=true />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">

@@ -22,7 +22,7 @@ class GroupMergedSeasonService extends BaseService
 	
 	public function unmerge(array $data = [])
     {
-		return GroupMergedSeason::find($data['id'])->delete();
+		return GroupMergedSeason::where(['group_id' => $data['group_id'], 'group_member_id' => $data['group_member_id'], 'season_id' => $data['season_id']])->delete();
     }
 	
 }

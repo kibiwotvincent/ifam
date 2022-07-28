@@ -100,23 +100,6 @@ class GroupController extends Controller
     }
 	
 	/**
-     * Display group member report view.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function group_member_report(Request $request)
-    {
-		$member = GroupMember::find($request->member_id);
-		
-		$seasons = $member->mergedSeasons(null, null);
-		
-		$departments = $member->departments();
-		$categories = $member->categories();
-		
-        return view('account.admin.group_member_report', ['member' => $member, 'seasons' => $seasons, 'departments' => $departments, 'categories' => $categories, 'from' => null, 'to' => null]);
-    }
-	
-	/**
      * Display group only report view.
      *
      * @return \Illuminate\View\View

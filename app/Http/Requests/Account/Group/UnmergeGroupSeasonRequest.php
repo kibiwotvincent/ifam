@@ -24,7 +24,9 @@ class UnmergeGroupSeasonRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|numeric',
+            'group_id' => 'required|numeric',
+            'group_member_id' => 'required|numeric',
+            'season_id' => 'required|numeric',
         ];
     }
 }

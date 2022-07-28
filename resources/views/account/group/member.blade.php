@@ -6,7 +6,7 @@
 				<div class="page-header-title">
 					<i class="ik ik-users bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">{{ $member->user['full_name'] }} 
+						<h5 class="pt-2">{{ $member->user['name'] }} 
 						<span class="mb-0 ml-2 badge badge-pill badge-{{ $member['position'] }}">{{ $member['position'] }}</span>
 						</h5>
 					</div>
@@ -24,7 +24,7 @@
 						<li class="breadcrumb-item">
 							<a href="{{ route('view_group', $group['id']) }}">{{ $group['name'] }}</a>
 						</li>
-						<li class="breadcrumb-item active" aria-current="page">{{ $member->user['full_name'] }}</li>
+						<li class="breadcrumb-item active" aria-current="page">{{ $member->user['name'] }}</li>
 					</ol>
 				</nav>
 			</div>
@@ -233,7 +233,9 @@
 					<form class="ajax" id="unmerge_season_{{ $row['id'] }}_form" action="{{ route('group.unmerge_season', [$row['group_id'], $row['group_member_id'], $row['season_id']]) }}" method="post">
 						@csrf
 						<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
-						<input type="hidden" name="id" value="{{ $row['id'] }}"/>
+						<input type="hidden" name="group_id" value="{{ $row['group_id'] }}"/>
+						<input type="hidden" name="group_member_id" value="{{ $row['group_member_id'] }}"/>
+						<input type="hidden" name="season_id" value="{{ $row['season_id'] }}"/>
 						<p>Are you sure you want to unmerge `{{ $row->season['name'] }}` season from {{ $row->group['name'] }} ?</p>
 						<div id="unmerge_season_{{ $row['id'] }}_form_feedback"></div>
 								

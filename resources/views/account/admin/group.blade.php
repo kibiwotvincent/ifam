@@ -32,12 +32,9 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row mb-1">
-				<div class="col-md-8">
+				<div class="col-md-12">
 					<h5 class="mt-3 h6 font-weight-bold text-muted">Group Farms</h5>
 				</div>
-				<!--<div class="col-md-4 text-right">
-					<a href="{{ route('admin.group_report', $group['id']) }}" class="btn btn-success"><i class="ik ik-bar-chart-line-"></i> Group Stats</a>
-				</div> -->
 			</div>
 			<div class="row">
 				<div class="col-md-12 mb-4 pl-0 pr-0">
@@ -104,71 +101,10 @@
 					</div>
 				</div>
 				<div class="card-block">
-					<div class="table-responsive">
-					<table id="data_tabl" class="table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>ID Number</th>
-								<th>Position</th>
-								<th>Gender</th>
-								<th>Age</th>
-								<th>&nbsp;</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach($group->members as $row)
-							<tr>
-								<td><img src="{{ $row->user['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row->user['profile_photo']) }}" class="table-user-thumb mr-2" alt="">
-								{{ $row->user['name'] }}</td>
-								<td>{{ $row->user['id_number'] }}</td>
-								<td><span class="mb-0 badge badge-pill badge-success">{{ $row['position'] }}</span></td>
-								<td>{{ $row->user['gender'] }}</td>
-								<td>{{ $row->user['age'] }}</td>
-								<td class="table-action text-right">
-									<a href="{{ route('admin.group', $row['id']) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
-								</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
-					</div>
+					<x-account.group.group-members-table :group=$group :isAdmin=true />
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addMemberModalLabel">Add Group Member</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				</div>
-				<div class="modal-body">
-				<form class="ajax" id="add_member_form" action="{{ route('add_group_member', $group['id']) }}" method="post">
-				@method('post')
-				@csrf
-				<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
-				<input type="hidden" name="group_id" value="{{ $group['id'] }}"/>
-				<div class="formgroup mb-3">
-					<label for="member-id-no">Enter ID number of member to add</label>
-					<div class="input-group m-0 mb-2">
-						<input type="number" class="form-control" id="member-id-no" name="id_number">
-						<div class="input-group-append">
-							<div class="input-group-text p-0">
-							<button type="submit" class="btn btn-success" style="border-radius: 0px 4px 4px 0px;" id="add_member_form_submit">Add</button>
-							</div>
-						</div>
-					</div>
-					<p class="d-none error" for="id_number"></p>
-					<div id="add_member_form_feedback"></div>
-				</div>
-				</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
 </div>
 </x-app-layout>
