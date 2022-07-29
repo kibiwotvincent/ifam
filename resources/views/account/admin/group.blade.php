@@ -45,7 +45,7 @@
 								<div class="card-body">
 									<div class="row align-items-center">
 										<div class="col pl-0 mx-3">
-											<a href="{{ route('group.view_farm', [$row->farmable['id'], $row['id']]) }}">
+											<a href="{{ route('admin.group.view_farm', [$row->farmable['id'], $row['id']]) }}">
 												<h6 class="mb-5 font-weight-bold">{{ $row['name'] }}</h6>
 											</a>
 											<p>

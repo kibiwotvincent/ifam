@@ -60,6 +60,11 @@
 					<a href="{{ route('admin.users') }}"><i class="ik ik-users"></i><span>Platform Users</span></a>
 				</div>
 				@endcan
+				@can('manage platform users')
+				<div class="nav-item active">
+					<a href="{{ route('admin.farmers') }}"><i class="ik ik-users"></i><span>Farmers</span></a>
+				</div>
+				@endcan
 				<div class="nav-lavel">&nbsp;</div>
 				<div class="nav-item active">
 					<a href="{{ route('information_center') }}"><i class="ik ik-help-circle"></i><span>Information Center</span></a>

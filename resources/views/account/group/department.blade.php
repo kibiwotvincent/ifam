@@ -36,7 +36,8 @@
 	
 	<div class="row clearfix">
 		<div class="col-md-12">
-			<x-account.farm.seasons :is_group=true/>
+			@php $page = "group"; @endphp
+			<x-account.farm.seasons :page=$page :read_only=false />
 		</div>
 	</div>
 </div>

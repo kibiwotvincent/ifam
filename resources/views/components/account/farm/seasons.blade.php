@@ -1,13 +1,15 @@
 <div class="card table-card">
 	<div class="card-header">
 		<h3>Seasons ({{ count($department->seasons) }})</h3>
+		@if(!$read_only)
 		<div class="card-header-right">
-			@if($is_group)
+			@if($page == "group")
 			<a href="{{ route('group.add_season', [$farm->farmable['id'], $farm['id'], $department['id']]) }}" class="btn btn-sm btn-success"><i class="ik ik-plus-circle"></i> Add Season</a>
 			@else
 			<a href="{{ route('add_season', [$farm['id'], $department['id']]) }}" class="btn btn-sm btn-success"><i class="ik ik-plus-circle"></i> Add Season</a>
 			@endif
 		</div>
+		@endif
 	</div>
 	<div class="card-block">
 		<div class="table-responsive">
@@ -29,8 +31,10 @@
 					@foreach($department->seasons as $row)
 					<tr>
 						<td>
-						@if($is_group)
+						@if($page == "group")
 						<a href="{{ route('group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
+						@elseif($page == "admin")
+						<a href="{{ route('admin.group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
 						@else
 						<a href="{{ route('view_season', [$farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
 						@endif
@@ -43,9 +47,11 @@
 						<td>{{ number_format($row->sales()->paid()->sum('amount_paid') - $row->expenses->sum('amount') ,2) }}</td>
 						<td><span class="badge badge-pill badge-{{ $row['status'] }}">{{ $row['status'] }}</span></td>
 						<td class="table-action text-right">
-						@if($is_group)
+						@if($page == "group")
 						<a href="{{ route('group.update_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-edit f-16 mr-15 text-success"></i></a>
 						<a href="{{ route('group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
+						@elseif($page == "admin")
+						<a href="{{ route('admin.group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
 						@else
 						<a href="{{ route('update_season', [$farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-edit f-16 mr-15 text-success"></i></a>
 						<a href="{{ route('view_season', [$farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>

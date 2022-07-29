@@ -45,7 +45,6 @@
 						<table id="data_tabl" class="table">
 							<thead>
 								<tr>
-									<th>Avatar</th>
 									<th>Name</th>
 									<th>Phone Number</th>
 									<th>ID Number</th>
@@ -57,8 +56,10 @@
 							<tbody>
 								@foreach($users as $row)
 								<tr>
-									<td><img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb" alt=""></td>
-									<td>{{ $row['name'] }}</td>
+									<td>
+									<img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb" alt="">
+									{{ $row['name'] }}
+									</td>
 									<td>{{ $row['phone_number'] }}</td>
 									<td>{{ $row['id_number'] }}</td>
 									<td>{{ $row['gender'] }}</td>

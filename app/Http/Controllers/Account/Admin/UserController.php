@@ -41,6 +41,20 @@ class UserController extends Controller
     }
 	
 	/**
+     * Display the farmers view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function farmers()
+    {
+		$farmers = User::orderBy('first_name', 'asc')->get()->filter(function($user) {
+						return $user->hasRole('Farmer');
+					});
+		
+        return view('account.admin.farm.farmers', compact('farmers'));
+    }
+	
+	/**
      * Handle an incoming update user role request.
      *
      * @param  \App\Http\Requests\Account\Admin\UpdateUserRoleRequest  $request

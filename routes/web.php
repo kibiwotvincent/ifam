@@ -13,6 +13,7 @@ use App\Http\Controllers\Account\Admin\FarmCategoryController;
 use App\Http\Controllers\Account\Admin\ChildCategoryController;
 use App\Http\Controllers\Account\Admin\ChildSubCategoryController;
 use App\Http\Controllers\Account\SeasonController;
+use App\Http\Controllers\Account\Admin\SeasonController as AdminSeasonController;
 use App\Http\Controllers\Account\ExpenseController;
 use App\Http\Controllers\Account\SaleController;
 use App\Http\Controllers\Account\GroupController;
@@ -154,7 +155,11 @@ Route::get('/admin/groups/{group_id}/report/group', [AdminGroupController::class
 Route::get('/admin/groups/{group_id}/members/{member_id}', [AdminGroupMemberController::class, 'view'])->middleware('auth')->name('admin.view_group_member');
 Route::get('/admin/groups/{group_id}/members/{member_id}/report', [AdminGroupMemberController::class, 'report'])->middleware('auth')->name('admin.group_member_report');
 Route::get('/admin/groups/{group_id}/members/{member_id}/seasons/{season_id}', [AdminGroupMergedSeasonController::class, 'view'])->middleware('auth')->name('admin.view_merged_season');
+//group farms
 Route::get('/admin/groups/{group_id}/farms/{farm_id}/report', [AdminFarmController::class, 'report'])->middleware('auth')->name('admin.farm_report');
+Route::get('/admin/groups/{group_id}/farms/{farm_id}', [AdminFarmController::class, 'view'])->middleware('auth')->name('admin.group.view_farm');
+Route::get('/admin/groups/{group_id}/farms/{farm_id}/{department_id}', [AdminFarmController::class, 'view_department'])->middleware('auth')->name('admin.group.view_department');
+Route::get('/admin/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}', [AdminSeasonController::class, 'view'])->middleware('auth')->name('admin.group.view_season');
 
 //farm categories
 Route::get('/admin/farm-categories', [FarmCategoryController::class, 'index'])->middleware('auth')->name('admin.farm_categories');
@@ -181,3 +186,7 @@ Route::post('/admin/roles/{id}/delete', [RoleController::class, 'delete'])->midd
 //users
 Route::get('/admin/users', [AdminUserController::class, 'index'])->middleware('auth')->name('admin.users');
 Route::post('/admin/users/{id}/update/role', [AdminUserController::class, 'updateRole'])->middleware('auth')->name('admin.users.update.role');
+
+//farmers
+Route::get('/admin/farmers', [AdminUserController::class, 'farmers'])->middleware('auth')->name('admin.farmers');
+Route::get('/admin/farmers/{user_id}', [AdminUserController::class, 'farmer'])->middleware('auth')->name('admin.farmer');

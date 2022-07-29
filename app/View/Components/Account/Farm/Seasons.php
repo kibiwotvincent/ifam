@@ -10,17 +10,19 @@ class Seasons extends Component
 {
 	public $farm;
 	public $department;
-	public $is_group;
+	public $read_only;
+	public $page;
 	
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Request $request, $isGroup = false)
+    public function __construct(Request $request, $page = "farmer", $readOnly = false)
     {
 		$this->farm = Farm::find($request->farm_id);
-		$this->is_group = $isGroup;
+		$this->read_only = $readOnly;
+		$this->page = $page;
 		$this->department = $this->farm->departments->only([$request->department_id])->first();
     }
 	

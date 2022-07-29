@@ -6,7 +6,7 @@
 				<div class="page-header-title">
 					<i class="ik ik-layout bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">{{ $farm['name'] }}</h5>
+						<h5 class="pt-2">{{ $department->category['name'] }}</h5>
 					</div>
 				</div>
 			</div>
@@ -17,12 +17,18 @@
 							<a href="{{ route('dashboard') }}"><i class="ik ik-home"></i></a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('groups') }}">Groups</a>
+							<a href="{{ route('dashboard') }}">Admin</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('view_group', $farm->farmable['id']) }}">{{ $farm->farmable['name'] }}</a>
+							<a href="{{ route('admin.groups') }}">Groups</a>
 						</li>
-						<li class="breadcrumb-item active" aria-current="page">{{ $farm['name'] }}</li>
+						<li class="breadcrumb-item">
+							<a href="{{ route('admin.group', $farm->farmable['id']) }}">{{ $farm->farmable['name'] }}</a>
+						</li>
+						<li class="breadcrumb-item">
+							<a href="{{ route('admin.group.view_farm', [$farm->farmable['id'], $farm['id']]) }}">{{ $farm['name'] }}</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">{{ $department->category['name'] }}</li>
 					</ol>
 				</nav>
 			</div>
@@ -33,7 +39,8 @@
 	
 	<div class="row clearfix">
 		<div class="col-md-12">
-			<x-account.farm.seasons :is_group=true/>
+			@php $page = "admin"; @endphp
+			<x-account.farm.seasons :page=$page :read_only=true />
 		</div>
 	</div>
 </div>
