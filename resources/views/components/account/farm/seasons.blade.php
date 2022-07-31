@@ -35,6 +35,8 @@
 						<a href="{{ route('group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
 						@elseif($page == "admin")
 						<a href="{{ route('admin.group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
+						@elseif($page == "admin-farmers")
+						<a href="{{ route('admin.farmer.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
 						@else
 						<a href="{{ route('view_season', [$farm['id'], $department['id'], $row['id']]) }}">{{ $row['name'] }}</a>
 						@endif
@@ -52,6 +54,8 @@
 						<a href="{{ route('group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
 						@elseif($page == "admin")
 						<a href="{{ route('admin.group.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
+						@elseif($page == "admin-farmers")
+						<a href="{{ route('admin.farmer.view_season', [$farm->farmable['id'], $farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
 						@else
 						<a href="{{ route('update_season', [$farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-edit f-16 mr-15 text-success"></i></a>
 						<a href="{{ route('view_season', [$farm['id'], $department['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>

@@ -57,7 +57,7 @@
 								@foreach($farmers as $row)
 								<tr>
 									<td>
-									<img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb" alt="">
+									<img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb mr-2" alt="">
 									{{ $row['name'] }}
 									</td>
 									<td>{{ $row['phone_number'] }}</td>
@@ -65,6 +65,7 @@
 									<td>{{ $row['gender'] }}</td>
 									<td><span class="badge badge-light">{{ implode(', ', $row->getRoleNames()->toArray()) }}</span></td>
 									<td class="table-action text-right">
+										<a href="{{ route('admin.farmer.report', $row['id']) }}"><i class="ik ik-bar-chart-line- mr-2 f-16 text-success"></i></a>
 										<a href="{{ route('admin.farmer', $row['id']) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
 									</td>
 								</tr>

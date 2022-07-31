@@ -126,14 +126,13 @@ class GroupMember extends Model
 	
 	//return group member unique categories - from child category table
 	public function categories() {
-		$categories = collect([]);
-		foreach($this->departments() as $category) {
-			foreach($category->child_categories as $row) {
-				$categories->push($row);				
-			}
-		}
-		
-		return $categories->unique('id');
+		$categories = $this->departments()->map(function($category){
+							return $category->child_categories->map(function($childCategory){
+								return $childCategory;
+							});
+						})->flatten()->unique('id');
+						
+		return $categories;
 	}
 	
 }

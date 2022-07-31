@@ -32,8 +32,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row mb-1">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<h5 class="mt-3 h6 font-weight-bold text-muted">Group Farms</h5>
+				</div>
+				<div class="col-md-6 text-right">
+					<a href="{{ route('admin.group_report', $group['id']) }}" class="btn btn-success"><i class="ik ik-bar-chart-line-"></i> Group Report</a>
 				</div>
 			</div>
 			<div class="row">

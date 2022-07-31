@@ -5,10 +5,12 @@ namespace App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Account\Season;
 
 class Group extends Model
 {
     use HasFactory, SoftDeletes;
+	const GROUP_MODEL_NAME = 'App\Models\Account\Group';
 	
 	/**
      * The attributes that are mass assignable.
@@ -56,22 +58,27 @@ class Group extends Model
 	
 	/*get group seasons, this includes merged seasons from members by default*/
 	public function seasons($includeMergedSeasons = true, $department = null, $categories = null) {
-		$seasons = collect([]);
-		//get group farms' seasons
-		foreach($this->farms as $farm) {
-			foreach($farm->seasons($department, $categories) as $season) {
-				$seasons->push($season);
-			}
-		}
+		
+		$seasons = Season::whereHas('department.farm.farmable')
+					->join('farm_departments', 'seasons.farm_department_id', '=', 'farm_departments.id')
+					->join('farms', 'farm_departments.farm_id', '=', 'farms.id')
+					->join('groups', 'farms.farmable_id', '=', 'groups.id')
+					->where('farms.farmable_type', self::GROUP_MODEL_NAME)
+					->where('groups.id', $this->id)
+					->department($department)
+					->childCategories($categories)
+					->select('seasons.*')
+					->get();
 		
 		if($includeMergedSeasons) {
 			//fetch group's merged seasons data
-			$mergedSeasons = $this->merged_seasons()->department($department)->childCategories($categories)->get();
-			
-			//push to seasons collection
-			foreach($mergedSeasons as $mergedSeason) {
-				$seasons->push($mergedSeason->season);
-			}
+			$mergedSeasons = $this->merged_seasons()->department($department)->childCategories($categories)->get()
+								->map(function($mergedSeason){
+									return $mergedSeason->season;
+								});
+								
+			//merge seasons
+			$seasons = $seasons->concat($mergedSeasons);
 		}
 		
 		return $seasons;
@@ -97,13 +104,12 @@ class Group extends Model
 	
 	//return group unique categories - from child category table
 	public function categories($includeMergedSeasons = true) {
-		$categories = collect([]);
-		foreach($this->departments($includeMergedSeasons) as $category) {
-			foreach($category->child_categories as $row) {
-				$categories->push($row);				
-			}
-		}
-		
-		return $categories->unique('id');
+		$categories = $this->departments($includeMergedSeasons)->map(function($category){
+							return $category->child_categories->map(function($childCategory){
+								return $childCategory;
+							});
+						})->flatten()->unique('id');
+						
+		return $categories;
 	}
 }

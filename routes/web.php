@@ -22,6 +22,7 @@ use App\Http\Controllers\Account\GroupMemberController;
 use App\Http\Controllers\Account\Admin\GroupMemberController as AdminGroupMemberController;
 use App\Http\Controllers\Account\GroupMergedSeasonController;
 use App\Http\Controllers\Account\Admin\GroupMergedSeasonController as AdminGroupMergedSeasonController;
+use App\Http\Controllers\Account\Admin\FarmerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,7 @@ Route::get('/terms-and-conditions', function () {
 })->name('terms_and_conditions');
 
 Route::get('/dashboard', function () {
-    return view('account.dashboard');
+    return view('account.dashboard', ['user' => request()->user()]);
 })->middleware('auth')->name('dashboard');
 
 Route::get('/calendar', function () {
@@ -132,6 +133,11 @@ Route::post('/profile', [UserController::class, 'update'])->middleware('auth');
 Route::post('/profile/change-password', [UserController::class, 'changePassword'])->middleware('auth')->name('profile.change_password');
 Route::post('/profile/change-profile-photo', [UserController::class, 'changeProfilePhoto'])->middleware('auth')->name('profile.change_profile_photo');
 
+//user routes
+Route::get('/report', [UserController::class, 'farmer_report'])->middleware('auth')->name('report');
+Route::post('/users/{user_id}/report', [UserController::class, 'fetch_farmer_report'])->middleware('auth')->name('farmer.report');
+
+
 Route::get('/information-center', function () {
     return view('account.information-center');
 })->middleware('auth')->name('information_center');
@@ -188,5 +194,10 @@ Route::get('/admin/users', [AdminUserController::class, 'index'])->middleware('a
 Route::post('/admin/users/{id}/update/role', [AdminUserController::class, 'updateRole'])->middleware('auth')->name('admin.users.update.role');
 
 //farmers
-Route::get('/admin/farmers', [AdminUserController::class, 'farmers'])->middleware('auth')->name('admin.farmers');
-Route::get('/admin/farmers/{user_id}', [AdminUserController::class, 'farmer'])->middleware('auth')->name('admin.farmer');
+Route::get('/admin/farmers', [FarmerController::class, 'index'])->middleware('auth')->name('admin.farmers');
+Route::get('/admin/farmers/{user_id}', [FarmerController::class, 'view'])->middleware('auth')->name('admin.farmer');
+Route::get('/admin/farmers/{user_id}/report', [FarmerController::class, 'farmer_report'])->middleware('auth')->name('admin.farmer.report');
+Route::get('/admin/farmers/{user_id}/farms/{farm_id}', [FarmerController::class, 'farm'])->middleware('auth')->name('admin.farmer.view_farm');
+Route::get('/admin/farmers/{user_id}/farms/{farm_id}/report', [FarmerController::class, 'farm_report'])->middleware('auth')->name('admin.farmer.farm_report');
+Route::get('/admin/farmers/{user_id}/farms/{farm_id}/{department_id}', [FarmerController::class, 'department'])->middleware('auth')->name('admin.farmer.view_department');
+Route::get('/admin/farmers/{user_id}/farms/{farm_id}/{department_id}/seasons/{season_id}', [FarmerController::class, 'season'])->middleware('auth')->name('admin.farmer.view_season');

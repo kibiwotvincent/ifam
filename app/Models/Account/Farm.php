@@ -5,6 +5,7 @@ namespace App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Account\Season;
 
 class Farm extends Model
 {
@@ -74,19 +75,16 @@ class Farm extends Model
 		return $this->morphTo();
 	}
 	
-	/*get farm seasons*/
+	/*get all seasons belonging to the farm*/
 	public function seasons($department = null, $categories = null) {
-		$seasons = collect([]);
-		//get group farms' seasons
-		foreach($this->departments as $farmDepartment) {
-			$filteredSeasons = $farmDepartment->seasons()
-								->department($department)	/*get seasons from specified department*/
-								->childCategories($categories)	/*get seasons from specified categories*/
-								->get();
-			foreach($filteredSeasons as $season) {
-				$seasons->push($season);
-			}
-		}
+		$seasons = Season::whereHas('department.farm')
+					->join('farm_departments', 'seasons.farm_department_id', '=', 'farm_departments.id')
+					->join('farms', 'farm_departments.farm_id', '=', 'farms.id')
+					->where('farms.id', $this->id)
+					->department($department)
+					->childCategories($categories)
+					->select('seasons.*')
+					->get();
 		
 		return $seasons;
 	}

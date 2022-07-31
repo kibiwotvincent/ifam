@@ -7,7 +7,7 @@
 					<div class="d-flex justify-content-between align-items-center">
 						<div class="state">
 							<h6>Groups</h6>
-							<h2>1,410</h2>
+							<h2>{{ count($user->groups) }}</h2>
 						</div>
 						<div class="icon">
 							<i class="ik ik-users"></i>
@@ -25,7 +25,7 @@
 					<div class="d-flex justify-content-between align-items-center">
 						<div class="state">
 							<h6>Farms</h6>
-							<h2>41,410</h2>
+							<h2>{{ count($user->farms) }}</h2>
 						</div>
 						<div class="icon">
 							<i class="ik ik-layout"></i>

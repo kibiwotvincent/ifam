@@ -36,6 +36,10 @@
 					@if($farmsCount > 0)<span class="badge badge-success">{{ $farmsCount }}</span>@endif
 					</a>
 				</div>
+				<div class="nav-item active">
+					<a href="{{ route('report') }}"><i class="ik ik-bar-chart-line-"></i><span>Report</span>
+					</a>
+				</div>
 				<div class="nav-item active d-none">
 					<a href="index.html"><i class="ik ik-dollar-sign"></i><span>Group Contributions</span></a>
 				</div>

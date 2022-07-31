@@ -11,10 +11,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 //use Laravel\Sanctum\HasApiTokens;
 //use App\Notifications\VerifyEmailAddress;
 //use App\Notifications\PasswordReset;
+use App\Models\Account\Season;
 
 class User extends Authenticatable //implements MustVerifyEmail
 {
     use HasFactory, SoftDeletes, HasRoles;//, Notifiable,  HasApiTokens;
+	
+	const USER_MODEL_NAME = 'App\Models\User';
 
     /**
      * The attributes that are mass assignable.
@@ -124,5 +127,24 @@ class User extends Authenticatable //implements MustVerifyEmail
     {
         $this->notify(new PasswordReset($token, $this));
     }*/
+	
+	/**
+	 * Get all of seasons belonging to user farms.
+	 */
+	public function seasons($department = null, $categories = null)
+	{
+		$seasons = Season::whereHas('department.farm.farmable')
+					->join('farm_departments', 'seasons.farm_department_id', '=', 'farm_departments.id')
+					->join('farms', 'farm_departments.farm_id', '=', 'farms.id')
+					->join('users', 'farms.farmable_id', '=', 'users.id')
+					->where('farms.farmable_type', self::USER_MODEL_NAME)
+					->where('users.id', $this->id)
+					->department($department)
+					->childCategories($categories)
+					->select('seasons.*')
+					->get();
+		
+		return $seasons;
+	}
     
 }

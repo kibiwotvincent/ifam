@@ -55,6 +55,20 @@ class UserController extends Controller
     }
 	
 	/**
+     * Display the farmer view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function farmer(Request $request)
+    {
+		$farmer = User::find($request->user_id);
+		$groups = $farmer->groups->filter(function($member) { 
+						return $member->isAccepted();
+					});
+        return view('account.admin.farm.farmer', compact('farmer','groups'));
+    }
+	
+	/**
      * Handle an incoming update user role request.
      *
      * @param  \App\Http\Requests\Account\Admin\UpdateUserRoleRequest  $request

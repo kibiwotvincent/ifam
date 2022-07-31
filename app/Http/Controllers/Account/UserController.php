@@ -13,6 +13,8 @@ use App\Http\Requests\Account\UpdateProfileRequest;
 use App\Http\Requests\Account\ChangePasswordRequest;
 use App\Http\Requests\Account\ChangeProfilePhotoRequest;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Validator;
+use \Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -39,6 +41,31 @@ class UserController extends Controller
     {
 		$user = Auth::getUser();
         return view('account.profile', compact('user'));
+    }
+	
+	/**
+     * Display farmer report view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function farmer_report(Request $request)
+    {
+		$user = $request->user();
+		$seasons = $user->seasons();
+					
+		$departments = $seasons->map(function($season){
+							return $season->department->category;
+						})->unique('id');
+		
+		$categories = $departments->map(function($category){
+							return $category->child_categories->map(function($childCategory){
+								return $childCategory;
+							});
+						})->flatten()->unique('id');
+		
+		$data = ['farmer' => $user, 'seasons' => $seasons, 'departments' => $departments, 'categories' => $categories, 'from' => null, 'to' => null];
+		
+        return view('account.farmer_report', $data);
     }
 	
 	/**
@@ -109,4 +136,58 @@ class UserController extends Controller
 		
 		return Response::json(['message' => "Profile photo updated successfully."], 200);
 	}
+	
+	/**
+     * Display farmer report.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function fetch_farmer_report(Request $request)
+    {
+		$validator = Validator::make($request->all(), [
+			'from' => ['nullable', 'date'],
+            'to' => ['nullable', 'date'],
+            'department' => ['nullable', 'numeric'],
+            'categories' => ['required', 'array'],
+		]);
+		
+		$validator->after(function ($validator) use ($request) {
+			if ($request->from != null && $request->to != null) {
+				$from = new Carbon($request->from);
+				$to = new Carbon($request->to);
+				
+				//extra validate `from` date only if `to` date exists
+				//`from` date must be before or equals to `to` date
+				if($from->gt($to)) {
+					$validator->errors()->add(
+						'from', "The from must be a date before or equal to to."
+					);
+				}
+				
+				//extra validate `to` date only if `from` date exists
+				//`to` date must come after or equals to `from` date
+				if($to->lt($from)) {
+					$validator->errors()->add(
+						'from', "The to must be a date after or equal to from."
+					);
+				}
+			}
+		});
+		
+		if ($validator->fails()) {
+			//get the first error message
+			$errorMessage = $validator->errors()->all()[0];
+			
+			return response()
+					->view('components.common.alert', ['type' => "danger", 'message' => $errorMessage], 200)
+					->header('Content-Type', "text/html; charset=UTF-8");
+		}
+		
+		$user = User::find($request->user_id);
+		$viewData = ['seasons' => $user->seasons($request->department, $request->categories), 'from' => $request->from, 'to' => $request->to];
+		
+		return response()
+			->view('components.account.farm.farmer_report_table', $viewData, 200)
+			->header('Content-Type', "text/html; charset=UTF-8");
+    }
 }

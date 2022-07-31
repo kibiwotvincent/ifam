@@ -57,7 +57,7 @@
 								@foreach($users as $row)
 								<tr>
 									<td>
-									<img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb" alt="">
+									<img src="{{ $row['profile_photo'] == "" ? asset('assets/img/default.jpg') : asset('storage/profile-photos/'.$row['profile_photo']) }}" class="table-user-thumb mr-2" alt="">
 									{{ $row['name'] }}
 									</td>
 									<td>{{ $row['phone_number'] }}</td>

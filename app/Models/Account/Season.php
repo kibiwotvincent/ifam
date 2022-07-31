@@ -126,17 +126,7 @@ class Season extends Model
      */
 	public function total_sales($from = null, $to = null)
     {
-        $sales = $this->sales()->paid();
-		
-		if($from != null) {
-			$sales->from($from);
-		}
-		
-		if($to != null) {
-			$sales->to($to);
-		}
-		
-		return $sales->sum('amount_paid');
+        return $this->sales()->paid()->from($from)->to($to)->sum('amount_paid');
     }
 	
 	/**
@@ -144,17 +134,7 @@ class Season extends Model
      */
 	public function total_expenses($from = null, $to = null)
     {
-		$expenses = $this->expenses();
-		
-		if($from != null) {
-			$expenses->from($from);
-		}
-		
-		if($to != null) {
-			$expenses->to($to);
-		}
-		
-		return $expenses->sum('amount');
+		return $this->expenses()->from($from)->to($to)->sum('amount');
 	}
 	
 	/**
