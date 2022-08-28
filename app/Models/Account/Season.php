@@ -92,6 +92,14 @@ class Season extends Model
 	/**
      * @var array Relations
      */
+	public function records()
+    {
+        return $this->hasMany('App\Models\Account\SeasonRecord'::class);
+    }
+	
+	/**
+     * @var array Relations
+     */
 	public function department()
     {
         return $this->belongsTo('App\Models\Account\FarmDepartment'::class, 'farm_department_id', 'id');

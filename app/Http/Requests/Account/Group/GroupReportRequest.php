@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Account;
+namespace App\Http\Requests\Account\Group;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
 use \Carbon\Carbon;
 use App\Exceptions\InvalidReportRequestException;
 
-class FarmReportRequest extends FormRequest
+class GroupReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,6 +31,7 @@ class FarmReportRequest extends FormRequest
             'to' => 'nullable|date',
             'department' => 'nullable|numeric',
             'categories' => 'required|array',
+			'is_admin' => ['required', 'numeric'],
         ];
     }
 	

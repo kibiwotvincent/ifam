@@ -30,6 +30,11 @@
 		<link rel="stylesheet" href="/assets/plugins/mohithg-switchery/dist/switchery.min.css">
 		<link rel="stylesheet" href="/assets/plugins/select2/dist/css/select2.min.css">
 		<link rel="stylesheet" href="/assets/plugins/chartist/dist/chartist.min.css">
+		<link rel="stylesheet" href="/assets/plugins/summernote/dist/summernote-bs4.css">
+		<!--cropper-->
+		<link rel="stylesheet" href="/assets/cropper/dist/cropper.css">
+		<link rel="stylesheet" href="/assets/cropper/css/main.css">
+		<!--end cropper-->
         <link rel="stylesheet" href="/assets/dist/css/theme.min.css">
         <link rel="stylesheet" href="/assets/dist/css/custom.css">
         <script src="/assets/src/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -81,6 +86,7 @@
         <script src="/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
         <script src="/assets/plugins/jquery.repeater/jquery.repeater.min.js"></script>
 		<script src="/assets/plugins/mohithg-switchery/dist/switchery.min.js"></script>
+		<script src="/assets/plugins/jquery.repeater/jquery.repeater.min.js"></script>
 		<!--<script src="/assets/plugins/chartist/dist/chartist.min.js"></script> 
         <script src="/assets/js/chart-chartist.js"></script>-->
         <script src="/assets/js/tables.js"></script>
@@ -91,7 +97,11 @@
 		<script src="/assets/js/form-advanced.js"></script>
 		<script src="/assets/js/form-components.js"></script>
 		<script src="/assets/js/calendar.js"></script>
-		
+		<!--cropper
+		<script src="/assets/cropper/dist/cropper.js"></script>
+		<script src="/assets/cropper/js/jquery-cropper.js"></script>
+		<script src="/assets/cropper/js/main.js"></script>
+		<!--end cropper-->
         <script src="/assets/dist/js/theme.js"></script>
 		<script src="/assets/dist/js/custom.js"></script>
 		

@@ -96,17 +96,19 @@ $(document).ready(function(t, e, i) {
             $("#addEvent").modal({
                 backdrop: 'static'
             });
-            $("#eventStarts").datetimepicker("date", start)
+            /*$("#eventStarts").datetimepicker("date", start)
             var form = $("#addEventForm");
-            $("#addEvent").find('.delete-event').hide().end().find('.save-event').show().end().find('.save-event').unbind('click').click(function() {
+            $("#addEventt").find('.delete-event').hide().end().find('.save-event').show().end().find('.save-event').unbind('click').click(function() {
                 form.submit();
             });
 
-            $("#addEvent").find('form').on('submit', function() {
+            $("#addEventt").find('form').on('submit', function() {
                 var title = form.find("#eventName").val();
+                var en = form.find("#eventEnds").val();
                 var start = form.find("#eventStarts").val();
                 var end = form.find("input[name='ending']").val();
-                var categoryClass = form.find("#addColor [type=radio]:checked").data("color");
+                var categoryClass = "bg-green";//form.find("#addColor [type=radio]:checked").data("color");
+				alert(en);
                 if (title !== null && title.length != 0) {
                     $("#calendar").fullCalendar('renderEvent', {
                         title: title,
@@ -120,7 +122,7 @@ $(document).ready(function(t, e, i) {
                     alert('You have to give a title to your event');
                 }
                 return false;
-            });
+            });*/
             $("#calendar").fullCalendar('unselect');
 
         }

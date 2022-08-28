@@ -7,7 +7,7 @@ use Illuminate\Validation\Validator;
 use \Carbon\Carbon;
 use App\Exceptions\InvalidReportRequestException;
 
-class FarmReportRequest extends FormRequest
+class FarmerReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

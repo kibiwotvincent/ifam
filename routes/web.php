@@ -23,6 +23,7 @@ use App\Http\Controllers\Account\Admin\GroupMemberController as AdminGroupMember
 use App\Http\Controllers\Account\GroupMergedSeasonController;
 use App\Http\Controllers\Account\Admin\GroupMergedSeasonController as AdminGroupMergedSeasonController;
 use App\Http\Controllers\Account\Admin\FarmerController;
+use App\Http\Controllers\Account\SeasonRecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,6 +91,8 @@ Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/add', 
 Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/add', [ExpenseController::class, 'store'])->middleware('auth');
 Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'create'])->middleware('auth')->name('add_sale');
 Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'store'])->middleware('auth');
+Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}/records/add', [SeasonRecordController::class, 'create'])->middleware('auth')->name('add_season_record');
+Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/records/add', [SeasonRecordController::class, 'store'])->middleware('auth');
 
 Route::get('/groups', [GroupController::class, 'index'])->middleware('auth')->name('groups');
 Route::get('/groups/create', [GroupController::class, 'create'])->middleware('auth')->name('create_group');
@@ -126,6 +129,7 @@ Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_i
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/update', [SeasonController::class, 'edit'])->middleware('auth')->name('group.update_season');
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/add', [ExpenseController::class, 'create'])->middleware('auth')->name('group.add_expense');
 Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'create'])->middleware('auth')->name('group.add_sale');
+Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/records/add', [SeasonRecordController::class, 'create'])->middleware('auth')->name('group.add_season_record');
 
 //profile
 Route::get('/profile', [UserController::class, 'profile'])->middleware('auth')->name('profile');
