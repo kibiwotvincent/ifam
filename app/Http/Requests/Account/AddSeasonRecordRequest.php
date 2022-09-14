@@ -28,7 +28,11 @@ class AddSeasonRecordRequest extends FormRequest
             'title' => 'required',
             'summary' => 'required',
             'record_date' => 'required|date',
-            'files.*' => 'nullable|file',
+            'record_file_1' => 'sometimes|mimes:pdf,png,jpeg,jpg',
+            'record_file_2' => 'sometimes|mimes:pdf,png,jpeg,jpg',
+            'record_file_3' => 'sometimes|mimes:pdf,png,jpeg,jpg',
+            'record_file_4' => 'sometimes|mimes:pdf,png,jpeg,jpg',
+            'record_file_5' => 'sometimes|mimes:pdf,png,jpeg,jpg',
         ];
     }
 }

@@ -151,7 +151,7 @@ class FarmController extends Controller
     {
 		$farm = Farm::find($request->farm_id);
 		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
-		
+
 		//get expenses and sales dated between from and to dates
 		$viewData = ['farm' => $farm, 'seasons' => $farm->seasons($request->department, $request->categories), 
 		'child_categories' => $childCategories, 'from' => $request->from, 'to' => $request->to];

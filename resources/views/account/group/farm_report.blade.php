@@ -59,7 +59,7 @@
 							<select style="min-width: 180px;" class="form-control select2 department-selector" id="farm-department" name="department">
 								<option value="">All Departments</option>
 								@foreach($farm->departments as $row)
-								<option value="{{ $row['id'] }}">{{ $row->category['name'] }}</option>
+								<option value="{{ $row->category['id'] }}">{{ $row->category['name'] }}</option>
 								@endforeach
 							</select>
 							<p class="d-none error" for="department"></p>
@@ -76,8 +76,8 @@
 								<div class="border-checkbox-section dropdown-menu dropdown-menu-right" aria-labelledby="moreDropdown">
 									@foreach($farm->departments as $farmDepartment)
 										@foreach($farmDepartment->category->child_categories as $row)
-										<div class="border-checkbox-group border-checkbox-group-success checkbox-panels checkbox-panel-{{ $farmDepartment['id'] }} d-block">
-											<input class="border-checkbox departments" data-department-id="{{ $farmDepartment['id'] }}" type="checkbox" id="child-category-{{ $row['id'] }}" name="categories[]" value="{{ $row['id'] }}" checked="checked" >
+										<div class="border-checkbox-group border-checkbox-group-success checkbox-panels checkbox-panel-{{ $row['parent_category_id'] }} d-block">
+											<input class="border-checkbox departments" data-department-id="{{ $row['parent_category_id'] }}" type="checkbox" id="child-category-{{ $row['id'] }}" name="categories[]" value="{{ $row['id'] }}" checked="checked" >
 											<label class="border-checkbox-label" for="child-category-{{ $row['id'] }}">{{ $row['name'] }}</label>
 										</div>
 										@endforeach

@@ -10,16 +10,24 @@ $(function () {
 		let id = $(this).attr('id');
 		let formName = '#'+id;
 		
-		let csrfToken = $('form'+formName+' input[name="_token"]').val();
-		
 		let formData = new FormData();
-		if($('#profile-photo')[0].files.length !== 0 ) {
-			//append only if input has file
-			let profilePhoto = $('#profile-photo')[0].files[0];
-			formData.append('profile_photo', profilePhoto);
-		}
 		
-        formData.append('_token', csrfToken);
+		//append form field values
+		let formFields = $('form'+formName).serialize().split('&');
+		for(let i = 0; i < formFields.length; i++) {
+			let formFieldName = formFields[i].split('=')[0];
+			let formFieldValue = $('form'+formName+' [name='+formFieldName+']').val();
+			
+			formData.append(formFieldName, formFieldValue);
+		};
+		
+		//append files if present
+		$('form'+formName+' input[type="file"]').each(function() {
+			if($(this)[0].files.length !== 0 ) {
+				//append only if input has file
+				formData.append($(this).attr('name'), $(this)[0].files[0]);
+			}
+		});
 		
 		ajaxPost(formName, formData);
 	});
@@ -86,6 +94,50 @@ $(function () {
 		}
 		
 		$(".sub-category-selector").html(subCategoryOptions);
+	});
+	
+	$('#add-more-doc').click(function (e) {
+		e.preventDefault();
+		$(".scaffold").each(function(){
+			$(this).removeClass("scaffold d-none");
+			return false;
+		});
+		if($(".scaffold").length == 0) {
+			$('#add-more-doc').addClass("d-none");
+		}
+	});
+	
+	$('.delete-doc').click(function (e) {
+		e.preventDefault();
+		let docID = $(this).attr('data-delete-id');
+		$("#record-file-"+docID).val('');
+		$("#file-upload-info-"+docID).val('Upload Document/photo');
+		
+		$(this).addClass("d-none"); //hide delete btn
+		if(docID > 1) {
+			$('#scaffold-'+docID).addClass("scaffold"); //reset scaffold
+			$('#scaffold-'+docID).addClass("d-none"); //hide file upload
+		}
+		
+		//toggle add more doc btn
+		if($(".scaffold").length == 0) {
+			$('#add-more-doc').addClass("d-none");
+		}
+		else {
+			$('#add-more-doc').removeClass("d-none");
+		}
+	});
+	
+	$('.file-upload-default').change(function (e) {
+		//show delete btn if file is selected
+		let recordFileID = $(this).attr('id').split('-')[2];
+		
+		if($('#record-file-'+recordFileID).val() == "") {
+			$('#delete-record-file-'+recordFileID).addClass('d-none');
+		}
+		else {
+			$('#delete-record-file-'+recordFileID).removeClass('d-none');
+		}
 	});
 
 	function ajaxPost(formName, formData = null, dataType = "json")

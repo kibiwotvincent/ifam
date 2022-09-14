@@ -98,6 +98,7 @@ Route::get('/groups', [GroupController::class, 'index'])->middleware('auth')->na
 Route::get('/groups/create', [GroupController::class, 'create'])->middleware('auth')->name('create_group');
 Route::post('/groups/create', [GroupController::class, 'store'])->middleware('auth');
 Route::get('/groups/{id}', [GroupController::class, 'view'])->middleware('auth')->name('view_group');
+Route::get('/groups/{id}/contributions', [GroupController::class, 'contributions'])->middleware('auth')->name('group.contributions');
 Route::get('/groups/{id}/profile', [GroupController::class, 'profile'])->middleware('auth')->name('group_profile');
 Route::get('/groups/{id}/report', [GroupController::class, 'report'])->middleware('auth')->name('group.report');
 Route::post('/groups/{id}/report', [GroupController::class, 'group_report'])->middleware('auth');

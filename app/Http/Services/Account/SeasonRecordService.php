@@ -2,9 +2,9 @@
 
 namespace App\Http\Services\Account;
 
+use App\Services\BaseService;
 use App\Models\Account\SeasonRecord;
 use App\Models\Account\SeasonRecordFile;
-use App\Services\BaseService;
 
 /**
  * Class SeasonRecordService.
@@ -30,10 +30,20 @@ class SeasonRecordService extends BaseService
 			'record_date' => $data['record_date'],
 		]);
 		
-		//fill season events files
-		/*foreach($data['files'] as $file) {
-			RecordFile::create(['eventable_type' => SeasonRecord::MODEL_NAME, 'eventable_id' => $seasonRecord['id'], 'name' => $name]);
-		}*/
+		$request = request();
+		//fill season records files
+		for($i = 1; $i <= 5; $i++) {
+			if($request->hasfile('record_file_'.$i)) {
+				$imagePath = $request->file('record_file_'.$i)->store('public/season-record-files');
+				$imageName = isset(explode('/', $imagePath)[2]) ? explode('/', $imagePath)[2] : null;
+				if($imageName != null) {
+					SeasonRecordFile::create([
+						'season_record_id' => $seasonRecord['id'],
+						'name' => $imageName
+					]);
+				}
+			}
+		}
 		
         return  $seasonRecord;
     }

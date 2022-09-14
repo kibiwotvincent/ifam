@@ -71,6 +71,18 @@ class GroupController extends Controller
     }
 	
 	/**
+     * Display group contributions view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function contributions(Request $request)
+    {
+		$group = Group::find($request->id);
+		
+        return view('account.group.contributions', ['group' => $group]);
+    }
+	
+	/**
      * Display group profile view.
      *
      * @return \Illuminate\View\View

@@ -104,6 +104,7 @@
 								<h3 class="mt-2">Group Members</h3>
 							</div>
 							<div class="col-6 text-right">
+								<a href="{{ route('group.contributions', $group['id']) }}" class="btn btn-info mr-2"><i class="ik ik-dollar-sign"></i> Members Contributions</a>
 								<a href="#" data-toggle="modal" data-target="#addMemberModal" class="btn btn-success"><i class="ik ik-plus-circle"></i> Add Member</a>
 							</div>
 						</div>
