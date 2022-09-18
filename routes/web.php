@@ -24,6 +24,7 @@ use App\Http\Controllers\Account\GroupMergedSeasonController;
 use App\Http\Controllers\Account\Admin\GroupMergedSeasonController as AdminGroupMergedSeasonController;
 use App\Http\Controllers\Account\Admin\FarmerController;
 use App\Http\Controllers\Account\SeasonRecordController;
+use App\Http\Controllers\Account\ContributionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,7 +99,9 @@ Route::get('/groups', [GroupController::class, 'index'])->middleware('auth')->na
 Route::get('/groups/create', [GroupController::class, 'create'])->middleware('auth')->name('create_group');
 Route::post('/groups/create', [GroupController::class, 'store'])->middleware('auth');
 Route::get('/groups/{id}', [GroupController::class, 'view'])->middleware('auth')->name('view_group');
-Route::get('/groups/{id}/contributions', [GroupController::class, 'contributions'])->middleware('auth')->name('group.contributions');
+Route::get('/groups/{id}/contributions/{year?}/{month?}', [ContributionController::class, 'index'])->middleware('auth')->name('group.contributions');
+Route::post('/groups/{id}/contributions', [ContributionController::class, 'store'])->middleware('auth')->name('group.add_contribution');
+Route::get('/groups/{id}/contributions/report/{year?}/{month?}', [ContributionController::class, 'report'])->middleware('auth')->name('group.contributions_report');
 Route::get('/groups/{id}/profile', [GroupController::class, 'profile'])->middleware('auth')->name('group_profile');
 Route::get('/groups/{id}/report', [GroupController::class, 'report'])->middleware('auth')->name('group.report');
 Route::post('/groups/{id}/report', [GroupController::class, 'group_report'])->middleware('auth');

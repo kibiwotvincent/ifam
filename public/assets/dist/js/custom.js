@@ -144,6 +144,8 @@ $(function () {
 	{
 		commandButton = formName+"_submit";
 		commandButtonText = $(commandButton).html();
+		const resetFormAfterSubmit = Boolean($(commandButton).attr('data-reset-form-after-submit') == '1');
+		const replaceIconOnSubmit = Boolean($(commandButton).attr('data-replace-icon-on-submit') == '1');
 		
 		let setUp = 
 		{
@@ -153,7 +155,14 @@ $(function () {
 			beforeSend: function(){
 				$(commandButton).attr("disabled","disabled");
 				$(formName+"_feedback").addClass("d-none");
-				$(formName+"_submit").html(commandButtonText+" <i class=\"fa fa-spin fa-spinner\"></i>");
+				
+				if(replaceIconOnSubmit) {
+					$(formName+"_submit").html("<i class=\"fa fa-spin fa-spinner\"></i>");
+				}
+				else {
+					$(formName+"_submit").html(commandButtonText+" <i class=\"fa fa-spin fa-spinner\"></i>");
+				}
+				
 				resetFormStyle(formName);
 			},
 			complete: function(){
@@ -169,13 +178,16 @@ $(function () {
 				let message = "<div class=\"alert alert-success role=\"alert\">"+response.message+"</div>";
 				$(formName+"_feedback").html(message).removeClass("d-none");
 				
+				if(resetFormAfterSubmit) {
+					$('form'+formName)[0].reset();
+				}
+				
 				let redirectUrl = $('form'+formName+' input[name="_redirect"]').val();
 				if(typeof redirectUrl !== 'undefined' && redirectUrl != "") {
 					window.location = redirectUrl;
 				}
 			},
 			error: function(response) {
-				//console.log(response);
 				if(dataType == "html") {
 					$(formName+"_feedback").html(response).removeClass("d-none");
 					return;

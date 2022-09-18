@@ -104,6 +104,15 @@ class GroupMember extends Model
         return $this->hasMany('App\Models\Account\GroupMergedSeason'::class, 'group_member_id', 'id');
     }
 	
+	/**
+     * @var array Relations
+	 * group member contributions
+     */
+	public function contributions()
+    {
+        return $this->hasMany('App\Models\Account\Contribution'::class);
+    }
+	
 	/*get group member merged seasons*/
 	public function mergedSeasons($department = null, $categories = null) {
 		$seasons = $this->merged_seasons()->department($department)->childCategories($categories)->get()
@@ -133,6 +142,17 @@ class GroupMember extends Model
 						})->flatten()->unique('id');
 						
 		return $categories;
+	}
+	
+	/*get group member grouped contributions*/
+	public function grouped_contributions($year, $month, $groupBy = 'month') {
+		$contributions = self::contributions()
+						->where('target_year', $year)
+						->where('target_month', $month)
+						->get()
+						->groupBy($groupBy);
+						
+		return $contributions;
 	}
 	
 }
