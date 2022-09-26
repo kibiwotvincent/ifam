@@ -10,6 +10,11 @@ class FarmCategory extends Model
 {
     use HasFactory, SoftDeletes;
 	
+	const METADATAS = 	[
+							['acreage' => ['label' => "Acreage", 'input' => "text", 'validation' => "nullable|numeric"]],
+							['planting_date' => ['label' => "Planting Date", 'input' => "date", 'validation' => "required|date"], 'stocking_date' => ['label' => "Stocking Date", 'input' => "date", 'validation' => "required|date"]],
+						];
+	
 	/**
      * The attributes that are mass assignable.
      *
@@ -41,4 +46,11 @@ class FarmCategory extends Model
         return $this->hasMany('App\Models\Account\Admin\ChildCategory'::class, 'parent_category_id', 'id');
     }
 
+	/**
+     * get metadatas as a single dimension array
+     */
+	public function getMetadatas()
+    {
+        return collect(self::METADATAS)->collapse();
+    }
 }

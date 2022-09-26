@@ -28,10 +28,9 @@ class AddSeasonRequest extends FormRequest
             'name' => 'required|max:255',
             'description' => 'nullable',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
             'child_category_id' => 'nullable|numeric',
             'child_sub_category_id' => 'nullable|numeric',
-            'acreage' => 'nullable|numeric',
+            'metadata' => 'sometimes|array',
         ];
     }
 	

@@ -26,6 +26,7 @@ class AddFarmCategoryRequest extends FormRequest
         return [
             'name' => 'required|max:255',
             'description' => 'nullable',
+            'metadata' => 'sometimes|array',
         ];
     }
 }

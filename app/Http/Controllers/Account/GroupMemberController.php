@@ -65,9 +65,9 @@ class GroupMemberController extends Controller
     public function view(Request $request)
     {
 		$group = Group::find($request->group_id);
-		$member = $group->members->only([$request->member_id])->first();
+		$member = GroupMember::withNotAccepted()->find($request->member_id);
 		
-        return view('account.group.member', ['group' => $group, 'member' => $member]);
+        return view('account.group.member', compact('group', 'member'));
     }
 
     /**

@@ -36,20 +36,28 @@
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="category-name">Acreage (in acres)</label>
-						<input type="text" class="form-control" id="category-name" name="acreage" value="{{ $season['acreage'] }}">
-						<p class="d-none error" for="acreage"></p>
-					</div>
-				</div>
-			</div>
-			<div class="row mb-1">
-				<div class="col-md-4">
-					<div class="form-group">
 						<label for="season-start-date">Season Start Date *</label>
 						<input type="date" class="form-control" id="season-start-date" name="start_date" value="{{ date('Y-m-d', strtotime($season['start_date'])) }}" required>
 						<p class="d-none error" for="start_date"></p>
 					</div>
 				</div>
+			</div>
+			<div class="row">
+				@php
+				$categoryMetadatas = $season->department->category->getMetadatas();
+				@endphp
+				
+				@foreach($season->department->category->metadata as $metadata)
+				<div class="col-md-4">
+					<div class="form-group">
+						<label for="metadata-{{ $metadata }}">{{ $categoryMetadatas[$metadata]['label'] }}</label>
+						<input type="{{ $categoryMetadatas[$metadata]['input'] }}" class="form-control" id="metadata-{{ $metadata }}" name="metadata[{{ $metadata }}]" value="{{ $season->metadata[$metadata] }}">
+						<p class="d-none error" for="metadata.{{ $metadata }}"></p>
+					</div>
+				</div>
+				@endforeach
+			</div>
+			<div class="row mb-1">
 				<div class="col-md-4">
 					<div class="form-group">
 						<label for="season-end-date">Season End Date</label>

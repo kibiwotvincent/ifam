@@ -16,29 +16,30 @@
 	<table class="table table-hover mb-0">
 		<thead>
 			<tr>
-			
 				<th>Date</th>
 				<th>Amount</th>
 				<th>Description</th>
-				
 				@if(!$read_only)
 				<th class="text-right">Action</th>
 				@endif
-				
 			</tr>
 		</thead>
 		<tbody>
 			@foreach($expenses as $row)
 			<tr>
-			
-				<td>{{ date('d M Y', strtotime($row['date_incurred'])) }}</td>
-				<td>{{ number_format($row['amount'], 2) }}</td>
-				<td>{{ $row['description'] }}</td>
+				<td class="@if($row->trashed()) trashed @endif">{{ date('d M Y', strtotime($row['date_incurred'])) }}</td>
+				<td class="@if($row->trashed()) trashed @endif">{{ number_format($row['amount'], 2) }}</td>
+				<td class="@if($row->trashed()) trashed @endif">{{ $row['description'] }}</td>
 				
 				@if(!$read_only)
 				<td class="text-right">
-				<a href="#!"><i class="ik ik-edit f-16 mr-15 text-green"></i></a>
-				<a href="#"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
+					@if($is_group)
+					<a href="{{ route('group.update_expense', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}"><i class="ik ik-edit mr-15 f-16 text-success"></i></a>
+					<a href="{{ route('group.view_expense', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
+					@else
+					<a href="{{ route('update_expense', [$season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}"><i class="ik ik-edit mr-15 f-16 text-success"></i></a>
+					<a href="{{ route('view_expense', [$season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
+					@endif
 				</td>
 				@endif
 				

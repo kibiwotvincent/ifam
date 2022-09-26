@@ -29,6 +29,10 @@
     background-color: #2dce89;
 	color: #fff;
 }
+.badge-removed {
+    background-color: #dc3545;
+	color: #fff;
+}
 .badge-invited, .badge-secretary {
     background-color: #11cdef;
 	color: #fff;
@@ -39,4 +43,7 @@
 }
 .phone {
 	letter-spacing: 0.15em;
+}
+table tbody tr td.trashed {
+	text-decoration: line-through;
 }

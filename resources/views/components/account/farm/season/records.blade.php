@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row">
 	<div class="col-8">
 		<h6 class="mt-2">Season Records ({{ count($records) }})</h6>
 	</div>
@@ -11,38 +11,39 @@
 			@endif
 		@endif
 	</div>
-</div>
-<div class="table-responsive">
-	<table class="table table-hover mb-0">
-		<thead>
-			<tr>
-			
-				<th>Record Date</th>
-				<th>Title</th>
-				<th>Attached Files</th>
-				
-				@if(!$read_only)
-				<th class="text-right">Action</th>
-				@endif
-				
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($records as $row)
-			<tr>
-				<td>{{ date('d M Y', strtotime($row['record_date'])) }}</td>
-				<td>{{ $row['title'] }}</td>
-				<td><span class="badge badge-pill badge-light">{{ count($row->files) }}</span></td>
-				
-				@if(!$read_only)
-				<td class="text-right">
-				<a href="#!"><i class="ik ik-edit f-16 mr-15 text-success"></i></a>
-				<a href="#"><i class="ik ik-arrow-right-circle f-16 text-success"></i></a>
-				</td>
-				@endif
-				
-			</tr>
-			@endforeach
-		</tbody>
-	</table>
+	
+	<div class="col-md-12 p-0">
+		<div class="card latest-update-card mt-4 mx-0 mb-0">
+			<div class="card-block">
+				<div class="latest-update-box">
+					@foreach($records as $row)
+						<div class="row pt-20 pb-30">
+							<div class="col-auto text-right update-meta pr-0">
+								<i class="b-success update-icon ring"></i>
+							</div>
+							<div class="col pl-5">
+								<span>{{ date('d M Y', strtotime($row['record_date'])) }}</span>
+								<a href="#!">
+									<h6 class="text-muted font-weight-bold mt-2" style="text-decoration: underline;">{{ $row['title'] }}</h6>
+								</a>
+								<div class="text-muted mb-0">
+								{!! $row['summary'] !!}
+								</div>
+								<div>
+									@if($row->files->isNotEmpty())
+										<p class="mb-1">Attached files:</p>
+										@foreach($row->files as $file)
+											<a target="_blank" href="{{ asset('storage/season-record-files/'.$file['name']) }}" class="text-primary mr-4">
+											{{ $file['name'] }}
+											</a>
+										@endforeach
+									@endif
+								</div>
+							</div>
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

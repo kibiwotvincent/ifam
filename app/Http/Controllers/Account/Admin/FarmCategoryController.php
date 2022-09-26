@@ -35,8 +35,8 @@ class FarmCategoryController extends Controller
      */
     public function create()
     {
-		$farmCategories = FarmCategory::orderBy('name', 'asc')->get();
-        return view('account.admin.add-farm-category', ['farm_categories' => $farmCategories]);
+		$metadatas = FarmCategory::METADATAS;
+        return view('account.admin.add-farm-category', compact('metadatas'));
     }
 	
 	/**

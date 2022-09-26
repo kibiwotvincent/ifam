@@ -45,7 +45,7 @@
 						<a class="nav-link font-weight-bold px-4" id="pills-sales-tab" data-toggle="pill" href="#sales-tab" role="tab" aria-controls="pills-sales-tab" aria-selected="true"><i class="ik ik-shopping-cart"></i> Sales</a>
 					</li>
 					<li class="nav-item border-right">
-						<a class="nav-link font-weight-bold" id="pills-profile-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="ik ik-file-text"></i> View Report</a>
+						<a class="nav-link font-weight-bold" id="pills-report-tab" data-toggle="pill" href="#report" role="tab" aria-controls="pills-report" aria-selected="false"><i class="ik ik-file-text"></i> View Report</a>
 					</li>
 					<li class="nav-item border-right">
 						<a class="nav-link font-weight-bold" id="pills-records-tab" data-toggle="pill" href="#records-tab" role="tab" aria-controls="pills-records" aria-selected="false"><i class="ik ik-records"></i> Season Records</a>
@@ -62,7 +62,7 @@
 							<x-account.farm.season.sales />
 						</div>
 					</div>
-					<div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">
+					<div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="pills-report-tab">
 						<div class="card-body">
 							<x-account.farm.season.report />
 						</div>

@@ -47,6 +47,35 @@
 							<textarea class="form-control" id="category-description" rows="4" name="description"></textarea>
 							<p class="d-none error" for="description"></p>
 						</div>
+						<div class="form-group">
+							<label>Metadata </label>
+							@foreach($metadatas as $groupedMetadataArray)
+									@if(count($groupedMetadataArray) == 1)
+										<div class="row mt-1 border-checkbox-section">
+											@foreach($groupedMetadataArray as $metadata => $metadataArray)
+											<div class="col-md-3">
+												<div class="border-checkbox-group border-checkbox-group-success">
+													<input class="border-checkbox" type="checkbox" id="metadata-{{ $metadata }}" name="metadata[]" value="{{ $metadata }}">
+													<label class="border-checkbox-label" for="metadata-{{ $metadata }}">{{ $metadataArray['label'] }}</label>
+												</div>
+											</div>
+											@endforeach
+										</div>
+									@else
+										<div class="form-radio mt-2">
+											@foreach($groupedMetadataArray as $metadata => $metadataArray)
+												<div class="radio radio-success radio-inline">
+													<label>
+														<input type="radio" name="metadata[]" value="{{ $metadata }}">
+														<i class="helper"></i>{{ $metadataArray['label'] }}
+													</label>
+												</div>
+											@endforeach
+										</div>
+									@endif
+							@endforeach
+							<p class="d-none error" for="metadata"></p>
+						</div>
 						
 						<div id="add_farm_category_form_feedback"></div>
 						

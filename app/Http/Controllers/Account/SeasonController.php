@@ -41,7 +41,7 @@ class SeasonController extends Controller
     {
 		$farm = Farm::find($request->farm_id);
 		$department = $farm->departments->only([$request->department_id])->first();
-		
+			
 		$view = ($request->routeIs('group.*')) ? 'account.group.add-season' : 'account.add-season';
 		
         return view($view, compact('farm', 'department'));

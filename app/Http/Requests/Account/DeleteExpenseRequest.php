@@ -4,7 +4,7 @@ namespace App\Http\Requests\Account;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddExpenseRequest extends FormRequest
+class DeleteExpenseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class AddExpenseRequest extends FormRequest
     public function rules()
     {
         return [
-            'season_id' => 'required|numeric',
-            'description' => 'required',
-            'amount' => 'required|numeric',
-            'date_incurred' => 'required|date',
-            'receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
+            'expense_id' => 'required|numeric',
         ];
     }
 	

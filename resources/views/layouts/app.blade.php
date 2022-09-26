@@ -103,6 +103,7 @@
 		<script src="/assets/cropper/js/main.js"></script>
 		<!--end cropper-->
         <script src="/assets/dist/js/theme.js"></script>
+        <script src="/assets/js/widget-data.js"></script>
 		<script src="/assets/dist/js/custom.js"></script>
 		
     </body>

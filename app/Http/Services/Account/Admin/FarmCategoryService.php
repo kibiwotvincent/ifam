@@ -25,6 +25,7 @@ class FarmCategoryService extends BaseService
 		$farmCategory = FarmCategory::create([
 			'name' => $data['name'],
 			'description' => $data['description'],
+			'metadata' => $data['metadata'],
 		]);
 		
         return  $farmCategory;

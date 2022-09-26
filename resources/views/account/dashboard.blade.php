@@ -74,6 +74,9 @@
 			</div>
 		</div>
 	</div>
+	
+	<x-account.subscription-check-alert />
+	
 	<div class="row">
 		<div class="col-md-8">
 			<div class="card">

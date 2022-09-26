@@ -55,27 +55,26 @@
 				</div>
 				<div class="col-md-4">
 					<div class="form-group">
-						<label for="category-name">Acreage (in acres)</label>
-						<input type="text" class="form-control" id="category-name" name="acreage">
-						<p class="d-none error" for="acreage"></p>
-					</div>
-				</div>
-			</div>
-			<div class="row mb-2">
-				<div class="col-md-6">
-					<div class="form-group">
 						<label for="season-start-date">Season Start Date *</label>
 						<input type="date" class="form-control" id="season-start-date" name="start_date" required>
 						<p class="d-none error" for="start_date"></p>
 					</div>
 				</div>
-				<div class="col-md-6">
+			</div>
+			<div class="row mb-2">
+				@php
+				$categoryMetadatas = $department->category->getMetadatas();
+				@endphp
+				
+				@foreach($department->category->metadata as $metadata)
+				<div class="col-md-4">
 					<div class="form-group">
-						<label for="season-end-date">Season End Date</label>
-						<input type="date" class="form-control" id="season-end-date" name="end_date">
-						<p class="d-none error" for="end_date"></p>
+						<label for="metadata-{{ $metadata }}">{{ $categoryMetadatas[$metadata]['label'] }}</label>
+						<input type="{{ $categoryMetadatas[$metadata]['input'] }}" class="form-control" id="metadata-{{ $metadata }}" name="metadata[{{ $metadata }}]">
+						<p class="d-none error" for="metadata.{{ $metadata }}"></p>
 					</div>
 				</div>
+				@endforeach
 			</div>
 			
 			<div id="add_season_form_feedback"></div>

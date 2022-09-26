@@ -29,9 +29,17 @@ class Expense extends Model
      * @var array
      */
     protected $casts = [
-        'date_incurred' => 'date:Y-m-d',
+        'date_incurred' => 'date',
         'deleted_at' => 'datetime',
     ];
+	
+	/**
+     * @var array Relations
+     */
+	public function season()
+    {
+        return $this->belongsTo('App\Models\Account\Season'::class);
+    }
 	
 	/**
 	 * Query scope to only include expenses incurred after or on a particular date.

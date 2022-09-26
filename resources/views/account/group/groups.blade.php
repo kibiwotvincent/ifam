@@ -108,12 +108,12 @@
 			@endif
 		</div>
 		
-		@if(count($user_groups) == 0)
+		@if(count($userGroups) == 0)
 		<div class="alert alert-info" role="alert">You're not a member of any group yet.</div>
 		@endif
 		
 		<div class="row">
-			@foreach($user_groups as $row)
+			@foreach($userGroups as $row)
 			<div class="col-md-6">
 				<div class="card proj-t-card">
 					<div class="card-body">
@@ -176,7 +176,7 @@
 								@csrf
 								<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
 								<input type="hidden" name="group_id" value="{{ $row['group_id'] }}"/>
-								<p>Are you sure you want to leave {{ $row->group['name'] }}</p>
+								<p>Are you sure you want to leave {{ $row->group['name'] }} ?</p>
 								<div id="leave_group_{{ $row['id'] }}_form_feedback"></div>
 										
 								<div class="text-right">

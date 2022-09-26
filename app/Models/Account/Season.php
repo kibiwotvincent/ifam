@@ -24,7 +24,6 @@ class Season extends Model
         'end_date',
         'child_category_id',
         'child_sub_category_id',
-        'acreage',
         'metadata',
         'status',
     ];

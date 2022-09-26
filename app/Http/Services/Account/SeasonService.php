@@ -29,10 +29,9 @@ class SeasonService extends BaseService
 			'name' => $data['name'],
 			'description' => $data['description'],
 			'start_date' => $data['start_date'],
-			'end_date' => $data['end_date'],
 			'child_category_id' => $data['child_category_id'],
 			'child_sub_category_id' => $data['child_sub_category_id'],
-			'acreage' => $data['acreage'],
+			'metadata' => $data['metadata'],
 			'status' => "open",
 		]);
 		
@@ -48,7 +47,7 @@ class SeasonService extends BaseService
 		$season->start_date = $data['start_date'];
 		$season->end_date = $data['end_date'];
 		$season->child_sub_category_id = $data['child_sub_category_id'];
-		$season->acreage = $data['acreage'];
+		$season->metadata = $data['metadata'];
 		
 		if(isset($data['status'])) {
 			$season->status = $data['status'];

@@ -5,10 +5,10 @@ namespace App\View\Components\Account;
 use Illuminate\View\Component;
 use Illuminate\Support\Facades\Auth;
 
-class Sidebar extends Component
+class SubscriptionCheckAlert extends Component
 {
-	public $farmsCount;
-	public $groupsCount;
+	public $message;
+	public $notSubscribed;
 	
     /**
      * Create a new component instance.
@@ -18,8 +18,8 @@ class Sidebar extends Component
     public function __construct()
     {
 		$user = Auth::user();
-		$this->farmsCount = $user->farms->count();
-		$this->groupsCount = $user->groups()->count();	
+		$this->notSubscribed = $user->is_not_subscribed;
+		$this->message = "Please subscribe to any of our plans to enjoy full features of iFam";	
 		
     }
 	
@@ -30,6 +30,6 @@ class Sidebar extends Component
      */
     public function render()
     {
-        return view('components.account.sidebar');
+        return view('components.account.subscription-check-alert');
     }
 }

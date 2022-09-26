@@ -52,6 +52,7 @@ class User extends Authenticatable //implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'deleted_at' => 'datetime',
         'date_of_birth' => 'date',
+		'subscription_expires_on' => 'datetime',
     ];
 	
 	/**
@@ -63,6 +64,7 @@ class User extends Authenticatable //implements MustVerifyEmail
 		'full_name',
 		'name',
 		'age',
+		'is_not_subscribed',
 	];
 	
 	/**
@@ -101,6 +103,21 @@ class User extends Authenticatable //implements MustVerifyEmail
 	public function getFullNameAttribute()
 	{
 		return $this->first_name." ".$this->last_name;
+	}
+	
+	/**
+	 * Get whether user is on an active paid plan or not.
+	 *
+	 * @param  none
+	 * @return boolean
+	 */
+	public function getIsNotSubscribedAttribute()
+	{	
+		//check if user is allowed to bypass subscription check
+		if($this->can('bypass subscription check')) return false;
+		
+		$now = \Carbon\Carbon::now();
+		return $this->subscription_expires_on == "" || $now->gt($this->subscription_expires_on);
 	}
 	
 	/**

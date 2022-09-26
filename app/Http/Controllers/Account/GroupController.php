@@ -49,13 +49,13 @@ class GroupController extends Controller
     public function index()
     {
 		$user = Auth::user();
-		$user_groups = $user->groups;
+		$userGroups = $user->groups()->acceptedOrPending()->get();
 		
-		$userGroupIDs = $user->groups()->get()->pluck('group_id')->all();
+		$userGroupIDs = $userGroups->pluck('group_id')->all();
 		
 		$groups = Group::inRandomOrder()->limit(10)->get()->except($userGroupIDs);
 		
-        return view('account.group.groups', compact('groups', 'user_groups'));
+        return view('account.group.groups', compact('groups', 'userGroups'));
     }
 	
 	/**
@@ -66,8 +66,9 @@ class GroupController extends Controller
     public function view(Request $request)
     {
 		$group = Group::find($request->id);
+		$members = $group->members()->acceptedOrPending()->get();
 		
-        return view('account.group.group', ['group' => $group]);
+        return view('account.group.group', compact('group','members'));
     }
 	
 	/**

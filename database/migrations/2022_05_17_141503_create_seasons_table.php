@@ -22,7 +22,6 @@ class CreateSeasonsTable extends Migration
 			$table->date('end_date')->nullable();
 			$table->integer('child_category_id')->nullable();
 			$table->integer('child_sub_category_id')->nullable();
-			$table->double('acreage')->nullable();
 			$table->text('metadata')->nullable();
 			$table->string('status');
 			$table->softDeletes();
