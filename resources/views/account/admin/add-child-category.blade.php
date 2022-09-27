@@ -36,7 +36,7 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-body">
-					<form class="ajax" id="add_child_category_form" action="{{ route('admin.add_child_category', $farm_category['id']) }}" method="post">
+					<form class="ajax repeater" id="add_child_category_form" action="{{ route('admin.add_child_category', $farm_category['id']) }}" method="post">
 						@method('post')
 						@csrf
 						<input type="hidden" name="_redirect" value="{{ url()->previous() }}" >

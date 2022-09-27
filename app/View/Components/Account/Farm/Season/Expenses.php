@@ -11,15 +11,15 @@ class Expenses extends Component
 {
 	public $season;
 	public $expenses;
-	public $is_group;
-	public $read_only;
+	public $isGroup;
+	public $readOnly;
 	
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Request $request, bool $isGroup = false, bool $readOnly = false)
+    public function __construct(Request $request, bool $isGroup, bool $readOnly)
     {
 		$season = Season::find($request->season_id);
 		$user = Auth::user();
@@ -52,8 +52,8 @@ class Expenses extends Component
 		
 		$this->season = $season;
 		$this->expenses = $expenses;
-		$this->is_group = $isGroup;
-		$this->read_only = $readOnly;
+		$this->isGroup = $isGroup;
+		$this->readOnly = $readOnly;
     }
 	
     /**

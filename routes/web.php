@@ -96,7 +96,7 @@ Route::middleware(['auth','set-active-sidebar-menu:farms'])->group(function () {
 	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/update/{id}', [ExpenseController::class, 'update']);
 	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/delete/{id}', [ExpenseController::class, 'delete'])->name('delete_expense');
 	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/restore/{id}', [ExpenseController::class, 'restore'])->name('restore_expense');
-	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/destroy/{id}', [ExpenseController::class, 'delete'])->name('destroy_expense');
+	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/destroy/{id}', [ExpenseController::class, 'destroy'])->name('destroy_expense');
 	Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'create'])->name('add_sale');
 	Route::post('/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'store']);
 	Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}/records/add', [SeasonRecordController::class, 'create'])->name('add_season_record');
@@ -141,7 +141,7 @@ Route::middleware(['auth', 'set-active-sidebar-menu:groups'])->group(function ()
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}', [SeasonController::class, 'view'])->name('group.view_season');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/update', [SeasonController::class, 'edit'])->name('group.update_season');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/add', [ExpenseController::class, 'create'])->name('group.add_expense');
-	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/update/{id}', [ExpenseController::class, 'update'])->name('group.update_expense');
+	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/update/{id}', [ExpenseController::class, 'edit'])->name('group.update_expense');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/expenses/{id}', [ExpenseController::class, 'view'])->name('group.view_expense');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/sales/add', [SaleController::class, 'create'])->name('group.add_sale');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/records/add', [SeasonRecordController::class, 'create'])->name('group.add_season_record');

@@ -37,6 +37,9 @@ class ExpensePolicy
 		
 		if($user->can('view expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expenses is being updated
+			//check if user can view deleted expense
+			if(! $user->can('view deleted expenses')) return false;
+			
 			return true;
 		}
 		
@@ -45,6 +48,8 @@ class ExpensePolicy
 			$group = $farm->farmable;
 			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
 			if($member != null && $member->can('view group expense')) {
+				if(! $member->can('view deleted group expenses')) return false;
+				
 				return true;
 			}
 		}

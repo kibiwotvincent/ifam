@@ -37,22 +37,22 @@
 				<div class="nav-item @if($_active_menu == 'profile') active @endif">
 					<a href="{{ route('profile') }}"><i class="ik ik-user"></i><span>Profile</span></a>
 				</div>
-				@can('manage farm categories')
+				@can('view farm categories')
 				<div class="nav-item @if($_active_menu == 'admin.farm-categories') active @endif">
 					<a href="{{ route('admin.farm_categories') }}"><i class="ik ik-pie-chart"></i><span>Farm Categories</span></a>
 				</div>
 				@endcan
-				@can('manage roles and permissions')
+				@can('view roles and permissions')
 				<div class="nav-item @if($_active_menu == 'admin.roles') active @endif">
 					<a href="{{ route('admin.roles') }}"><i class="ik ik-sliders"></i><span>Roles and Permissions</span></a>
 				</div>
 				@endcan
-				@can('manage platform users')
+				@can('view users')
 				<div class="nav-item @if($_active_menu == 'admin.users') active @endif">
 					<a href="{{ route('admin.users') }}"><i class="ik ik-users"></i><span>Platform Users</span></a>
 				</div>
 				@endcan
-				@can('manage platform users')
+				@can('view farmers')
 				<div class="nav-item @if($_active_menu == 'admin.farmers') active @endif">
 					<a href="{{ route('admin.farmers') }}"><i class="ik ik-users"></i><span>Farmers</span></a>
 				</div>

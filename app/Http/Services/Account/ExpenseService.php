@@ -4,6 +4,7 @@ namespace App\Http\Services\Account;
 
 use App\Models\Account\Expense;
 use App\Services\BaseService;
+use Storage;
 
 /**
  * Class ExpenseService.
@@ -54,15 +55,17 @@ class ExpenseService extends BaseService
      */
     public function update(array $data = []): Expense
     {
+		$expense = Expense::find($data['expense_id']);
+		
 		$request = request();
 		$receiptCopy = null;
 		if($request->hasfile('receipt_copy')) {
 			$filePath = $request->file('receipt_copy')->store('public/expense-receipts');
 			$receiptCopy = isset(explode('/', $filePath)[2]) ? explode('/', $filePath)[2] : null;
 			//delete existing receipt copy if it exists
+			$this->deleteReceiptCopy($expense->receipt_copy);
 		}
 		
-		$expense = Expense::find($data['expense_id']);
 		$expense->description = $data['description'];
 		$expense->amount = $data['amount'];
 		$expense->date_incurred = $data['date_incurred'];
@@ -93,7 +96,11 @@ class ExpenseService extends BaseService
      */
     public function destroy($expenseID)
     {
-		return Expense::withTrashed()->find($expenseID)->forceDelete();
+		$expense = Expense::withTrashed()->find($expenseID);
+		
+		$this->deleteReceiptCopy($expense->receipt_copy);
+		
+		return $expense->forceDelete();
 	}
 	
 	/**
@@ -105,6 +112,19 @@ class ExpenseService extends BaseService
     public function restore($expenseID)
     {
 		return Expense::withTrashed()->find($expenseID)->restore();
+	}
+	
+	/**
+     * Delete expense receipt copy file if it exists
+     *
+     * @param  str $receiptCopy
+     * @return bool
+     */
+    public function deleteReceiptCopy($receiptCopy)
+    {
+		if($receiptCopy != "" && Storage::exists('public/expense-receipts/'.$receiptCopy)){
+			Storage::delete('public/expense-receipts/'.$receiptCopy);
+		}
 	}
 
 }

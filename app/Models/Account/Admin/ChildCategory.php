@@ -10,6 +10,11 @@ class ChildCategory extends Model
 {
     use HasFactory, SoftDeletes;
 	
+	const METADATAS = 	[
+							['unit_measure' => ['label' => "Unit Measure", 'input' => "select", 'validation' => "nullable", 'type' => "repeater", 'attributes' => ['code','name']]],
+							['quality' => ['label' => "Quality", 'input' => "select", 'validation' => "nullable", 'type' => "repeater", 'attributes' => ['code','name']]],
+						];
+	
 	/**
      * The attributes that are mass assignable.
      *
@@ -47,6 +52,14 @@ class ChildCategory extends Model
 	public function parent_category()
     {
         return $this->belongsTo('App\Models\Account\Admin\FarmCategory'::class, 'id', 'parent_category_id');
+    }
+	
+	/**
+     * get metadatas as a single dimension array
+     */
+	public function getMetadatas()
+    {
+        return collect(self::METADATAS)->collapse();
     }
 
 }

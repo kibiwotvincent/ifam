@@ -37,7 +37,8 @@ class ChildCategoryController extends Controller
     public function create(Request $request)
     {
 		$farmCategory = FarmCategory::find($request->id);
-        return view('account.admin.add-child-category', ['farm_category' => $farmCategory]);
+		$metadatas = ChildCategory::METADATAS;
+        return view('account.admin.add-child-category', ['farm_category' => $farmCategory, 'metadatas' => $metadatas]);
     }
 	
 	/**

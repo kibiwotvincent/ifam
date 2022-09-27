@@ -232,7 +232,7 @@ class GroupMember extends Model
 									return $row['name'];
 								})->all();
 								
-			if(in_array('add group expense', $rolePermissions)) {
+			if(in_array($permission, $rolePermissions)) {
 				//member has the permission being checked
 				return true;
 			}

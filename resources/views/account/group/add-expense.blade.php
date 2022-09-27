@@ -40,7 +40,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.add-expense :is_group=true />
+			<x-account.farm.season.add-expense :season=$season />
 		</div>
 	</div>
 	

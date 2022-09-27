@@ -71,7 +71,7 @@ class ExpenseController extends Controller
      */
     public function edit(Request $request)
     {
-		$expense = Expense::find($request->id);
+		$expense = Expense::findOrFail($request->id);
 		$this->authorize('update', $expense);
 		
 		$view = ($request->routeIs('group.*')) ? 'account.group.update-expense' : 'account.update-expense';

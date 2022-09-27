@@ -57,12 +57,12 @@
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="expenses-tab" role="tabpanel" aria-labelledby="pills-expenses-tab">
 						<div class="card-body">
-							<x-account.farm.season.expenses :is_group=true />
+							<x-account.farm.season.expenses :isGroup=true :readOnly=false />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="sales-tab" role="tabpanel" aria-labelledby="pills-sales-tab">
 						<div class="card-body">
-							<x-account.farm.season.sales :is_group=true />
+							<x-account.farm.season.sales :isGroup=true :readOnly=false />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -72,7 +72,7 @@
 					</div>
 					<div class="tab-pane fade" id="records-tab" role="tabpanel" aria-labelledby="pills-records-tab">
 						<div class="card-body">
-							<x-account.farm.season.season-records :is_group=true />
+							<x-account.farm.season.season-records :isGroup=true  :readOnly=false />
 						</div>
 					</div>
 					
