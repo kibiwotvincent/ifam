@@ -32,7 +32,7 @@ class ExpenseService extends BaseService
 		$request = request();
 		$receiptCopy = null;
 		if($request->hasfile('receipt_copy')) {
-			$filePath = $request->file('receipt_copy')->store('public/expense-receipts');
+			$filePath = $request->file('receipt_copy')->store('public/'.Expense::EXPENSE_RECEIPTS_FOLDER);
 			$receiptCopy = isset(explode('/', $filePath)[2]) ? explode('/', $filePath)[2] : null;
 		}
 		
@@ -60,7 +60,7 @@ class ExpenseService extends BaseService
 		$request = request();
 		$receiptCopy = null;
 		if($request->hasfile('receipt_copy')) {
-			$filePath = $request->file('receipt_copy')->store('public/expense-receipts');
+			$filePath = $request->file('receipt_copy')->store('public/'.Expense::EXPENSE_RECEIPTS_FOLDER);
 			$receiptCopy = isset(explode('/', $filePath)[2]) ? explode('/', $filePath)[2] : null;
 			//delete existing receipt copy if it exists
 			$this->deleteReceiptCopy($expense->receipt_copy);
@@ -122,7 +122,7 @@ class ExpenseService extends BaseService
      */
     public function deleteReceiptCopy($receiptCopy)
     {
-		if($receiptCopy != "" && Storage::exists('public/expense-receipts/'.$receiptCopy)){
+		if($receiptCopy != "" && Storage::exists('public/'.Expense::EXPENSE_RECEIPTS_FOLDER.'/'.$receiptCopy)){
 			Storage::delete('public/expense-receipts/'.$receiptCopy);
 		}
 	}

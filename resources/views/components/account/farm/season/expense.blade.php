@@ -1,20 +1,34 @@
 <div class="card">
 	<div class="card-body">
+		<div class="form-group">
+			<label for="description">Short Description</label>
+			<span class="form-control pt-2 font-weight-bold">{{ $expense['description'] }}</span>
+		</div>
 		<div class="row">
 			<div class="col-md-6">
-				<h6>Date incurred: <span class="font-weight-bold">{{ date('d M Y', strtotime($expense['date_incurred'])) }}</span></h6>
+				<div class="form-group">
+					<label>Amount</label>
+					<span class="form-control pt-2 font-weight-bold">{{ number_format($expense['amount'], 2) }}</span>
+				</div>
 			</div>
-			<div class="col-md-6 text-right">
-				<h6>Amount: <span class="font-weight-bold">{{ number_format($expense['amount'], 2) }}</span></h6>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Date Incurred</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $expense->date_incurred->format('d M Y') }}</span>
+				</div>
 			</div>
 		</div>
-		<h6 class="mt-2">Description </h6>
-		<p class="text-muted">{{ $expense['description'] }}</p>
-		<h6>Receipt Copy </h6>
-		<a target="_blank" href="{{ asset('storage/expense-receipts/'.$expense['receipt_copy']) }}" class="d-block text-primary">
-		{{ $expense['receipt_copy'] }}
-		</a>
-		<div class="text-right mt-3">
+		<div class="form-group">
+			<label>Receipt Copy</label>
+			@if($expense['receipt_copy'] != "")
+			<a target="_blank" href="{{ asset('storage/'.$expense::EXPENSE_RECEIPTS_FOLDER.'/'.$expense['receipt_copy']) }}" class="ml-1 text-primary form-control pt-2 font-weight-bold">
+			{{ $expense->receipt_copy }}
+			</a>
+			@else
+			<span class="form-control pt-2 font-weight-bold">--</span>
+			@endif
+		</div>
+		<div class="text-right">
 			<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
 			@if($expense->trashed())
 				@if($canRestore)

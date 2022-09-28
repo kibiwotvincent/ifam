@@ -10,6 +10,8 @@ class Expense extends Model
 {
     use HasFactory, SoftDeletes;
 	
+	const EXPENSE_RECEIPTS_FOLDER = "expense-receipts";
+	
 	/**
      * The attributes that are mass assignable.
      *

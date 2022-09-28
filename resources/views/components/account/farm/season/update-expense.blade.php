@@ -25,16 +25,14 @@
 					</div>
 				</div>
 			</div>
-			@if($expense['receipt_copy'] != "")
 			<div class="form-group">
-				<label>Existing Receipt Copy</label>
-				
-			</div>
-			@endif
-			<div class="form-group">
-				<label>Change Receipt Copy</label><a target="_blank" href="{{ asset('storage/expense-receipts/'.$expense['receipt_copy']) }}" class="d-block text-primary">
-				{{ $expense['receipt_copy'] }}
+				<label>Receipt Copy
+				@if($expense['receipt_copy'] != "")
+				<a target="_blank" href="{{ asset('storage/'.$expense::EXPENSE_RECEIPTS_FOLDER.'/'.$expense['receipt_copy']) }}" class="ml-1 text-primary">
+				<i class="ik ik-file-text"></i>
 				</a>
+				@endif
+				</label>
 				<input type="file" name="receipt_copy" id="receipt-copy" class="file-upload-default">
 				<div class="input-group col-xs-12">
 					<input type="text" class="form-control file-upload-info" disabled placeholder="Upload Receipt Copy">
