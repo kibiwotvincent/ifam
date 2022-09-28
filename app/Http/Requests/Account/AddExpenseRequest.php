@@ -27,7 +27,7 @@ class AddExpenseRequest extends FormRequest
             'season_id' => 'required|numeric',
             'description' => 'required',
             'amount' => 'required|numeric',
-            'date_incurred' => 'required|date',
+            'date_incurred' => 'required|date|before_or_equal:today',
             'receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
         ];
     }
