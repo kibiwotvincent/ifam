@@ -61,6 +61,7 @@ class ExpensePolicy
      * Determine whether the user can create models.
      *
      * @param  \App\Models\User  $user
+     * @param  \App\Models\Account\Season  $season
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user, Season $season)

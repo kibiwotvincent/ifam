@@ -29,7 +29,7 @@ class Expense extends Model
      * @var array
      */
     protected $casts = [
-        'date_incurred' => 'date',
+        'date_incurred' => 'date:Y-m-d',
         'deleted_at' => 'datetime',
     ];
 	

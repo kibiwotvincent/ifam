@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account\Admin\FarmCategory;
 use App\Models\Account\Season;
 use App\Models\Account\Expense;
 use App\Http\Requests\Account\AddExpenseRequest;
@@ -11,11 +10,8 @@ use App\Http\Requests\Account\UpdateExpenseRequest;
 use App\Http\Requests\Account\DeleteExpenseRequest;
 use App\Http\Requests\Account\RestoreExpenseRequest;
 use App\Http\Services\Account\ExpenseService;
-use App\Models\Account\Farm;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {

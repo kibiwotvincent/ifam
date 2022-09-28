@@ -5,13 +5,13 @@ namespace App\View\Components\Account\Farm\Season;
 use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use \App\Models\Account\Season;
-use \App\Models\Account\Expense as ExpenseModel;
+use \App\Models\Account\Sale as SaleModel;
 use Illuminate\Support\Facades\Auth;
 
-class Expense extends Component
+class Sale extends Component
 {
 	public $season;
-	public $expense;
+	public $sale;
 	public $canDelete;
 	public $canRestore;
 	public $canDestroy;
@@ -21,7 +21,7 @@ class Expense extends Component
      *
      * @return void
      */
-    public function __construct(Request $request, Season $season, ExpenseModel $expense)
+    public function __construct(Request $request, Season $season, SaleModel $sale)
     {
 		$user = Auth::user();
 		
@@ -36,19 +36,19 @@ class Expense extends Component
 			$group = $farm->farmable;
 			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
 			if($member != null) {
-				$canDelete = $member->can('delete group expense');
-				$canRestore = $member->can('restore group expense');
-				$canDestroy = $member->can('permanently delete group expense');
+				$canDelete = $member->can('delete group sale');
+				$canRestore = $member->can('restore group sale');
+				$canDestroy = $member->can('permanently delete group sale');
 			}
 		}
 		else {
-			$canDelete = $user->can('delete expense');
-			$canRestore = $user->can('restore expense');
-			$canDestroy = $user->can('permanently delete expense');
+			$canDelete = $user->can('delete sale');
+			$canRestore = $user->can('restore sale');
+			$canDestroy = $user->can('permanently delete sale');
 		}
 		
 		$this->season = $season;
-		$this->expense = $expense;
+		$this->sale = $sale;
 		$this->canDelete = $canDelete;
 		$this->canRestore = $canRestore;
 		$this->canDestroy = $canDestroy;
@@ -61,6 +61,6 @@ class Expense extends Component
      */
     public function render()
     {
-        return view('components.account.farm.season.expense');
+        return view('components.account.farm.season.sale');
     }
 }

@@ -25,7 +25,7 @@
     background-color: #fb6340;
 	color: #fff;
 }
-.badge-accepted, .badge-chairperson, .badge-open {
+.badge-accepted, .badge-chairperson, .badge-open, .badge-paid {
     background-color: #2dce89;
 	color: #fff;
 }

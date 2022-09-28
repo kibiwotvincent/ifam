@@ -18,7 +18,7 @@ class CreateExpensesTable extends Migration
             $table->integer('season_id');
             $table->string('description');
             $table->double('amount');
-            $table->date('date_incurred');
+            $table->timestamp('date_incurred');
             $table->string('receipt_copy')->nullable();
 			$table->softDeletes();
             $table->timestamps();

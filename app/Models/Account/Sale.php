@@ -11,6 +11,9 @@ class Sale extends Model
 {
     use HasFactory, SoftDeletes;
 	
+	const SALE_RECEIPTS_FOLDER = "sale-receipts";
+	const PAYMENT_RECEIPTS_FOLDER = "sale-payment-receipts";
+	
 	/**
      * The attributes that are mass assignable.
      *
@@ -25,7 +28,6 @@ class Sale extends Model
 		'expected_amount',
 		'sale_date',
 		'sale_receipt_copy',
-		'status',
     ];
 	
 	/**
@@ -35,8 +37,37 @@ class Sale extends Model
      */
     protected $casts = [
         'sale_date' => 'date:Y-m-d',
+        'payment_date' => 'date:Y-m-d',
         'deleted_at' => 'datetime',
     ];
+	
+	/**
+	 * The accessors to append to the model's array form.
+	 *
+	 * @var array
+	 */
+	protected $appends = [
+		'status',
+	];
+	
+	/**
+	 * Get payment status of the sale.
+	 *
+	 * @param  none
+	 * @return string
+	 */
+	public function getStatusAttribute()
+	{
+		return $this->amount_paid == "" ? "pending" : "paid";
+	}
+	
+	/**
+     * @var array Relations
+     */
+	public function season()
+    {
+        return $this->belongsTo('App\Models\Account\Season'::class);
+    }
 	
 	/**
 	 * Query scope to only include paid sales.
@@ -46,7 +77,7 @@ class Sale extends Model
 	 */
 	public function scopePaid($query)
 	{
-		return $query->where('status', "paid");
+		return $query->where('amount_paid', '!=', "");
 	}
 	
 	/**

@@ -13,14 +13,14 @@
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="amount">Amount * </label>
-						<input type="text" class="form-control" id="amount" name="amount" required value={{ $expense['amount'] }}>
+						<input type="text" class="form-control" id="amount" name="amount" required value="{{ $expense['amount'] }}">
 						<p class="d-none error" for="amount"></p>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="date-incurred">Date Incurred * </label>
-						<input type="date" class="form-control" id="date-incurred" name="date_incurred" required value={{ $expense['date_incurred'] }}>
+						<input type="date" class="form-control" id="date-incurred" name="date_incurred" required value="{{ $expense->date_incurred->format('Y-m-d') }}">
 						<p class="d-none error" for="date_incurred"></p>
 					</div>
 				</div>
@@ -28,13 +28,13 @@
 			@if($expense['receipt_copy'] != "")
 			<div class="form-group">
 				<label>Existing Receipt Copy</label>
-				<a target="_blank" href="{{ asset('storage/expense-receipts/'.$expense['receipt_copy']) }}" class="d-block text-primary">
-				{{ $expense['receipt_copy'] }}
-				</a>
+				
 			</div>
 			@endif
 			<div class="form-group">
-				<label>Change Receipt Copy</label>
+				<label>Change Receipt Copy</label><a target="_blank" href="{{ asset('storage/expense-receipts/'.$expense['receipt_copy']) }}" class="d-block text-primary">
+				{{ $expense['receipt_copy'] }}
+				</a>
 				<input type="file" name="receipt_copy" id="receipt-copy" class="file-upload-default">
 				<div class="input-group col-xs-12">
 					<input type="text" class="form-control file-upload-info" disabled placeholder="Upload Receipt Copy">
