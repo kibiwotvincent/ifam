@@ -25,15 +25,15 @@ class UpdateSaleRequest extends FormRequest
     {
         return [
             'sale_id' => 'required|numeric',
-			'description' => 'nullable',
+			'description' => 'required',
             'quantity' => 'required|numeric',
             'unit_measure' => 'required',
             'quality' => 'nullable',
             'expected_amount' => 'nullable|numeric',
-            'sale_date' => 'required|date',
+            'sale_date' => 'required|date|before_or_equal:today',
 			'sale_receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
-			'amount_paid' => 'nullable|numeric',
-            'payment_date' => 'nullable|date',
+			'amount_paid' => 'required_with:payment_date,payment_receipt_copy|numeric',
+            'payment_date' => 'required_with:amount_paid,payment_receipt_copy|date|after_or_equal:sale_date',
 			'payment_receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
 			'payment_info' => 'nullable',
 			

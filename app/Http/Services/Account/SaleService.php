@@ -4,6 +4,7 @@ namespace App\Http\Services\Account;
 
 use App\Models\Account\Sale;
 use App\Services\BaseService;
+use Storage;
 
 /**
  * Class SaleService.

@@ -25,12 +25,12 @@ class AddSaleRequest extends FormRequest
     {
         return [
             'season_id' => 'required|numeric',
-            'description' => 'nullable',
+            'description' => 'required',
             'quantity' => 'required|numeric',
             'unit_measure' => 'required',
             'quality' => 'nullable',
             'expected_amount' => 'nullable|numeric',
-            'sale_date' => 'required|date',
+            'sale_date' => 'required|date|before_or_equal:today',
 			'sale_receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
         ];
     }
