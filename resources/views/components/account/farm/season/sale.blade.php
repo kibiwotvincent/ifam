@@ -28,7 +28,7 @@
 				<div class="col-md-3">
 					<div class="form-group">
 						<label>Expected Amount</label>
-						<span class="form-control pt-2 font-weight-bold">{{ $sale['expected_amount'] ?? '--' }}</span>
+						<span class="form-control pt-2 font-weight-bold">{{ $sale['expected_amount'] == "" ? '--' : number_format($sale['expected_amount'], 2) }}</span>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -54,7 +54,7 @@
 				<div class="col-md-3">
 					<div class="form-group">
 						<label>Amount Paid</label>
-						<span class="form-control pt-2 font-weight-bold">{{ $sale['amount_paid'] ?? '--' }}</span>
+						<span class="form-control pt-2 font-weight-bold">{{ $sale['amount_paid'] == "" ? '--' : number_format($sale['amount_paid'], 2) }}</span>
 					</div>
 				</div>
 				<div class="col-md-3">
