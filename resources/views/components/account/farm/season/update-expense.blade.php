@@ -3,6 +3,7 @@
 		<form class="ajax-upload" id="update_expense_form" action="{{ route('update_expense', [$season->department['farm_id'], $season->department['id'], $season['id'], $expense['id']]) }}" method="post">
 			@method('post')
 			@csrf
+			<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
 			<input type="hidden" name="expense_id" value="{{ $expense['id'] }}" >
 			<div class="form-group">
 				<label for="description">Short Description *</label>
