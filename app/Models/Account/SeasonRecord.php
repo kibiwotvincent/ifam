@@ -10,6 +10,8 @@ class SeasonRecord extends Model
 {
     use HasFactory, SoftDeletes;
 	
+	const SEASON_RECORD_FILES_FOLDER = "season-record-files";
+	
 	/**
      * The attributes that are mass assignable.
      *
@@ -31,6 +33,14 @@ class SeasonRecord extends Model
         'deleted_at' => 'datetime',
         'record_date' => 'date',
     ];
+	
+	/**
+     * @var array Relations
+     */
+	public function season()
+    {
+        return $this->belongsTo('App\Models\Account\Season'::class);
+    }
 	
 	/**
      * @var array Relations

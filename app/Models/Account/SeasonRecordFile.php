@@ -18,4 +18,12 @@ class SeasonRecordFile extends Model
         'season_record_id',
         'name',
     ];
+	
+	/**
+     * @var array Relations
+     */
+	public function record()
+    {
+        return $this->belongsTo('App\Models\Account\SeasonRecord'::class, 'season_record_id', 'id');
+    }
 }
