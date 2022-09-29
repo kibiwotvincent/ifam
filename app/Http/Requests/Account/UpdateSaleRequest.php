@@ -32,8 +32,8 @@ class UpdateSaleRequest extends FormRequest
             'expected_amount' => 'nullable|numeric',
             'sale_date' => 'required|date|before_or_equal:today',
 			'sale_receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
-			'amount_paid' => 'required_with:payment_date,payment_receipt_copy|numeric',
-            'payment_date' => 'required_with:amount_paid,payment_receipt_copy|date|after_or_equal:sale_date',
+			'amount_paid' => 'nullable|required_with:payment_date,payment_receipt_copy|numeric',
+            'payment_date' => 'nullable|required_with:amount_paid,payment_receipt_copy|date|after_or_equal:sale_date',
 			'payment_receipt_copy' => 'nullable|mimes:pdf,png,jpeg,jpg',
 			'payment_info' => 'nullable',
 			
