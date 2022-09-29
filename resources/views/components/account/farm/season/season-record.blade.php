@@ -3,17 +3,17 @@
 		<h6 class="mt-2">Added On: <span class="text-muted font-weight-bold">{{ date('d M Y', strtotime($seasonRecord['record_date'])) }}</span></h6>
 	</div>
 	<div class="col-md-8 text-right">
-		<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
+		<a class="btn btn-light" href="{{ url()->previous() }}">Back</a>
 		@if($seasonRecord->trashed())
 			@if($canRestore)
-			<button class="btn btn-success mr-2" data-toggle="modal" data-target="#restoreSeasonRecordModal" >Restore</button>
+			<button class="btn btn-success ml-2" data-toggle="modal" data-target="#restoreSeasonRecordModal" >Restore</button>
 			@endif
 			@if($canDestroy)
-			<button class="btn btn-warning" data-toggle="modal" data-target="#destroySeasonRecordModal" >Delete Permanently</button>
+			<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#destroySeasonRecordModal" >Delete Permanently</button>
 			@endif
 		@else
 			@if($canDelete)
-			<button class="btn btn-warning" data-toggle="modal" data-target="#deleteSeasonRecordModal" >Delete</button>
+			<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#deleteSeasonRecordModal" >Delete</button>
 			@endif
 		@endif
 	</div>

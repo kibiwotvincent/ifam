@@ -3,7 +3,7 @@
 		<h6 class="mt-2">Season Records ({{ count($records) }})</h6>
 	</div>
 	<div class="col-4 text-right">
-		@if(!$readOnly)
+		@if($canAddSeasonRecord)
 			@if($isGroup)
 			<a href="{{ route('group.add_season_record', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id']]) }}" class="btn btn-sm btn-success"><i class="ik ik-plus-circle"></i> Add Record</a>
 			@else
@@ -23,7 +23,7 @@
 							</div>
 							<div class="col pl-5">
 								<span>{{ date('d M Y', strtotime($row['record_date'])) }}
-								@if(!$readOnly)
+								@if($canUpdateSeasonRecord)
 									@if($isGroup)
 										<a href="{{ route('group.update_season_record', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}"><i class="ik ik-edit ml-2 f-16 text-success"></i></a>
 									@else
@@ -35,7 +35,7 @@
 								@endif
 								</span>
 								
-								@if(!$readOnly)
+								@if($canViewSeasonRecord)
 								<td class="text-right">
 									@if($isGroup)
 										<a href="{{ route('group.view_season_record', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id'], $row['id']]) }}">
