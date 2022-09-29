@@ -32,10 +32,14 @@ class ExpensePolicy
      */
     public function view(User $user, Expense $expense)
     {
+		if($user->can('view any expense')) {
+			return true;
+		}
+		
         //get the farm 
 		$farm = $expense->season->department->farm;
 		
-		if($user->can('view expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('view expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expenses is being updated
 			//check if user can view deleted expense
 			if($expense->trashed() && $user->cannot('view deleted expenses')) return false;
@@ -43,10 +47,9 @@ class ExpensePolicy
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expenses is being updated
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('view group expense')) {
 				if($expense->trashed() && ! $member->can('view deleted group expenses')) return false;
 				
@@ -69,15 +72,14 @@ class ExpensePolicy
         //get the farm 
 		$farm = $season->department->farm;
 		
-		if($user->can('add expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('add expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expenses is being added
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expenses is being added
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('add group expense')) {
 				return true;
 			}
@@ -98,15 +100,14 @@ class ExpensePolicy
         //get the farm 
 		$farm = $expense->season->department->farm;
 		
-		if($user->can('update expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('update expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expenses is being updated
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expenses is being updated
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('update group expense')) {
 				return true;
 			}
@@ -127,15 +128,14 @@ class ExpensePolicy
         //get the farm 
 		$farm = $expense->season->department->farm;
 		
-		if($user->can('delete expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('delete expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expense is being deleted
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expense is being deleted
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('delete group expense')) {
 				return true;
 			}
@@ -156,15 +156,14 @@ class ExpensePolicy
         //get the farm 
 		$farm = $expense->season->department->farm;
 		
-		if($user->can('restore expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('restore expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expense is being restored
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expense is being restored
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('restore group expense')) {
 				return true;
 			}
@@ -185,15 +184,14 @@ class ExpensePolicy
         //get the farm 
 		$farm = $expense->season->department->farm;
 		
-		if($user->can('permanently delete expense') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('permanently delete expense') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//user owns the farm which owns the season which the expense is being permanently deleted
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
+		if($farm->isOwnedByGroup) {
 			//group owns the farm which owns the season which the expense is being permanently deleted
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('permanently delete group expense')) {
 				return true;
 			}

@@ -12,14 +12,16 @@ class Expenses extends Component
 	public $season;
 	public $expenses;
 	public $isGroup;
-	public $readOnly;
+	public $canAddExpense;
+	public $canViewExpense;
+	public $canUpdateExpense;
 	
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Request $request, bool $isGroup, bool $readOnly)
+    public function __construct(Request $request)
     {
 		$season = Season::find($request->season_id);
 		$user = Auth::user();
@@ -28,17 +30,24 @@ class Expenses extends Component
 		$farm = $season->department->farm;
 		
 		$canViewDeletedExpenses = false;
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
-			if($member != null && $member->can('view deleted group expenses')) {
-				$canViewDeletedExpenses = true;
+		$canAddExpense = false;
+		$canViewExpense = false;
+		$canUpdateExpense = false;
+		
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
+			if($member != null) {
+				$canAddExpense = $member->can('add group expense');
+				$canViewExpense = $member->can('view group expense');
+				$canUpdateExpense = $member->can('update group expense');
+				$canViewDeletedExpenses = $member->can('view deleted group expenses');
 			}
 		}
 		else {
-			if($user->can('view deleted expenses')) {
-				$canViewDeletedExpenses = true;
-			}
+			$canAddExpense = $user->can('add expense');
+			$canViewExpense = $user->can('view expense');
+			$canUpdateExpense = $user->can('update expense');
+			$canViewDeletedExpenses = $user->can('view deleted expenses');
 		}
 		
 		if($canViewDeletedExpenses) {
@@ -50,10 +59,17 @@ class Expenses extends Component
 			$expenses = $season->expenses()->orderBy('date_incurred', 'desc')->get();
 		}
 		
+		if($canViewExpense == false) {
+			//check allow if user is allowed to view any expense
+			$canViewExpense = $user->can('view any expense');
+		}
+		
 		$this->season = $season;
 		$this->expenses = $expenses;
-		$this->isGroup = $isGroup;
-		$this->readOnly = $readOnly;
+		$this->isGroup = $farm->isOwnedByGroup;
+		$this->canAddExpense = $canAddExpense;
+		$this->canViewExpense = $canViewExpense;
+		$this->canUpdateExpense = $canUpdateExpense;
     }
 	
     /**

@@ -49,7 +49,7 @@ class Farm extends Model
 	];
 	
 	/**
-	 * Get user name.
+	 * Get farm owner.
 	 *
 	 * @param  none
 	 * @return string
@@ -57,6 +57,28 @@ class Farm extends Model
 	public function getOwnerAttribute()
 	{
 		return ($this->farmable_type == self::GROUP_MODEL_NAME) ? "group" : "individual";
+	}
+	
+	/**
+	 * Check if farm is owned by farmer.
+	 *
+	 * @param  none
+	 * @return bool
+	 */
+	public function getIsOwnedByFarmerAttribute()
+	{
+		return $this->farmable_type == self::USER_MODEL_NAME;
+	}
+	
+	/**
+	 * Check if farm is owned by group.
+	 *
+	 * @param  none
+	 * @return bool
+	 */
+	public function getIsOwnedByGroupAttribute()
+	{
+		return $this->farmable_type == self::GROUP_MODEL_NAME;
 	}
 	
 	/**

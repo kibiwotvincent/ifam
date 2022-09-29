@@ -29,17 +29,17 @@
 			@endif
 		</div>
 		<div class="text-right">
-			<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
+			<a class="btn btn-light" href="{{ url()->previous() }}">Back</a>
 			@if($expense->trashed())
 				@if($canRestore)
-				<button class="btn btn-success mr-2" data-toggle="modal" data-target="#restoreExpenseModal" >Restore</button>
+				<button class="btn btn-success ml-2" data-toggle="modal" data-target="#restoreExpenseModal" >Restore</button>
 				@endif
 				@if($canDestroy)
-				<button class="btn btn-warning" data-toggle="modal" data-target="#destroyExpenseModal" >Delete Permanently</button>
+				<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#destroyExpenseModal" >Delete Permanently</button>
 				@endif
 			@else
 				@if($canDelete)
-				<button class="btn btn-warning" data-toggle="modal" data-target="#deleteExpenseModal" >Delete</button>
+				<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#deleteExpenseModal" >Delete</button>
 				@endif
 			@endif
 		</div>

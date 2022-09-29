@@ -48,24 +48,18 @@
 						<a class="nav-link font-weight-bold px-4" id="pills-sales-tab" data-toggle="pill" href="#sales-tab" role="tab" aria-controls="pills-sales-tab" aria-selected="true"><i class="ik ik-shopping-cart"></i> Sales</a>
 					</li>
 					<li class="nav-item border-right">
-						<a class="nav-link font-weight-bold" id="pills-profile-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="ik ik-file-text"></i> View Report</a>
-					</li>
-					<li class="nav-item border-right d-none">
-						<a class="nav-link font-weight-bold" id="pills-profile-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-profile" aria-selected="false"><i class="ik ik-edit-1"></i> Make Notes</a>
-					</li>
-					<li class="nav-item border-right">
-						<a class="nav-link font-weight-bold" id="pills-calendar-tab" data-toggle="pill" href="#calendar-tab" role="tab" aria-controls="pills-calendar" aria-selected="false"><i class="ik ik-calendar"></i> Season's Calendar</a>
+						<a class="nav-link font-weight-bold" id="pills-records-tab" data-toggle="pill" href="#records-tab" role="tab" aria-controls="pills-records" aria-selected="false"><i class="ik ik-records"></i> Season's Calendar</a>
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
 					<div class="tab-pane fade show active" id="expenses-tab" role="tabpanel" aria-labelledby="pills-expenses-tab">
 						<div class="card-body">
-							<x-account.farm.season.expenses :read_only=true />
+							<x-account.farm.season.expenses :isGroup=false :readOnly=true />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="sales-tab" role="tabpanel" aria-labelledby="pills-sales-tab">
 						<div class="card-body">
-							<x-account.farm.season.sales :read_only=true />
+							<x-account.farm.season.sales :isGroup=false :readOnly=true />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="last-month" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -73,9 +67,9 @@
 							<x-account.farm.season.report />
 						</div>
 					</div>
-					<div class="tab-pane fade" id="calendar-tab" role="tabpanel" aria-labelledby="pills-calendar-tab">
+					<div class="tab-pane fade" id="records-tab" role="tabpanel" aria-labelledby="pills-records-tab">
 						<div class="card-body">
-							<x-account.farm.season.calendar />
+							<x-account.farm.season.season-records :isGroup=false :readOnly=true />
 						</div>
 					</div>
 					

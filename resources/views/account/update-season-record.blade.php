@@ -4,7 +4,7 @@
 		<div class="row align-items-end">
 			<div class="col-lg-4">
 				<div class="page-header-title">
-					<i class="ik ik-plus bg-success"></i>
+					<i class="ik ik-edit bg-success"></i>
 					<div class="d-inline">
 						<h5 class="pt-2">Update Record</h5>
 					</div>
