@@ -54,7 +54,7 @@
 						<a class="nav-link font-weight-bold" id="pills-report-tab" data-toggle="pill" href="#last-month" role="tab" aria-controls="pills-report" aria-selected="false"><i class="ik ik-file-text"></i> View Report</a>
 					</li>
 					<li class="nav-item border-right">
-						<a class="nav-link font-weight-bold" id="pills-records-tab" data-toggle="pill" href="#records-tab" role="tab" aria-controls="pills-records" aria-selected="false"><i class="ik ik-records"></i> Season's Calendar</a>
+						<a class="nav-link font-weight-bold" id="pills-records-tab" data-toggle="pill" href="#records-tab" role="tab" aria-controls="pills-records" aria-selected="false"><i class="ik ik-records"></i> Season Records</a>
 					</li>
 				</ul>
 				<div class="tab-content" id="pills-tabContent">
@@ -65,12 +65,17 @@
 					</div>
 					<div class="tab-pane fade" id="sales-tab" role="tabpanel" aria-labelledby="pills-sales-tab">
 						<div class="card-body">
-							<x-account.farm.season.sales :isGroup=false :readOnly=true />
+							<x-account.farm.season.sales />
+						</div>
+					</div>
+					<div class="tab-pane fade" id="report" role="tabpanel" aria-labelledby="pills-report-tab">
+						<div class="card-body">
+							<x-account.farm.season.report />
 						</div>
 					</div>
 					<div class="tab-pane fade" id="records-tab" role="tabpanel" aria-labelledby="pills-records-tab">
 						<div class="card-body">
-							<x-account.farm.season.season-records :isGroup=false :readOnly=true />
+							<x-account.farm.season.season-records />
 						</div>
 					</div>
 					

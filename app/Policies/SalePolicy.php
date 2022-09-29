@@ -31,18 +31,21 @@ class SalePolicy
      */
     public function view(User $user, Sale $sale)
     {
+		if($user->can('view any sale')) {
+			return true;
+		}
+		
 		$farm = $sale->season->department->farm;
 		
-		if($user->can('view sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('view sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			//check if user is allowed to view deleted sales - applies to when viewing deleted sale
 			if($sale->trashed() && $user->cannot('view deleted sales')) return false;
 			
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('view group sale')) {
 				if($sale->trashed() && ! $member->can('view deleted group sales')) return false;
 				
@@ -64,13 +67,12 @@ class SalePolicy
     {
         $farm = $season->department->farm;
 		
-		if($user->can('add sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('add sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('add group sale')) {
 				return true;
 			}
@@ -90,13 +92,12 @@ class SalePolicy
     {
         $farm = $sale->season->department->farm;
 		
-		if($user->can('update sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('update sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('update group sale')) {
 				return true;
 			}
@@ -116,13 +117,12 @@ class SalePolicy
     {
         $farm = $sale->season->department->farm;
 		
-		if($user->can('delete sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('delete sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('delete group sale')) {
 				return true;
 			}
@@ -142,13 +142,12 @@ class SalePolicy
     {
         $farm = $sale->season->department->farm;
 		
-		if($user->can('restore sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('restore sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('restore group sale')) {
 				return true;
 			}
@@ -168,13 +167,12 @@ class SalePolicy
     {
         $farm = $sale->season->department->farm;
 		
-		if($user->can('permanently delete sale') && $farm->farmable_type == 'App\Models\User' && $farm->farmable_id == $user->id) {
+		if($user->can('permanently delete sale') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
 		}
 		
-		if($farm->farmable_type == 'App\Models\Account\Group') {
-			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+		if($farm->isOwnedByGroup) {
+			$member = $farm->farmable->members()->where('user_id', $user->id)->first();
 			if($member != null && $member->can('permanently delete group sale')) {
 				return true;
 			}

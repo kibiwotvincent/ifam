@@ -82,23 +82,24 @@
 			</div>
 			
 			<div class="text-right">
-				<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
+				<a class="btn btn-light" href="{{ url()->previous() }}">Back</a>
 				@if($sale->trashed())
 					@if($canRestore)
-					<button class="btn btn-success mr-2" data-toggle="modal" data-target="#restoreSaleModal" >Restore</button>
+					<button class="btn btn-success ml-2" data-toggle="modal" data-target="#restoreSaleModal" >Restore</button>
 					@endif
 					@if($canDestroy)
-					<button class="btn btn-warning" data-toggle="modal" data-target="#destroySaleModal" >Delete Permanently</button>
+					<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#destroySaleModal" >Delete Permanently</button>
 					@endif
 				@else
 					@if($canDelete)
-					<button class="btn btn-warning" data-toggle="modal" data-target="#deleteSaleModal" >Delete</button>
+					<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#deleteSaleModal" >Delete</button>
 					@endif
 				@endif
 			</div>
 	</div>
 </div>
 
+@if($canDelete)
 <!-- delete sale confirmation -->
 <div class="modal fade" id="deleteSaleModal" tabindex="-1" role="dialog" aria-labelledby="deleteSaleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -126,6 +127,8 @@
 	</div>
 </div>
 <!--end delete sale confirmation -->
+@endif
+@if($canDestroy)
 <!-- destroy sale confirmation -->
 <div class="modal fade" id="destroySaleModal" tabindex="-1" role="dialog" aria-labelledby="destroySaleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -153,6 +156,8 @@
 	</div>
 </div>
 <!--end destroy sale confirmation -->
+@endif
+@if($canDelete)
 <!-- restore deleted sale confirmation -->
 <div class="modal fade" id="restoreSaleModal" tabindex="-1" role="dialog" aria-labelledby="restoreSaleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -180,3 +185,4 @@
 	</div>
 </div>
 <!--end restore deleted sale confirmation -->
+@endif
