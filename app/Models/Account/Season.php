@@ -25,7 +25,6 @@ class Season extends Model
         'child_category_id',
         'child_sub_category_id',
         'metadata',
-        'status',
     ];
 	
 	/**
@@ -46,9 +45,21 @@ class Season extends Model
 	 * @var array
 	 */
 	protected $appends = [
+		'status',
 		'start_date_string',
 		'end_date_string',
 	];
+	
+	/**
+	 * Get start date as formated date string.
+	 *
+	 * @param  none
+	 * @return string
+	 */
+	public function getStatusAttribute()
+	{
+		return $this->end_date == null || $this->end_date->gt($this->start_date) ? "open" : "closed";
+	}
 	
 	/**
 	 * Get start date as formated date string.

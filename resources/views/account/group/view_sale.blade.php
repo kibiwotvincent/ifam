@@ -40,7 +40,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.sale :season=$season :sale=$sale/>
+			<x-account.farm.season.view_sale :season=$season :sale=$sale/>
 		</div>
 	</div>
 	

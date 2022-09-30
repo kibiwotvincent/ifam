@@ -28,10 +28,9 @@ class UpdateSeasonRequest extends FormRequest
             'name' => 'required|max:255',
             'description' => 'nullable',
             'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after:start_date',
             'child_sub_category_id' => 'nullable|numeric',
             'metadata' => 'sometimes|array',
-            'status' => 'nullable|alpha',
             'merged_group_id' => 'nullable|numeric',
         ];
     }

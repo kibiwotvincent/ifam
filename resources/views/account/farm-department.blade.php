@@ -4,7 +4,7 @@
 		<div class="row align-items-end">
 			<div class="col-lg-4">
 				<div class="page-header-title">
-					<i class="ik ik-layout bg-success"></i>
+					<i class="ik ik-grid bg-success"></i>
 					<div class="d-inline">
 						<h5 class="pt-2">{{ $department->category['name'] }}</h5>
 					</div>
@@ -34,7 +34,7 @@
 	<div class="row clearfix">
 		<div class="col-md-12">
 			@php $page = "farmer"; @endphp
-			<x-account.farm.seasons :page=$page :read_only=false />
+			<x-account.farm.farm-department :page=$page :read_only=false />
 		</div>
 	</div>
 </div>

@@ -23,7 +23,6 @@ class CreateSeasonsTable extends Migration
 			$table->integer('child_category_id')->nullable();
 			$table->integer('child_sub_category_id')->nullable();
 			$table->text('metadata')->nullable();
-			$table->string('status');
 			$table->softDeletes();
             $table->timestamps();
         });

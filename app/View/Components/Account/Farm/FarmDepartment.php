@@ -6,7 +6,7 @@ use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use \App\Models\Account\Farm;
 
-class Seasons extends Component
+class FarmDepartment extends Component
 {
 	public $farm;
 	public $department;
@@ -33,6 +33,6 @@ class Seasons extends Component
      */
     public function render()
     {
-        return view('components.account.farm.seasons');
+        return view('components.account.farm.farm-department');
     }
 }

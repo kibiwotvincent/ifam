@@ -8,7 +8,7 @@ use \App\Models\Account\Season;
 use \App\Models\Account\Expense as ExpenseModel;
 use Illuminate\Support\Facades\Auth;
 
-class Expense extends Component
+class ViewExpense extends Component
 {
 	public $season;
 	public $expense;
@@ -61,6 +61,6 @@ class Expense extends Component
      */
     public function render()
     {
-        return view('components.account.farm.season.expense');
+        return view('components.account.farm.season.view_expense');
     }
 }

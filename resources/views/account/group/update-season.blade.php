@@ -4,9 +4,9 @@
 		<div class="row align-items-end">
 			<div class="col-lg-5">
 				<div class="page-header-title">
-					<i class="ik ik-plus bg-success"></i>
+					<i class="ik ik-edit bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">{{ $season['name'] }} <span class="ml-2 badge badge-pill badge-{{ $season['status'] }}">{{ $season['status'] }}</span></h5>
+						<h5 class="pt-2">{{ $season['name'] }}</h5>
 					</div>
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.update-season isGroup=true />
+			<x-account.farm.season.update-season :isGroup=true />
 		</div>
 	</div>
 	

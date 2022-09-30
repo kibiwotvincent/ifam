@@ -54,7 +54,7 @@ class SaleController extends Controller
 		$sale = Sale::withTrashed()->find($request->id);
 		$this->authorize('view', $sale);
 		
-		$view = ($request->routeIs('group.*')) ? 'account.group.sale' : 'account.sale';
+		$view = ($request->routeIs('group.*')) ? 'account.group.view_sale' : 'account.view_sale';
 		$season = $sale->season;
 		
         return view($view, compact('sale', 'season'));

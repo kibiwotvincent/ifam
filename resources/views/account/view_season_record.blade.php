@@ -6,7 +6,7 @@
 				<div class="page-header-title">
 					<i class="ik ik-menu bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">View Sale</h5>
+						<h5 class="pt-2">View Record</h5>
 					</div>
 				</div>
 			</div>
@@ -28,7 +28,7 @@
 						<li class="breadcrumb-item">
 							<a href="{{ route('view_season', [$season->department['farm_id'], $season->department['id'], $season['id']]) }}">{{ $season['name'] }}</a>
 						</li>
-						<li class="breadcrumb-item active" aria-current="page">View Sale</li>
+						<li class="breadcrumb-item active" aria-current="page">View Record</li>
 					</ol>
 				</nav>
 			</div>
@@ -37,7 +37,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.sale :season=$season :sale=$sale />
+			<x-account.farm.season.view_season_record :season=$season :seasonRecord=$seasonRecord />
 		</div>
 	</div>
 	

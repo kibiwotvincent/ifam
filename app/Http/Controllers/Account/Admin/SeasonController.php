@@ -38,7 +38,7 @@ class SeasonController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function view(Request $request)
+    public function viewSeasonMeta(Request $request)
     {
 		$season = Season::find($request->season_id);
 		$farm = $season->department->farm;

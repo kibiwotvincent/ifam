@@ -15,8 +15,8 @@ class UpdateSeason extends Component
      * @var model
      */
     public $season;
-    public $child_sub_categories;
-    public $user_groups;
+    public $childSubCategories;
+    public $userGroups;
 	
     /**
      * Create a new component instance.
@@ -26,9 +26,9 @@ class UpdateSeason extends Component
     public function __construct(Request $request, bool $isGroup = false)
     {
         $this->season = Season::find($request->season_id);
-		$this->is_group = $isGroup;
-		$this->child_sub_categories = $this->season->child_category->child_sub_categories()->orderBy('name', 'asc')->get();
-		$this->user_groups = Auth::user()->groups;
+		$this->isGroup = $isGroup;
+		$this->childSubCategories = $this->season->child_category->child_sub_categories()->orderBy('name', 'asc')->get();
+		$this->userGroups = Auth::user()->groups;
     }
 	
     /**

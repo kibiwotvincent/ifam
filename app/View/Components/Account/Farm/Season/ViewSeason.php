@@ -5,13 +5,12 @@ namespace App\View\Components\Account\Farm\Season;
 use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use \App\Models\Account\Season;
-use \App\Models\Account\Sale as SaleModel;
+use \App\Models\Account\Season as SeasonModel;
 use Illuminate\Support\Facades\Auth;
 
-class Sale extends Component
+class ViewSeason extends Component
 {
 	public $season;
-	public $sale;
 	public $canDelete;
 	public $canRestore;
 	public $canDestroy;
@@ -21,7 +20,7 @@ class Sale extends Component
      *
      * @return void
      */
-    public function __construct(Request $request, Season $season, SaleModel $sale)
+    public function __construct(Request $request, Season $season)
     {
 		$user = Auth::user();
 		
@@ -34,21 +33,20 @@ class Sale extends Component
 		
 		if($farm->farmable_type == 'App\Models\Account\Group') {
 			$group = $farm->farmable;
-			$member = $group->members()->where(['group_id' => $group['id'], 'user_id' => $user->id])->first();
+			$member = $group->members()->where('user_id', $user->id)->first();
 			if($member != null) {
-				$canDelete = $member->can('delete group sale');
-				$canRestore = $member->can('restore group sale');
-				$canDestroy = $member->can('permanently delete group sale');
+				$canDelete = $member->can('delete group season');
+				$canRestore = $member->can('restore group season');
+				$canDestroy = $member->can('permanently delete group season');
 			}
 		}
 		else {
-			$canDelete = $user->can('delete sale');
-			$canRestore = $user->can('restore sale');
-			$canDestroy = $user->can('permanently delete sale');
+			$canDelete = $user->can('delete season');
+			$canRestore = $user->can('restore season');
+			$canDestroy = $user->can('permanently delete season');
 		}
 		
 		$this->season = $season;
-		$this->sale = $sale;
 		$this->canDelete = $canDelete;
 		$this->canRestore = $canRestore;
 		$this->canDestroy = $canDestroy;
@@ -61,6 +59,6 @@ class Sale extends Component
      */
     public function render()
     {
-        return view('components.account.farm.season.sale');
+        return view('components.account.farm.season.view_season');
     }
 }

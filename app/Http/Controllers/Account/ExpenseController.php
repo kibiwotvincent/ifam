@@ -54,7 +54,7 @@ class ExpenseController extends Controller
 		$expense = Expense::withTrashed()->find($request->id);
 		$this->authorize('view', $expense);
 		
-		$view = ($request->routeIs('group.*')) ? 'account.group.expense' : 'account.expense';
+		$view = ($request->routeIs('group.*')) ? 'account.group.view_expense' : 'account.view_expense';
 		$season = $expense->season;
 		
         return view($view, compact('expense', 'season'));

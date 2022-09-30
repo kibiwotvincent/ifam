@@ -19,7 +19,7 @@
 				<div class="col-md-4">
 					<div class="form-group">
 						<label for="crop">Select Category * </label>
-						<select class="form-control select2 category-selector" id="crop" name="child_category_id">
+						<select class="form-control select2 category-selector" id="crop" name="child_category_id" required>
 							<option value="">Select category</option>
 							@foreach($child_categories as $row)
 							<option value="{{ $row['id'] }}">{{ $row['name'] }}</option>
@@ -80,7 +80,7 @@
 			<div id="add_season_form_feedback"></div>
 			
 			<div class="text-right">
-				<a class="btn btn-light" href="{{ url()->previous() }}">Cancel</a>
+				<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
 				<button type="submit" class="btn btn-success mr-2" id="add_season_form_submit">Save</button>
 			</div>
 		</form>

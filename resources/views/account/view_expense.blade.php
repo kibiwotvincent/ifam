@@ -37,7 +37,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.expense :season=$season :expense=$expense />
+			<x-account.farm.season.view_expense :season=$season :expense=$expense />
 		</div>
 	</div>
 	

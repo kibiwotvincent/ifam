@@ -24,14 +24,9 @@
 				</div>
 				<div class="col-md-3">
 					<div class="form-group">
-						<label for="variety">Select Variety </label>
-						<select class="form-control select2" id="variety" name="child_sub_category_id">
-							<option value="">Select variety</option>
-							@foreach($childSubCategories as $row)
-							<option value="{{ $row['id'] }}" @if($season['child_sub_category_id'] == $row['id']) selected @endif>{{ $row['name'] }}</option>
-							@endforeach
-						</select>
-						<p class="d-none error" for="child_sub_category_id"></p>
+						<label for="crop">Crop * </label>
+						<input type="text" class="form-control" id="crop" name="crop" value="{{ $season->child_sub_category['name'] }}" readonly>
+						<p class="d-none error" for="child_category_id"></p>
 					</div>
 				</div>
 				<div class="col-md-3">
@@ -67,15 +62,10 @@
 			<div class="row mb-2">
 				<div class="col-md-12">
 					<div class="form-group">
-						<label for="merged-group-id">Select Tracking Group </label>
-						<select class="form-control select2" id="merged-group-id" name="merged_group_id">
-							<option value="">Select group</option>
-							@foreach($userGroups as $row)
-							<option value="{{ $row['group_id'] }}" @if($season->merged_group['group_id'] == $row['group_id']) selected @endif>{{ $row->group['name'] }}</option>
-							@endforeach
-						</select>
-						<small class="text-muted f-12">Selected group will be able to track this season's expenses, sales and profit for use in group reports.</small>
-						<p class="d-none error" for="merged_group_id"></p>
+						<label for="merged-group-id">Tracking Group </label>
+						<input type="text" class="form-control" id="crop" name="crop" value="{{ $season->merged_group->group['name'] }}" readonly>
+						<p class="d-none error" for="child_category_id"></p>
+						
 					</div>
 				</div>
 			</div>

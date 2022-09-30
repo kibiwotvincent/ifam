@@ -32,7 +32,6 @@ class SeasonService extends BaseService
 			'child_category_id' => $data['child_category_id'],
 			'child_sub_category_id' => $data['child_sub_category_id'],
 			'metadata' => $data['metadata'],
-			'status' => "open",
 		]);
 		
         return  $season;
@@ -48,10 +47,6 @@ class SeasonService extends BaseService
 		$season->end_date = $data['end_date'];
 		$season->child_sub_category_id = $data['child_sub_category_id'];
 		$season->metadata = $data['metadata'];
-		
-		if(isset($data['status'])) {
-			$season->status = $data['status'];
-		}
 		
 		$season->save();
 		

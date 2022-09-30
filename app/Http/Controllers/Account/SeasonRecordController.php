@@ -53,7 +53,7 @@ class SeasonRecordController extends Controller
 		$seasonRecord = SeasonRecord::withTrashed()->find($request->id);
 		$this->authorize('view', $seasonRecord);
 		
-		$view = ($request->routeIs('group.*')) ? 'account.group.season-record' : 'account.season-record';
+		$view = ($request->routeIs('group.*')) ? 'account.group.view_season_record' : 'account.view_season_record';
 		$season = $seasonRecord->season;
 		
         return view($view, compact('seasonRecord', 'season'));

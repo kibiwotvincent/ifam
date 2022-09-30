@@ -87,6 +87,19 @@ class FarmerController extends Controller
      *
      * @return \Illuminate\View\View
      */
+    public function viewSeason(Request $request)
+    {
+		$season = Season::find($request->season_id);
+		$farm = $season->department->farm;
+		
+        return view('account.admin.farm.season', compact('season', 'farm'));
+    }
+	
+	/**
+     * Display season view.
+     *
+     * @return \Illuminate\View\View
+     */
     public function season(Request $request)
     {
 		$season = Season::find($request->season_id);

@@ -72,7 +72,7 @@
 					</div>
 					<div class="tab-pane fade" id="records-tab" role="tabpanel" aria-labelledby="pills-records-tab">
 						<div class="card-body">
-							<x-account.farm.season.season-records :isGroup=true  :readOnly=false />
+							<x-account.farm.season.season-records />
 						</div>
 					</div>
 					
