@@ -68,5 +68,47 @@ class SeasonService extends BaseService
 		
         return  $season;
     }
+	
+	/**
+     * Delete season.
+     *
+     * @param  int $seasonID
+     * @return bool
+     */
+    public function delete($seasonID)
+    {
+		return Season::find($seasonID)->delete();
+	}
+	
+	/**
+     * Permanently delete season.
+     *
+     * @param  int $seasonID
+     * @return bool
+     */
+    public function destroy($seasonID)
+    {
+		$season = Season::withTrashed()->find($seasonID);
+		//fire an event `SeasonDeleted` 
+		//delete expenses
+		$season->expenses()->forceDelete();
+		//delete sales
+		$season->sales()->forceDelete();
+		//delete season record files
+		$season->records()->forceDelete();
+		//delete season
+		return $season->forceDelete();
+	}
+	
+	/**
+     * Restore deleted season.
+     *
+     * @param  int $seasonID
+     * @return bool
+     */
+    public function restore($seasonID)
+    {
+		return Season::withTrashed()->find($seasonID)->restore();
+	}
 
 }

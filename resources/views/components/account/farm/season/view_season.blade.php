@@ -1,82 +1,157 @@
 <div class="card">
 	<div class="card-body">
-		<form class="ajax" id="update_season_form" action="{{ route('update_season', [$season->department['farm_id'], $season->department['id'], $season['id']]) }}" method="post">
-			@csrf
-			<input type="hidden" name="_redirect" value="{{ url()->full() }}" >
-			<input type="hidden" name="season_id" value="{{ $season['id'] }}" >
-			<div class="form-group">
-				<label for="category-name">Season Name *</label>
-				<input type="text" class="form-control" id="category-name" name="name" value="{{ $season['name'] }}" required>
-				<p class="d-none error" for="name"></p>
-			</div>
-			<div class="form-group">
-				<label for="category-description">Season Description</label>
-				<textarea class="form-control" id="category-description" rows="4" name="description">{{ $season['description'] }}</textarea>
-				<p class="d-none error" for="description"></p>
-			</div>
-			<div class="row mb-1">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="crop">Crop * </label>
-						<input type="text" class="form-control" id="crop" name="crop" value="{{ $season->child_category['name'] }}" readonly>
-						<p class="d-none error" for="child_category_id"></p>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="crop">Crop * </label>
-						<input type="text" class="form-control" id="crop" name="crop" value="{{ $season->child_sub_category['name'] }}" readonly>
-						<p class="d-none error" for="child_category_id"></p>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="season-start-date">Season Start Date *</label>
-						<input type="date" class="form-control" id="season-start-date" name="start_date" value="{{ date('Y-m-d', strtotime($season['start_date'])) }}" required>
-						<p class="d-none error" for="start_date"></p>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="season-end-date">Season End Date</label>
-						<input type="date" class="form-control" id="season-end-date" name="end_date" value="{{ $season['end_date'] == "" ? "" : $season->end_date->format('Y-m-d') }}">
-						<p class="d-none error" for="end_date"></p>
-					</div>
+		<div class="form-group">
+			<label>Season Name</label>
+			<span class="form-control pt-2 font-weight-bold">{{ $season['name'] }}</span>
+		</div>
+		<div class="form-group">
+			<label>Season Description</label>
+			<span class="form-control pt-2 font-weight-bold">{{ $season['description'] ?? '--' }}</span>
+		</div>
+		<div class="row mb-1">
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Crop</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $season->child_category['name'] }}</span>
 				</div>
 			</div>
-			<div class="row">
-				@php
-				$categoryMetadatas = $season->department->category->getMetadatas();
-				@endphp
-				
-				@foreach($season->department->category->metadata as $metadata)
-				<div class="col-md-4">
-					<div class="form-group">
-						<label for="metadata-{{ $metadata }}">{{ $categoryMetadatas[$metadata]['label'] }}</label>
-						<input type="{{ $categoryMetadatas[$metadata]['input'] }}" class="form-control" id="metadata-{{ $metadata }}" name="metadata[{{ $metadata }}]" value="{{ $season->metadata[$metadata] }}">
-						<p class="d-none error" for="metadata.{{ $metadata }}"></p>
-					</div>
-				</div>
-				@endforeach
-			</div>
-			<div class="row mb-2">
-				<div class="col-md-12">
-					<div class="form-group">
-						<label for="merged-group-id">Tracking Group </label>
-						<input type="text" class="form-control" id="crop" name="crop" value="{{ $season->merged_group->group['name'] }}" readonly>
-						<p class="d-none error" for="child_category_id"></p>
-						
-					</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Variety</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $season->child_sub_category['name'] ?? '--' }}</span>
 				</div>
 			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Season Start Date</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $season['start_date'] == "" ? "" : $season->start_date->format('Y-m-d') }}</span>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>Season End Date</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $season['end_date'] == "" ? "" : $season->end_date->format('Y-m-d') }}</span>
+				</div>
+			</div>
+			@php
+			$categoryMetadatas = $season->department->category->getMetadatas();
+			@endphp
 			
-			
-			<div id="update_season_form_feedback"></div>
-			
-			<div class="text-right">
-				<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
-				<button type="submit" class="btn btn-success mr-2" id="update_season_form_submit">Save</button>
+			@foreach($season->department->category->metadata as $metadata)
+			<div class="col-md-6">
+				<div class="form-group">
+					<label>{{ $categoryMetadatas[$metadata]['label'] }}</label>
+					<span class="form-control pt-2 font-weight-bold">{{ $season->metadata[$metadata] ?? '--' }} </span>
+				</div>
 			</div>
-		</form>
+			@endforeach
+		</div>
+		<div class="form-group">
+			<label>Tracking Group </label>
+			<span class="form-control pt-2 font-weight-bold">{{ $season->merged_group != null ? $season->merged_group->group['name'] : '--'}}</span>
+		</div>
+		
+		<div class="text-right">
+			<a class="btn btn-light" href="{{ url()->previous() }}">Back</a>
+			@if($season->trashed())
+				@if($canRestore)
+				<button class="btn btn-success ml-2" data-toggle="modal" data-target="#restoreSeasonModal" >Restore</button>
+				@endif
+				@if($canDestroy)
+				<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#destroySeasonModal" >Delete Permanently</button>
+				@endif
+			@else
+				@if($canDelete)
+				<button class="btn btn-warning ml-2" data-toggle="modal" data-target="#deleteSeasonModal" >Delete</button>
+				@endif
+			@endif
+		</div>
 	</div>
 </div>
+@if($canDelete)
+<!-- delete season confirmation -->
+<div class="modal fade" id="deleteSeasonModal" tabindex="-1" role="dialog" aria-labelledby="deleteSeasonModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="deleteSeasonModalLabel">Delete Season</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<form class="ajax" id="delete_season_form" action="{{ route('delete_season', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id']]) }}" method="post">
+					@method('post')
+					@csrf
+					<input type="hidden" name="_redirect" value="{{ url()->previous() }}" >
+					<input type="hidden" name="season_id" value="{{ $season['id'] }}"/>
+					<p>Are you sure you want to delete this season ?</p>
+					<div id="delete_season_form_feedback"></div>
+							
+					<div class="text-right">
+						<a href="#" class="btn btn-light mr-2" data-dismiss="modal">Cancel</a>
+						<button type="submit" class="btn btn-danger" id="delete_season_form_submit">Delete Season</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end delete season confirmation -->
+@endif
+@if($canDestroy)
+<!-- destroy season confirmation -->
+<div class="modal fade" id="destroySeasonModal" tabindex="-1" role="dialog" aria-labelledby="destroySeasonModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="destroySeasonModalLabel">Permanently Delete Season</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<form class="ajax" id="destroy_season_form" action="{{ route('destroy_season', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id']]) }}" method="post">
+					@method('post')
+					@csrf
+					<input type="hidden" name="_redirect" value="{{ url()->previous() }}" >
+					<input type="hidden" name="season_id" value="{{ $season['id'] }}"/>
+					<p>Are you sure you want to permanently delete this season ?</p>
+					<div id="destroy_season_form_feedback"></div>
+							
+					<div class="text-right">
+						<a href="#" class="btn btn-light mr-2" data-dismiss="modal">Cancel</a>
+						<button type="submit" class="btn btn-danger" id="destroy_season_form_submit">Permanently Delete Season</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end destroy season confirmation -->
+@endif
+@if($canDelete)
+<!-- restore deleted season confirmation -->
+<div class="modal fade" id="restoreSeasonModal" tabindex="-1" role="dialog" aria-labelledby="restoreSeasonModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="restoreSeasonModalLabel">Restore Season</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+			<div class="modal-body">
+				<form class="ajax" id="restore_season_form" action="{{ route('restore_season', [$season->department->farm->farmable['id'], $season->department['farm_id'], $season->department['id'], $season['id']]) }}" method="post">
+					@method('post')
+					@csrf
+					<input type="hidden" name="_redirect" value="{{ url()->previous() }}" >
+					<input type="hidden" name="season_id" value="{{ $season['id'] }}"/>
+					<p>Are you sure you want to restore this season ?</p>
+					<div id="restore_season_form_feedback"></div>
+							
+					<div class="text-right">
+						<a href="#" class="btn btn-light mr-2" data-dismiss="modal">Cancel</a>
+						<button type="submit" class="btn btn-danger" id="restore_season_form_submit">Restore Season</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--end restore deleted season confirmation -->
+@endif

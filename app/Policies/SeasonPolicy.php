@@ -139,7 +139,7 @@ class SeasonPolicy
      */
     public function restore(User $user, Season $season)
     {
-        $farm = $season->season->department->farm;
+        $farm = $season->department->farm;
 		
 		if($user->can('restore season') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;
@@ -162,9 +162,9 @@ class SeasonPolicy
      * @param  \App\Models\Account\Season  $season
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Season $season)
+    public function destroy(User $user, Season $season)
     {
-        $farm = $sale->season->department->farm;
+        $farm = $season->department->farm;
 		
 		if($user->can('permanently delete season') && $farm->isOwnedByFarmer && $farm->farmable_id == $user->id) {
 			return true;

@@ -34,7 +34,7 @@
 	<div class="row clearfix">
 		<div class="col-md-12">
 			@php $page = "farmer"; @endphp
-			<x-account.farm.farm-department :page=$page :read_only=false />
+			<x-account.farm.farm-department :page=$page />
 		</div>
 	</div>
 </div>

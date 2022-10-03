@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Account\Season;
 use App\Http\Requests\Account\AddSeasonRequest;
 use App\Http\Requests\Account\UpdateSeasonRequest;
+use App\Http\Requests\Account\DeleteSeasonRequest;
+use App\Http\Requests\Account\RestoreSeasonRequest;
 use App\Http\Services\Account\SeasonService;
 use App\Models\Account\FarmDepartment;
 use Illuminate\Http\Request;
@@ -119,4 +121,49 @@ class SeasonController extends Controller
 		$this->seasonService->update($request->validated());
 		return Response::json(['message' => "Season updated successfully."], 200);
     }
+	/**
+     * Handle an incoming delete season request.
+     *
+     * @param  \App\Http\Requests\Account\DeleteSeasonRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function delete(DeleteSeasonRequest $request)
+    {
+		$season = Season::find($request->season_id);
+		$this->authorize('delete', $season);
+		
+		$this->seasonService->delete($request->validated()['season_id']);
+		return Response::json(['message' => "Season deleted successfully."], 200);
+    }
+	
+	/**
+     * Handle an incoming restore deleted season request.
+     *
+     * @param  \App\Http\Requests\Account\RestoreSeasonRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function restore(RestoreSeasonRequest $request)
+    {
+		$season = Season::withTrashed()->find($request->season_id);
+		$this->authorize('restore', $season);
+		
+		$this->seasonService->restore($request->validated()['season_id']);
+		return Response::json(['message' => "Season has been restored successfully."], 200);
+    }
+	
+	/**
+     * Handle an incoming permanently delete season request.
+     *
+     * @param  \App\Http\Requests\Account\DeleteSeasonRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function destroy(DeleteSeasonRequest $request)
+    {
+		$season = Season::withTrashed()->find($request->season_id);
+		$this->authorize('destroy', $season);
+		
+		$this->seasonService->destroy($request->validated()['season_id']);
+		return Response::json(['message' => "Season has been permanently deleted."], 200);
+    }
+	
 }
