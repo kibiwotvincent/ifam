@@ -17,6 +17,8 @@ class FarmDepartmentController extends Controller
     public function view(Request $request)
     {
 		$department = FarmDepartment::find($request->department_id);
+		$this->authorize('view', $department);
+		
 		$farm = $department->farm;
 		
 		$view = $request->routeIs('group.*') ? 'account.group.farm-department' : 'account.farm-department';

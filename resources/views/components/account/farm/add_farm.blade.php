@@ -1,11 +1,11 @@
-<form class="forms-sample ajax" id="add_farm_form" action="{{ route('add_farm') }}" method="post">
+<form class="ajax" id="add_farm_form" action="{{ route('add_farm') }}" method="post">
 	@method('post')
 	@csrf
 	<input type="hidden" name="_redirect" value="{{ url()->previous() }}" >
 	<input type="hidden" name="owner" value="{{ $owner }}" >
-	<input type="hidden" name="owner_id" value="{{ $owner_id }}" >
+	<input type="hidden" name="owner_id" value="{{ $ownerID }}" >
 	<div class="form-group">
-		<label for="farm-name">Farm Name</label>
+		<label for="farm-name">Farm Name *</label>
 		<input type="text" class="form-control" id="farm-name" name="name" required>
 		<p class="d-none error" for="name"></p>
 	</div>
@@ -16,9 +16,9 @@
 	</div>
 	
 	<div class="form-group">
-		<label>Add Farm Departments </label>
+		<label>Add Farm Departments *</label>
 		<div class="row mt-2 border-checkbox-section">
-			@foreach($farm_categories as $row)
+			@foreach($farmCategories as $row)
 			<div class="col-6 col-md-3 mb-2">
 				<div class="border-checkbox-group border-checkbox-group-success">
 					<input class="border-checkbox" type="checkbox" id="category-{{ $row['id'] }}" name="departments[]" value="{{ $row['id'] }}">
@@ -44,7 +44,7 @@
 	<div id="add_farm_form_feedback"></div>
 	
 	<div class="text-right">
-		<a class="btn btn-light" href="{{ url()->previous() }}">Cancel</a>
+		<a class="btn btn-light mr-2" href="{{ url()->previous() }}">Cancel</a>
 		<button type="submit" class="btn btn-success mr-2" id="add_farm_form_submit">Save</button>
 	</div>
 </form>

@@ -20,7 +20,7 @@
 							<a href="{{ route('farms') }}">Farms</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('view_farm', $farm['id']) }}">{{ $farm['name'] }}</a>
+							<a href="{{ route('farm', $farm['id']) }}">{{ $farm['name'] }}</a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">{{ $department->category['name'] }}</li>
 					</ol>
@@ -33,8 +33,7 @@
 	
 	<div class="row clearfix">
 		<div class="col-md-12">
-			@php $page = "farmer"; @endphp
-			<x-account.farm.farm-department :page=$page />
+			<x-account.farm.farm-department page="farmer" />
 		</div>
 	</div>
 </div>

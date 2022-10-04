@@ -43,5 +43,80 @@ class FarmService extends BaseService
 		
         return  $farm;
     }
+	
+	public function update(array $data = []): Farm
+    {
+		$farm = Farm::find($data['farm_id']);
+		$existingFarmDepartments = $farm->departments->map(function($row) {
+															return $row->department_id;
+														});
+		
+		$farm->name = $data['name'];
+		$farm->description = $data['description'];
+		$farm->acreage = $data['acreage'];
+		$farm->location = $data['location'];
+		$farm->save();
+		
+		//update farm departments
+		foreach($data['departments'] as $departmentID) {
+			//check if department exists already
+			$farmDepartment = FarmDepartment::withTrashed()->where(['farm_id' => $farm['id'], 'department_id' => $departmentID])->first();
+			if($farmDepartment != null) {
+				//department already exists
+				if($farmDepartment->trashed()) { /*restore the department instead of creating a new one */
+					$farmDepartment->restore();
+				}
+			}
+			else {
+				FarmDepartment::create(['farm_id' => $farm['id'], 'department_id' => $departmentID]);
+			}
+		}
+		
+		//remove farm departments if they were unchecked
+		//get departments that were removed and delete them
+		$newFarmDepartments = $data['departments'];
+		
+		$departmentsToBeRemoved = $existingFarmDepartments->diff($newFarmDepartments);
+		foreach($departmentsToBeRemoved as $departmentID) {
+			FarmDepartment::where(['farm_id' => $farm['id'], 'department_id' => $departmentID])->delete();
+		}
+		
+        return  $farm;
+    }
+	
+	/**
+     * Delete farm.
+     *
+     * @param  int $farmID
+     * @return bool
+     */
+    public function delete($farmID)
+    {
+		return Farm::find($farmID)->delete();
+	}
+	
+	/**
+     * Permanently delete farm.
+     *
+     * @param  int $farmID
+     * @return bool
+     */
+    public function destroy($farmID)
+    {
+		$farm = Farm::withTrashed()->find($farmID);
+		//fire an event `FarmDeleted` to delete farm departments
+		return $farm->forceDelete();
+	}
+	
+	/**
+     * Restore deleted farm.
+     *
+     * @param  int $farmID
+     * @return bool
+     */
+    public function restore($farmID)
+    {
+		return Farm::withTrashed()->find($farmID)->restore();
+	}
 
 }

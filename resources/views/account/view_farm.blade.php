@@ -4,9 +4,9 @@
 		<div class="row align-items-end">
 			<div class="col-lg-8">
 				<div class="page-header-title">
-					<i class="ik ik-plus bg-success"></i>
+					<i class="ik ik-menu bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">Add New Farm</h5>
+						<h5 class="pt-2">View Farm</h5>
 					</div>
 				</div>
 			</div>
@@ -19,7 +19,10 @@
 						<li class="breadcrumb-item">
 							<a href="{{ route('farms') }}">Farms</a>
 						</li>
-						<li class="breadcrumb-item active" aria-current="page">Add New Farm</li>
+						<li class="breadcrumb-item">
+							<a href="{{ route('farm', $farm['id']) }}">{{ $farm['name'] }}</a>
+						</li>
+						<li class="breadcrumb-item active" aria-current="page">View</li>
 					</ol>
 				</nav>
 			</div>
@@ -28,11 +31,7 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<div class="card">
-				<div class="card-body">
-					<x-account.farm.add-farm />
-				</div>
-			</div>
+			<x-account.farm.view_farm :farm=$farm />
 		</div>
 	</div>
 </div>

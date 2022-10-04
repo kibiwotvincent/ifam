@@ -14,9 +14,7 @@ class FarmDepartment extends Component
 	public $farm;
 	public $department;
 	public $page;
-	
 	public $seasons;
-	public $isGroup;
 	public $canAddSeason;
 	public $canViewSeason;
 	public $canUpdateSeason;
@@ -26,7 +24,7 @@ class FarmDepartment extends Component
      *
      * @return void
      */
-    public function __construct(Request $request, $page = "farmer")
+    public function __construct(Request $request, $page)
     {
 		$department = FarmDepartmentModel::find($request->department_id);
 		$user = Auth::user();
@@ -72,9 +70,7 @@ class FarmDepartment extends Component
 		$this->farm = Farm::find($request->farm_id);
 		$this->page = $page;
 		$this->department = $department;
-		
 		$this->seasons = $seasons;
-		$this->isGroup = $farm->isOwnedByGroup;
 		$this->canAddSeason = $canAddSeason;
 		$this->canViewSeason = $canViewSeason;
 		$this->canUpdateSeason = $canUpdateSeason;

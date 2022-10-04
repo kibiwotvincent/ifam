@@ -17,6 +17,7 @@ class CreateFarmDepartmentsTable extends Migration
             $table->id();
 			$table->integer('farm_id');
 			$table->integer('department_id');
+			$table->softDeletes();
         });
     }
 

@@ -5,32 +5,28 @@ namespace App\View\Components\Account\Farm;
 use Illuminate\View\Component;
 use Illuminate\Http\Request;
 use \App\Models\Account\Admin\FarmCategory;
+use \App\Models\Account\Farm;
 
-class AddFarm extends Component
+class UpdateFarm extends Component
 {
-	public $owner;
-	public $ownerID;
+	public $farm;
 	public $farmCategories;
+	public $farmDepartmentsIDs;
 	
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, Farm $farm)
     {
-		if($request->routeIs('group.*')) {
-			$owner = 'group';
-			$ownerID = $request->group_id;
-		}
-		else {
-			$owner = 'individual';
-			$ownerID = $request->user()->id;
-		}
+		$farmDepartmentsIDs = $farm->departments->map(function($row) {
+															return $row->department_id;
+														})->toArray();
 		
-		$this->owner =  $owner;
-		$this->ownerID = $ownerID;
+		$this->farm =  $farm;
 		$this->farmCategories = FarmCategory::orderBy('name', 'asc')->get();
+		$this->farmDepartmentsIDs = $farmDepartmentsIDs;
     }
 	
     /**
@@ -40,6 +36,6 @@ class AddFarm extends Component
      */
     public function render()
     {
-        return view('components.account.farm.add_farm');
+        return view('components.account.farm.update_farm');
     }
 }

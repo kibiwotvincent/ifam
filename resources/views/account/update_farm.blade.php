@@ -2,15 +2,15 @@
 <div class="container-fluid">
 	<div class="page-header">
 		<div class="row align-items-end">
-			<div class="col-lg-5">
+			<div class="col-lg-8">
 				<div class="page-header-title">
-					<i class="ik ik-plus bg-success"></i>
+					<i class="ik ik-edit bg-success"></i>
 					<div class="d-inline">
-						<h5 class="pt-2">Add Season</h5>
+						<h5 class="pt-2">Update Farm</h5>
 					</div>
 				</div>
 			</div>
-			<div class="col-lg-7">
+			<div class="col-lg-4">
 				<nav class="breadcrumb-container" aria-label="breadcrumb">
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">
@@ -22,10 +22,7 @@
 						<li class="breadcrumb-item">
 							<a href="{{ route('farm', $farm['id']) }}">{{ $farm['name'] }}</a>
 						</li>
-						<li class="breadcrumb-item">
-							<a href="{{ route('department', [$farm['id'], $department['id']]) }}">{{ $department->category['name'] }}</a>
-						</li>
-						<li class="breadcrumb-item active" aria-current="page">Add Season</li>
+						<li class="breadcrumb-item active" aria-current="page">Update</li>
 					</ol>
 				</nav>
 			</div>
@@ -34,9 +31,12 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.season.add-season />
+			<div class="card">
+				<div class="card-body">
+					<x-account.farm.update_farm :farm=$farm />
+				</div>
+			</div>
 		</div>
 	</div>
-	
 </div>
 </x-app-layout>

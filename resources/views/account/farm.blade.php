@@ -26,12 +26,19 @@
 		</div>
 	</div>
 	
-	<x-account.farm.meta-data />
-	
-	<div class="row clearfix">
+	<div class="row">
 		<div class="col-md-12">
-			<x-account.farm.seasons :is_group=false/>
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<h6 class="mt-2 font-weight-bold">Farm Departments</h6>
+				</div>
+				<div class="col-md-6 text-right">
+					<a href="{{ route('update_farm', $farm['id']) }}" class="btn btn-success"><i class="ik ik-edit"></i> Update Farm</a>
+				</div>
+			</div>
 		</div>
+		<x-account.farm.farm :farm=$farm />
 	</div>
+		
 </div>
 </x-app-layout>

@@ -81,10 +81,16 @@ Route::middleware(['auth','set-active-sidebar-menu:farms'])->group(function () {
 	Route::get('/farms', [FarmController::class, 'index'])->name('farms');
 	Route::get('/farms/add', [FarmController::class, 'create'])->name('add_farm');
 	Route::post('/farms/add', [FarmController::class, 'store']);
-	Route::get('/farms/{farm_id}', [FarmController::class, 'view'])->name('view_farm');
+	Route::get('/farms/{farm_id}', [FarmController::class, 'farm'])->name('farm');
+	Route::get('/farms/{farm_id}/view', [FarmController::class, 'view'])->name('view_farm');
+	Route::get('/farms/{farm_id}/update', [FarmController::class, 'edit'])->name('update_farm');
+	Route::post('/farms/{farm_id}/update', [FarmController::class, 'update']);
+	Route::post('/farms/{farm_id}/delete', [FarmController::class, 'delete'])->name('delete_farm');
+	Route::post('/farms/{farm_id}/restore', [FarmController::class, 'restore'])->name('restore_farm');
+	Route::post('/farms/{farm_id}/destroy', [FarmController::class, 'destroy'])->name('destroy_farm');
 	Route::get('/farms/{farm_id}/report', [FarmController::class, 'report'])->name('farm.report');
 	Route::post('/farms/{farm_id}/report', [FarmController::class, 'farm_report']);
-	Route::get('/farms/{farm_id}/{department_id}', [FarmDepartmentController::class, 'view'])->name('view_department');
+	Route::get('/farms/{farm_id}/{department_id}', [FarmDepartmentController::class, 'view'])->name('department');
 	Route::get('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->name('add_season');
 	Route::post('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'store']);
 	Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}', [SeasonController::class, 'season'])->name('season');
@@ -154,7 +160,7 @@ Route::middleware(['auth', 'set-active-sidebar-menu:groups'])->group(function ()
 
 	Route::get('/groups/{group_id}/farms/{farm_id}/report', [FarmController::class, 'report'])->name('group.farm_report');
 
-	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}', [FarmController::class, 'view_department'])->name('group.view_department');
+	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}', [FarmDepartmentController::class, 'view'])->name('group.department');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->name('group.add_season');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}', [SeasonController::class, 'season'])->name('group.season');
 	Route::get('/groups/{group_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/view', [SeasonController::class, 'view'])->name('group.view_season');

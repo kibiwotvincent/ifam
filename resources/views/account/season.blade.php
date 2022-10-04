@@ -20,10 +20,10 @@
 							<a href="{{ route('farms') }}">Farms</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('view_farm', [$season->department['farm_id'], $season->department['id']]) }}">{{ $season->department->farm['name'] }}</a>
+							<a href="{{ route('farm', [$season->department['farm_id'], $season->department['id']]) }}">{{ $season->department->farm['name'] }}</a>
 						</li>
 						<li class="breadcrumb-item">
-							<a href="{{ route('view_department', [$season->department['farm_id'], $season->department['id']]) }}">{{ $season->department->category['name'] }}</a>
+							<a href="{{ route('department', [$season->department['farm_id'], $season->department['id']]) }}">{{ $season->department->category['name'] }}</a>
 						</li>
 						<li class="breadcrumb-item active" aria-current="page">{{ $season['name'] }}</li>
 					</ol>

@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
-use App\Models\Account\Admin\FarmCategory;
 use App\Http\Requests\Account\AddFarmRequest;
+use App\Http\Requests\Account\UpdateFarmRequest;
+use App\Http\Requests\Account\DeleteFarmRequest;
+use App\Http\Requests\Account\RestoreFarmRequest;
 use App\Http\Requests\Account\FarmReportRequest;
 use App\Http\Services\Account\FarmService;
 use App\Models\Account\Group;
 use App\Models\Account\Farm;
-use App\Models\Account\Season;
-use App\Models\Account\FarmDepartment;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
@@ -40,20 +39,37 @@ class FarmController extends Controller
      */
     public function create(Request $request)
     {
-		$farmCategories = FarmCategory::orderBy('name', 'asc')->get();
-		
+		$data = [];
 		if($request->routeIs('group.*')) {
-			$view = 'account.group.add-farm';
-			$data['group'] = Group::find($request->group_id);
+			$group = Group::find($request->group_id);
+			$this->authorize('create', [Farm::class, true, $group]);
+			
+			$view = 'account.group.add_farm';
+			$data['group'] = $group;
 		}
 		else {
-			$view = 'account.add-farm';
+			$this->authorize('create', [Farm::class, false, null]);
+			$view = 'account.add_farm';
 		}
-		
-		$data['farm_categories'] = $farmCategories;
 		
         return view($view, $data);
     }
+	
+	/**
+     * Display the update farm view.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function edit(Request $request)
+    {
+		$farm = Farm::findOrFail($request->farm_id);
+		$this->authorize('update', $farm);
+		
+		$view = ($request->routeIs('group.*')) ? 'account.group.update_farm' : 'account.update_farm';
+		
+        return view($view, compact('farm'));
+    }
+
 	
 	/**
      * Display farms view.
@@ -65,7 +81,7 @@ class FarmController extends Controller
 		$user = Auth::user();
 		$farms = $user->farms()->orderBy('name', 'asc')->get();
 		
-        return view('account.farms', ['farms' => $farms]);
+        return view('account.farms', compact('farms'));
     }
 	
 	/**
@@ -75,42 +91,27 @@ class FarmController extends Controller
      */
     public function view(Request $request)
     {
-		//redirect to farms at the moment
-		if($request->routeIs('group.*')) {
-			//return redirect()->route('view_group');
-		}
-		else {
-			return redirect()->route('farms');
-		}
+		$farm = Farm::withTrashed()->find($request->farm_id);
+		$this->authorize('view', $farm);
 		
+		$view = ($request->routeIs('group.*')) ? 'account.group.view_farm' : 'account.view_farm';
 		
-		$farm = Farm::find($request->farm_id);
-		$view = $request->routeIs('group.*') ? 'account.group.farm' : 'account.farm';
-		
-		$data['farm'] = $farm;
-        return view($view, $data);
+        return view($view, compact('farm'));
     }
 	
 	/**
-     * Display farm department view.
+     * Display farm departments page.
      *
      * @return \Illuminate\View\View
      */
-    public function view_department(Request $request)
+    public function farm(Request $request)
     {
-		$farm = Farm::find($request->farm_id);
-		$department = $farm->departments->only([$request->department_id])->first();
+		$farm = Farm::withTrashed()->find($request->farm_id);
+		$this->authorize('view', $farm);
 		
-		if($request->routeIs('group.*')) {
-			$view = 'account.group.department';
-		}
-		else {
-			$view = 'account.department';
-		}
+		$view = ($request->routeIs('group.*')) ? 'account.group.farm' : 'account.farm';
 		
-		$data['farm'] = $farm;
-		$data['department'] = $department;
-        return view($view, $data);
+        return view($view, compact('farm'));
     }
 	
 	/**
@@ -137,8 +138,76 @@ class FarmController extends Controller
      */
     public function store(AddFarmRequest $request)
     {
+		if($request->owner == 'group') {
+			$group = Group::find($request->owner_id);
+			$this->authorize('create', [Farm::class, true, $group]);
+		}
+		else {
+			$this->authorize('create', [Farm::class, false]);
+		}
+		
 		$this->farmService->store($request->validated());
 		return Response::json(['message' => "Farm added successfully."], 200);
+    }
+	
+	/**
+     * Handle an incoming update farm request.
+     *
+     * @param  \App\Http\Requests\Account\UpdateFarmRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function update(UpdateFarmRequest $request)
+    {
+		$farm = Farm::find($request->farm_id);
+		$this->authorize('update', $farm);
+		
+		$this->farmService->update($request->validated());
+		return Response::json(['message' => "Farm updated successfully."], 200);
+    }
+	
+	/**
+     * Handle an incoming delete farm request.
+     *
+     * @param  \App\Http\Requests\Account\DeleteFarmRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function delete(DeleteFarmRequest $request)
+    {
+		$farm = Farm::find($request->farm_id);
+		$this->authorize('delete', $farm);
+		
+		$this->farmService->delete($request->validated()['farm_id']);
+		return Response::json(['message' => "Farm deleted successfully."], 200);
+    }
+	
+	/**
+     * Handle an incoming permanently delete farm request.
+     *
+     * @param  \App\Http\Requests\Account\DeleteFarmRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function destroy(DeleteFarmRequest $request)
+    {
+		$farm = Farm::withTrashed()->find($request->farm_id);
+		$this->authorize('destroy', $farm);
+		
+		$this->farmService->destroy($request->validated()['farm_id']);
+		return Response::json(['message' => "Farm has been permanently deleted."], 200);
+    }
+	
+	/**
+     * Handle an incoming restore deleted farm request.
+     *
+     * @param  \App\Http\Requests\Account\RestoreFarmRequest  $request
+     * @return \Illuminate\Support\Facades\Response
+     */
+    public function restore(RestoreFarmRequest $request)
+    {
+		$farm = Farm::withTrashed()->find($request->farm_id);
+		$this->authorize('restore', $farm);
+		
+		$this->farmService->restore($request->validated()['farm_id']);
+		return Response::json(['message' => "Farm has been restored successfully."], 200);
     }
 
     /**
@@ -152,7 +221,7 @@ class FarmController extends Controller
 		$farm = Farm::find($request->farm_id);
 		$childCategories = ChildCategory::orderBy('name', 'asc')->get();
 
-		//get expenses and sales dated between from and to dates
+		//get farms and sales dated between from and to dates
 		$viewData = ['farm' => $farm, 'seasons' => $farm->seasons($request->department, $request->categories), 
 		'child_categories' => $childCategories, 'from' => $request->from, 'to' => $request->to];
 		
