@@ -22,13 +22,13 @@ class CreateUsersTable extends Migration
             $table->string('id_number')->unique();
             $table->string('phone_number')->unique();
             $table->datetime('phone_number_verified_at')->nullable();
-			$table->string('email')->unique();
+	    $table->string('email')->unique()->nullable();
             $table->datetime('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('profile_photo');
+            $table->string('profile_photo')->nullable();
             $table->timestamp('subscription_expires_on')->nullable();
             $table->rememberToken();
-			$table->softDeletes();
+	    $table->softDeletes();
             $table->timestamps();
         });
     }
