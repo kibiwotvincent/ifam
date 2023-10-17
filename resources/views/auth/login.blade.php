@@ -40,9 +40,9 @@
 					@csrf
 					<input type="hidden" name="_redirect" value="{{ route('dashboard') }}" />
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="ID Number" name="id_number" required="">
-						<i class="ik ik-user"></i>
-						<p class="d-none error" for="id_number"></p>
+						<input type="text" class="form-control" placeholder="Email" name="email" required="">
+						<i class="ik ik-mail"></i>
+						<p class="d-none error" for="email"></p>
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password" required="">

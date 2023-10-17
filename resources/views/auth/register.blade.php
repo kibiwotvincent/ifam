@@ -16,7 +16,7 @@
 								  </li>
 								  <li class="d-inline-block mx-2">
 									<a href="#" class="text-success">Privacy Policy</a>
-								  </li>
+							      </li>
 								  <li class="d-inline-block ml-2">
 									<a href="#" class="text-success">Contact Us</a>
 								  </li>
@@ -39,27 +39,10 @@
 				<form action="{{ route('register') }}" method="post">
 					@method('post')
 					@csrf
-					<div class="row">
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="First Name" name="first_name" required="">
-								<i class="ik ik-user"></i>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Last Name" name="last_name" required="">
-								<i class="ik ik-user"></i>
-							</div>
-						</div>
-					</div>
+					
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="ID Number" name="id_number" required="">
-						<i class="ik ik-edit"></i>
-					</div>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Phone Number" name="phone_number" required="">
-						<i class="ik ik-phone"></i>
+						<input type="text" class="form-control" placeholder="Email" name="email" required="">
+						<i class="ik ik-mail"></i>
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="Password" name="password" required="">

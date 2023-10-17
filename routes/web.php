@@ -266,3 +266,12 @@ Route::middleware('set-active-sidebar-menu:admin.farmers')->group(function () {
 	Route::get('/admin/farmers/{user_id}/farms/{farm_id}/{department_id}/seasons/{season_id}', [FarmerController::class, 'season'])->middleware('auth')->name('admin.farmer.season');
 	Route::get('/admin/farmers/{user_id}/farms/{farm_id}/{department_id}/seasons/{season_id}/view', [FarmerController::class, 'viewSeason'])->middleware('auth')->name('admin.farmer.view_season');
 });
+
+
+Route::get('command/permissions-clear', function () {
+        // Reset cached roles and permissions
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        dd("Cached roles and permissions reset");
+});
+

@@ -36,13 +36,13 @@
 					<a href="{{ route('index') }}"><img src="/assets/img/ifam-square.png" width="80" height="80" alt=""></a>
 				</div>
 				<h3>Forgot Password</h3>
-				<p>Password reset code will be sent to your phone.</p>
+				<p>Password reset code will be sent to your email.</p>
 				<form method="post" action="{{ route('forgot_password') }}">
 					@method('post')
 					@csrf
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="ID Number" required="">
-						<i class="ik ik-user"></i>
+						<input type="text" class="form-control" placeholder="Email" required="">
+						<i class="ik ik-mail"></i>
 					</div>
 					<div class="sign-btn text-center">
 						<button class="btn btn-success">Submit</button>
