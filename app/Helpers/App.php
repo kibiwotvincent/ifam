@@ -120,6 +120,8 @@ class App
 				]);
 			
         $admin->assignRole('system admin');
+        $admin->assignRole('farmer');
+        
         // Reset cached roles and permissions
 		app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         
