@@ -27,7 +27,6 @@ class Farm extends Model
         'description',
         'acreage',
         'location',
-        'category_id',
     ];
 	
 	/**

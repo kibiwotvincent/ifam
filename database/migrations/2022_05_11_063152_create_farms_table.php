@@ -21,7 +21,6 @@ class CreateFarmsTable extends Migration
 			$table->text('description')->nullable();
 			$table->double('acreage')->nullable();
 			$table->string('location')->nullable();
-			$table->integer('category_id');
 			$table->softDeletes();
             $table->timestamps();
         });
