@@ -49,7 +49,7 @@ class UserService extends BaseService
 		$user = Auth::getUser();
 		$user->first_name = $data['first_name'];
 		$user->last_name = $data['last_name'];
-		$user->email = $data['email'];
+		$user->id_number = $data['id_number'];
 		$user->phone_number = $data['phone_number'];
 		$user->date_of_birth = $data['date_of_birth'];
 		$user->gender = $data['gender'];

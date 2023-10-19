@@ -80,8 +80,13 @@
 								</div>
 								<div class="form-group">
 									<label for="email">Email</label>
-									<input type="email" value="{{ $user['email'] }}" class="form-control" name="email" id="email">
+									<input type="email" value="{{ $user['email'] }}" class="form-control" name="email" id="email" readonly>
 									<p class="d-none error" for="email"></p>
+								</div>
+								<div class="form-group">
+									<label for="id-number">ID Number</label>
+									<input type="text" value="{{ $user['id_number'] }}" class="form-control" name="id_number" id="id-number">
+									<p class="d-none error" for="id_number"></p>
 								</div>
 								<div class="form-group">
 									<label for="phone-number">Phone Number</label>
@@ -93,7 +98,7 @@
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="date-of-birth">Date of Birth</label>
-											<input type="date" value="{{ $user['date_of_birth']->format('Y-m-d') }}" class="form-control" name="date_of_birth" id="date-of-birth">
+											<input type="date" value="{{ $user['date_of_birth'] == "" ? '' : $user['date_of_birth']->format('Y-m-d') }}" class="form-control" name="date_of_birth" id="date-of-birth">
 											<p class="d-none error" for="date_of_birth"></p>
 										</div>
 									</div>
