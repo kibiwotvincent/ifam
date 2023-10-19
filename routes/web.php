@@ -90,7 +90,8 @@ Route::middleware(['auth','set-active-sidebar-menu:farms'])->group(function () {
 	Route::post('/farms/{farm_id}/destroy', [FarmController::class, 'destroy'])->name('destroy_farm');
 	Route::get('/farms/{farm_id}/report', [FarmController::class, 'report'])->name('farm.report');
 	Route::post('/farms/{farm_id}/report', [FarmController::class, 'farm_report']);
-	Route::get('/farms/{farm_id}/{department_id}', [FarmDepartmentController::class, 'view'])->name('department');
+	Route::get('/farms/{farm_id}/{department_id}', [FarmDepartmentController::class, 'department'])->name('department');
+    Route::get('/farms/{farm_id}/{department_id}/view', [FarmDepartmentController::class, 'view'])->name('view_department');
 	Route::get('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'create'])->name('add_season');
 	Route::post('/farms/{farm_id}/{department_id}/seasons/add', [SeasonController::class, 'store']);
 	Route::get('/farms/{farm_id}/{department_id}/seasons/{season_id}', [SeasonController::class, 'season'])->name('season');

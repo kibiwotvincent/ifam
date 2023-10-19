@@ -28,7 +28,7 @@
 			</div>
 			<div class="form-group">
 				<label>Receipt Copy</label>
-				<input type="file" name="receipt_copy" id="receipt-copy" class="file-upload-default">
+				<input type="file" name="receipt_copy" id="receipt-copy" class="file-upload-default" capture="camera">
 				<div class="input-group col-xs-12">
 					<input type="text" class="form-control file-upload-info" disabled placeholder="Upload Receipt Copy">
 					<span class="input-group-append">

@@ -26,4 +26,21 @@ class FarmDepartmentController extends Controller
         return view($view, compact('farm', 'department'));
     }
 	
+	/**
+     * Display farm department seasons.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function department(Request $request)
+    {
+		$department = FarmDepartment::find($request->department_id);
+		$this->authorize('view', $department);
+		
+		$farm = $department->farm;
+		
+		$view = $request->routeIs('group.*') ? 'account.group.farm-department' : 'account.farm-department';
+		
+        return view($view, compact('farm', 'department'));
+    }
+	
 }
